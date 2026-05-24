@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CS Guru | Spielen</title>
+    <link rel="stylesheet" href="../style.css" />
+    <script src="../app.js" defer></script>
+
+    <link
+      rel="icon"
+      type="image/png"
+      href="/assets/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+    <link rel="shortcut icon" href="/assets/favicon.ico" />
+  </head>
+
+  <body>
+    <div class="page play-page">
+      <nav class="nav">
+        <a href="/index.html" class="nav__logo">
+          <img src="/assets/favicon.ico" alt="CS Guru" class="nav__favicon" />
+          <span class="nav__brand"
+            >CS <span style="color: var(--red)">Guru</span></span
+          >
+        </a>
+
+        <ul class="nav__links">
+          <li><a href="/index.html" class="nav__link">Home</a></li>
+          <li><a href="/pages/learn.html" class="nav__link">Lernen</a></li>
+          <li>
+            <a href="/pages/play.html" class="nav__link nav__link--active"
+              >Spielen</a
+            >
+          </li>
+          <li>
+            <a href="/pages/discover.html" class="nav__link">Entdecken</a>
+          </li>
+        </ul>
+      </nav>
+
+      <main class="play">
+        <svg class="play__circuit" viewBox="0 0 600 470" aria-hidden="true">
+          <defs>
+            <filter id="redGlow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="4" result="blur" />
+              <feMerge>
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+
+          <g filter="url(#redGlow)">
+            <path d="M40 120 H180 L230 70 H340" />
+            <circle cx="35" cy="120" r="7" />
+            <circle cx="345" cy="70" r="4" />
+
+            <path d="M120 210 H260 L310 160 H430 H520" />
+            <circle cx="120" cy="210" r="7" />
+            <circle cx="520" cy="160" r="4" />
+
+            <path d="M300 95 H430 L470 55 H610" />
+            <circle cx="300" cy="95" r="5" />
+            <circle cx="610" cy="55" r="4" />
+
+            <path d="M410 250 H520 L570 200 H720" />
+            <circle cx="410" cy="250" r="4" />
+            <circle cx="720" cy="200" r="6" />
+
+            <path d="M500 130 H620 L690 60 H860" />
+            <circle cx="500" cy="130" r="4" />
+            <circle cx="860" cy="60" r="4" />
+
+            <path d="M550 300 H700 L760 240 H860" />
+            <circle cx="550" cy="300" r="4" />
+            <circle cx="860" cy="240" r="6" />
+          </g>
+        </svg>
+        <section class="play__intro">
+          <h1>Spielen<span>.</span></h1>
+          <p>
+            Teste dein Wissen mit interaktiven Challenges und verbessere deine
+            Skills.
+          </p>
+        </section>
+
+        <section class="game-grid">
+          <a href="/games/konvertiere/index.html" class="game-card">
+            <div class="game-card__icon game-card__icon--stack">
+              <span
+                style="font-size: 2.4rem; font-weight: 600; padding-top: 10px"
+                >101</span
+              >
+              <span style="font-size: 2.4rem; font-weight: 600">↔</span>
+              <span style="font-size: 2.4rem; font-weight: 600">5</span>
+            </div>
+
+            <div class="game-card__divider"></div>
+
+            <div class="game-card__content">
+              <p class="game-card__num">01</p>
+              <h2>Konvertiere</h2>
+              <p>Wandle Zahlen zwischen Binär, Oktal und Hex um.</p>
+            </div>
+
+            <span class="game-card__arrow">›</span>
+          </a>
+
+          <a href="/games/vereinfache/index.html" class="game-card">
+            <div class="game-card__icon">
+              <span style="font-size: 2.5rem; font-weight: 700">A∧¬B</span>
+            </div>
+
+            <div class="game-card__divider"></div>
+
+            <div class="game-card__content">
+              <p class="game-card__num">02</p>
+              <h2>Vereinfache</h2>
+              <p>Vereinfache logische Ausdrücke mit den Booleschen Gesetzen.</p>
+            </div>
+
+            <span class="game-card__arrow">›</span>
+          </a>
+
+          <a href="/games/twoPow/index.html" class="game-card">
+            <div class="game-card__icon">
+              <span>2ⁿ</span>
+            </div>
+
+            <div class="game-card__divider"></div>
+
+            <div class="game-card__content">
+              <p class="game-card__num">03</p>
+              <h2>two_pow</h2>
+              <p>Berechne 2ⁿ so schnell wie möglich.</p>
+            </div>
+
+            <span class="game-card__arrow">›</span>
+          </a>
+
+          <a href="/games/findeDasGesetz/index.html" class="game-card">
+            <div class="game-card__icon">
+              <span style="font-size: 5rem; font-weight: 500">⚖</span>
+            </div>
+
+            <div class="game-card__divider"></div>
+
+            <div class="game-card__content">
+              <p class="game-card__num">04</p>
+              <h2>Finde das Gesetz</h2>
+              <p>Erkenne das korrekte Boolesche Gesetz hinter dem Ausdruck.</p>
+            </div>
+
+            <span class="game-card__arrow">›</span>
+          </a>
+        </section>
+
+        <div class="play-hint">
+          <span>🎮</span>
+          <p>Worauf wartest du? Los geht's!</p>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

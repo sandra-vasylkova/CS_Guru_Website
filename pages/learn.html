@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CS Guru | Lernen</title>
+    <link rel="stylesheet" href="../style.css" />
+    <script src="../app.js" defer></script>
+
+    <link
+      rel="icon"
+      type="image/png"
+      href="/assets/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+    <link rel="shortcut icon" href="/assets/favicon.ico" />
+  </head>
+
+  <body>
+    <div class="page learn-page">
+      <nav class="nav">
+        <a href="/index.html" class="nav__logo">
+          <img
+            src="/assets/favicon_turquise.ico"
+            alt="CS Guru"
+            class="nav__favicon"
+          />
+          <span class="nav__brand"
+            >CS <span style="color: var(--turquiose)">Guru</span></span
+          >
+        </a>
+
+        <ul class="nav__links">
+          <li><a href="/index.html" class="nav__link">Home</a></li>
+          <li>
+            <a href="/pages/learn.html" class="nav__link nav__link--active"
+              >Lernen</a
+            >
+          </li>
+          <li><a href="/pages/play.html" class="nav__link">Spielen</a></li>
+          <li>
+            <a href="/pages/discover.html" class="nav__link">Entdecken</a>
+          </li>
+        </ul>
+      </nav>
+
+      <main class="topics">
+        <section class="topics__intro">
+          <h1>Lernen<span>.</span></h1>
+          <p>Wähle ein Thema und entdecke alle Unterthemen.</p>
+        </section>
+
+        <section class="topics__list">
+          <!-- Python -->
+          <div class="topic topic--closed topic--python">
+            <button class="topic__head" type="button">
+              <div class="topic__icon">&lt;/&gt;</div>
+              <div class="topic__num">01</div>
+              <div class="topic__divider"></div>
+              <h2>Python Grundlagen</h2>
+              <span class="topic__arrow">›</span>
+            </button>
+
+            <div class="subtopics">
+              <a href="#" class="subtopic">
+                <div class="subtopic__icon">x</div>
+                <div>
+                  <h3>1. Variablen</h3>
+                  <p>Werte speichern und verwenden.</p>
+                </div>
+                <span>›</span>
+              </a>
+
+              <a href="#" class="subtopic">
+                <div class="subtopic__icon">T</div>
+                <div>
+                  <h3>2. Datentypen</h3>
+                  <p>Zahlen, Texte und Wahrheitswerte.</p>
+                </div>
+                <span>›</span>
+              </a>
+
+              <a href="#" class="subtopic">
+                <div class="subtopic__icon">?</div>
+                <div>
+                  <h3>3. Bedingungen</h3>
+                  <p>if, elif und else verstehen.</p>
+                </div>
+                <span>›</span>
+              </a>
+
+              <a href="#" class="subtopic">
+                <div class="subtopic__icon">↻</div>
+                <div>
+                  <h3>4. Schleifen</h3>
+                  <p>for- und while-Schleifen nutzen.</p>
+                </div>
+                <span>›</span>
+              </a>
+
+              <a href="#" class="subtopic">
+                <div class="subtopic__icon">ƒ</div>
+                <div>
+                  <h3>5. Funktionen</h3>
+                  <p>Code wiederverwendbar machen.</p>
+                </div>
+                <span>›</span>
+              </a>
+
+              <a href="#" class="subtopic">
+                <div class="subtopic__icon">[ ]</div>
+                <div>
+                  <h3>6. Listen</h3>
+                  <p>Mehrere Werte speichern.</p>
+                </div>
+                <span>›</span>
+              </a>
+
+              <a href="#" class="subtopic">
+                <div class="subtopic__icon">{ }</div>
+                <div>
+                  <h3>7. Dictionaries</h3>
+                  <p>Daten mit Schlüsseln speichern.</p>
+                </div>
+                <span>›</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Zahlensysteme geöffnet -->
+          <div class="topic topic--closed topic--numbers">
+            <button class="topic__head" type="button">
+              <div class="topic__icon">1010<br />0101</div>
+              <div class="topic__num">02</div>
+              <div class="topic__divider"></div>
+              <h2>Zahlensysteme</h2>
+              <span class="topic__arrow">›</span>
+            </button>
+
+            <div class="subtopics">
+              <a href="#" class="subtopic">
+                <div class="subtopic__icon">01</div>
+                <div>
+                  <h3>1. Überblick</h3>
+                  <p>
+                    Grundlagen des Binär- Oktal- Dezimal- und
+                    Hexadezimalsystems.
+                  </p>
+                </div>
+                <span>›</span>
+              </a>
+
+              <a href="#" class="subtopic">
+                <div class="subtopic__icon">→<br />←</div>
+                <div>
+                  <h3>4. Umwandlungen</h3>
+                  <p>Zwischen den Zahlensystemen umwandeln.</p>
+                </div>
+                <span>›</span>
+              </a>
+
+              <a href="#" class="subtopic">
+                <div class="subtopic__icon">⚡</div>
+                <div>
+                  <h3>5. Schnellmethoden</h3>
+                  <p>Tipps und Tricks für schnelle Umwandlungen.</p>
+                </div>
+                <span>›</span>
+              </a>
+
+              <a href="#" class="subtopic">
+                <div class="subtopic__icon">±</div>
+                <div>
+                  <h3>6. Zweierkomplement</h3>
+                  <p>Negative Zahlen im Binärsystem.</p>
+                </div>
+                <span>›</span>
+              </a>
+
+              <a href="#" class="subtopic">
+                <div class="subtopic__icon">A</div>
+                <div>
+                  <h3>7. ASCII & Unicode</h3>
+                  <p>Zeichencodierung verstehen.</p>
+                </div>
+                <span>›</span>
+              </a>
+
+              <a href="#" class="subtopic">
+                <div class="subtopic__icon">◎</div>
+                <div>
+                  <h3>8. Speichergrößen</h3>
+                  <p>Bits, Bytes und Speichergrößen.</p>
+                </div>
+                <span>›</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Schaltalgebra -->
+          <div class="topic topic--closed topic--logic">
+            <button class="topic__head" type="button">
+              <div class="topic__icon">▷</div>
+              <div class="topic__num">03</div>
+              <div class="topic__divider"></div>
+              <h2>Schaltalgebra</h2>
+              <span class="topic__arrow">›</span>
+            </button>
+
+            <div class="subtopics">
+              <a href="#" class="subtopic">
+                <div class="subtopic__icon">A</div>
+                <div>
+                  <h3>1. Aussagenlogik</h3>
+                  <p>Logische Aussagen verstehen.</p>
+                </div>
+                <span>›</span>
+              </a>
+
+              <a href="#" class="subtopic">
+                <div class="subtopic__icon">▦</div>
+                <div>
+                  <h3>2. Wahrheitstabellen</h3>
+                  <p>Wahrheitswerte systematisch prüfen.</p>
+                </div>
+                <span>›</span>
+              </a>
+
+              <a href="#" class="subtopic">
+                <div class="subtopic__icon">∧</div>
+                <div>
+                  <h3>3. Operatoren</h3>
+                  <p>UND, ODER und NICHT anwenden.</p>
+                </div>
+                <span>›</span>
+              </a>
+
+              <a href="#" class="subtopic">
+                <div class="subtopic__icon">≡</div>
+                <div>
+                  <h3>4. Gesetze</h3>
+                  <p>Boolesche Gesetze erkennen.</p>
+                </div>
+                <span>›</span>
+              </a>
+
+              <a href="#" class="subtopic">
+                <div class="subtopic__icon">↓</div>
+                <div>
+                  <h3>6. Vereinfachung</h3>
+                  <p>Ausdrücke kürzen und vereinfachen.</p>
+                </div>
+                <span>›</span>
+              </a>
+
+              <a href="#" class="subtopic">
+                <div class="subtopic__icon">⊳</div>
+                <div>
+                  <h3>7. Logikgatter</h3>
+                  <p>Schaltungen logisch verstehen.</p>
+                </div>
+                <span>›</span>
+              </a>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

@@ -331,6 +331,11 @@ body:has(.play-page) {
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55);
 }
 
+.card--entdecken {
+  --x: 100px;
+  --y: -30px;
+}
+
 .card--lernen {
   --x: 0px;
   --y: 0px;
@@ -344,11 +349,6 @@ body:has(.play-page) {
 .card--werkzeuge {
   --x: -200px;
   --y: 60px;
-}
-
-.card--entdecken {
-  --x: 100px;
-  --y: -30px;
 }
 
 .card__icon {

@@ -2137,22 +2137,22 @@ body:has(.play-page) {
     min-height: 84px;
   }
 
-  .card--lernen {
+  .card--entdecken {
     --x: 56px;
     --y: -18px;
   }
 
-  .card--spielen {
+  .card--lernen {
     --x: 14px;
     --y: 0px;
   }
 
-  .card--werkzeuge {
+  .card--spielen {
     --x: -34px;
     --y: 18px;
   }
 
-  .card--entdecken {
+  .card--werkzeuge {
     --x: -82px;
     --y: 36px;
   }
@@ -2340,22 +2340,22 @@ body:has(.play-page) {
     min-height: 78px;
   }
 
-  .card--lernen {
+  .card--entdecken {
     --x: 34px;
     --y: -14px;
   }
 
-  .card--spielen {
+  .card--lernen {
     --x: 8px;
     --y: 0px;
   }
 
-  .card--werkzeuge {
+  .card--spielen {
     --x: -24px;
     --y: 14px;
   }
 
-  .card--entdecken {
+  .card--werkzeuge {
     --x: -58px;
     --y: 28px;
   }

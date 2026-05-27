@@ -1020,393 +1020,6 @@ body:has(.play-page) {
   }
 }
 
-/* ── Responsive: tablet layout ─────────────────────────── */
-
-@media (max-width: 1100px) {
-  .nav {
-    justify-content: space-between;
-    padding: 14px 28px;
-  }
-
-  .topic--closed .subtopics {
-    display: none;
-  }
-
-  .nav__logo {
-    position: static;
-  }
-
-  .nav__links {
-    gap: 28px;
-  }
-
-  .hero {
-    min-height: auto;
-    flex-direction: column;
-    padding: 70px 28px 80px;
-  }
-
-  .hero::before {
-    clip-path: polygon(70% 0%, 100% 0%, 100% 100%, 48% 100%);
-  }
-
-  .hero::after {
-    background: radial-gradient(
-      circle at 30% 25%,
-      rgba(245, 166, 35, 0.08),
-      transparent 38%
-    );
-  }
-
-  .hero__left {
-    width: 100%;
-    padding: 0;
-    justify-content: center;
-    text-align: center;
-  }
-
-  .hero__text {
-    max-width: 660px;
-  }
-
-  .hero__heading {
-    font-size: clamp(3rem, 9vw, 5rem);
-  }
-
-  .hero__btns {
-    justify-content: center;
-  }
-
-  .hero__right {
-    width: 100%;
-    padding: 70px 0 0;
-  }
-
-  .cards {
-    max-width: 440px;
-    margin-inline: auto;
-  }
-
-  .card--lernen,
-  .card--spielen,
-  .card--werkzeuge,
-  .card--entdecken {
-    --x: 0px;
-    --y: 0px;
-  }
-
-  .card:hover {
-    transform: translateY(-6px) scale(1.03);
-  }
-
-  .learn {
-    min-height: auto;
-    padding: 55px 28px 70px;
-  }
-
-  .learn::before {
-    clip-path: polygon(76% 0%, 100% 0%, 100% 100%, 48% 100%);
-  }
-
-  .learn__grid {
-    grid-template-columns: 1fr;
-    max-width: 760px;
-    margin-inline: auto;
-  }
-
-  .discover {
-    min-height: auto;
-    flex-direction: column;
-    padding: 70px 28px 80px;
-  }
-
-  .discover::before {
-    clip-path: polygon(70% 0%, 100% 0%, 100% 100%, 48% 100%);
-  }
-
-  .discover__left {
-    width: 100%;
-    padding-left: 0;
-    text-align: left;
-    align-items: flex-start;
-  }
-
-  .discover__right {
-    width: 100%;
-    padding: 60px 0 0;
-  }
-
-  .discover__steps {
-    grid-template-columns: 1fr;
-    gap: 34px;
-  }
-
-  .discover__arrow {
-    display: none;
-  }
-}
-
-/* ── Responsive: phone layout ──────────────────────────── */
-
-@media (max-width: 600px) {
-  .nav {
-    flex-direction: column;
-    align-items: center;
-    gap: 14px;
-    padding: 14px 16px 18px;
-  }
-
-  .nav__links {
-    gap: 18px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  .nav__link {
-    font-size: 0.9rem;
-  }
-
-  .nav__favicon {
-    width: 38px;
-    height: 38px;
-  }
-
-  .hero {
-    padding: 54px 20px 60px;
-  }
-
-  .hero::before {
-    clip-path: polygon(0 52%, 100% 44%, 100% 100%, 0% 100%);
-  }
-
-  .hero__heading {
-    font-size: clamp(2.7rem, 13vw, 4rem);
-  }
-
-  .hero__sub {
-    font-size: 0.95rem;
-  }
-
-  .hero__btns {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .btn {
-    width: 100%;
-    max-width: 260px;
-    text-align: center;
-  }
-
-  .hero__right {
-    padding-top: 60px;
-  }
-
-  .cards {
-    max-width: 100%;
-  }
-
-  .card {
-    min-height: 120px;
-  }
-
-  .card__icon {
-    width: 82px;
-  }
-
-  .card__content {
-    padding: 18px 22px;
-  }
-
-  .card__title {
-    font-size: 1.05rem;
-  }
-
-  .card__desc {
-    font-size: 0.85rem;
-  }
-
-  .learn {
-    padding: 44px 20px 60px;
-  }
-
-  .learn::before {
-    clip-path: polygon(0 58%, 100% 48%, 100% 100%, 0% 100%);
-  }
-
-  .learn__intro h1 {
-    font-size: clamp(3.1rem, 16vw, 4.2rem);
-  }
-
-  .learn__intro p {
-    font-size: 1rem;
-  }
-
-  .learn-card {
-    grid-template-columns: 1fr;
-    text-align: center;
-    gap: 18px;
-    padding: 28px 22px;
-  }
-
-  .learn-card__divider {
-    display: none;
-  }
-
-  .learn-card__icon {
-    width: 100%;
-    min-height: auto;
-  }
-
-  .learn-card__content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .learn-card__content h2 {
-    font-size: 1.35rem;
-  }
-
-  .learn-card__content p {
-    font-size: 0.95rem;
-  }
-
-  .discover {
-    padding: 50px 20px 60px;
-  }
-
-  .discover::before {
-    clip-path: polygon(0 55%, 100% 45%, 100% 100%, 0% 100%);
-  }
-
-  .discover__title {
-    font-size: clamp(3rem, 15vw, 4.2rem);
-  }
-
-  .discover__text {
-    font-size: 1rem;
-  }
-
-  .discover__panel {
-    padding: 32px 22px;
-  }
-
-  .discover__panel-head {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .discover__panel-head h2 {
-    font-size: 1.6rem;
-  }
-
-  .frame {
-    width: 94%;
-    margin-top: 30px;
-  }
-}
-
-/* ── Tablet ────────────────────────────────────── */
-
-@media (min-width: 768px) and (max-width: 1100px) {
-  .discover {
-    min-height: calc(100vh - 64px);
-    flex-direction: row;
-    padding: 0;
-  }
-
-  .discover::before {
-    clip-path: polygon(63% 0%, 100% 0%, 100% 100%, 36% 100%);
-  }
-
-  .discover__left {
-    width: 42%;
-    padding-left: 36px;
-    padding-right: 20px;
-    text-align: left;
-    align-items: flex-start;
-    justify-content: center;
-  }
-
-  .discover__title {
-    font-size: clamp(3.2rem, 5vw, 4.4rem);
-  }
-
-  .discover__text {
-    max-width: 390px;
-    font-size: 1rem;
-  }
-
-  .discover__icon {
-    margin-left: 0;
-    margin-top: 48px;
-  }
-
-  .discover__right {
-    flex: 1;
-    width: auto;
-    padding: 40px 34px 40px 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .discover-guide {
-    width: 100%;
-    max-width: 620px;
-    padding: 30px 34px 18px;
-  }
-
-  .discover-guide__head {
-    gap: 22px;
-  }
-
-  .discover-guide__info {
-    width: 62px;
-    height: 62px;
-    font-size: 1.8rem;
-  }
-
-  .discover-guide__head h2 {
-    font-size: 1.75rem;
-  }
-
-  .discover-guide__head p {
-    font-size: 0.95rem;
-  }
-
-  .discover-guide__row {
-    grid-template-columns: 54px 38px 105px 1fr 34px;
-    gap: 16px;
-    padding: 24px 0;
-  }
-
-  .discover-guide__icon {
-    width: 50px;
-    height: 50px;
-    font-size: 1.45rem;
-  }
-
-  .discover-guide__num {
-    font-size: 1.25rem;
-  }
-
-  .discover-guide__row h3 {
-    font-size: 1.15rem;
-  }
-
-  .discover-guide__text p {
-    font-size: 0.82rem;
-    line-height: 1.4;
-  }
-
-  .discover-guide__arrow {
-    display: block;
-    font-size: 2.3rem;
-  }
-}
-
 /* ── Play page ───────────────────────────────────────── */
 
 .play-page .nav__link--active,
@@ -2833,6 +2446,238 @@ body:has(.play-page) {
 
   .tool-card__icon--logic {
     font-size: 0.82rem;
+  }
+}
+
+/* ───────────────── Responsive Layout ───────────────── */
+
+@media (min-width: 901px) and (max-width: 1280px) {
+  .hero {
+    min-height: calc(100vh - 72px);
+    flex-direction: row;
+    padding: 0;
+  }
+
+  .hero__left {
+    width: 43%;
+    padding: 0 28px 40px 90px;
+  }
+
+  .hero__right {
+    width: 57%;
+    padding: 40px 70px 40px 90px;
+  }
+
+  .cards {
+    max-width: 360px;
+  }
+
+  .card--entdecken {
+    --x: 56px;
+    --y: -18px;
+  }
+
+  .card--lernen {
+    --x: 14px;
+    --y: 0px;
+  }
+
+  .card--spielen {
+    --x: -34px;
+    --y: 18px;
+  }
+
+  .card--werkzeuge {
+    --x: -82px;
+    --y: 36px;
+  }
+}
+
+@media (min-width: 701px) and (max-width: 900px) {
+  html,
+  body,
+  .page {
+    overflow-x: hidden;
+  }
+
+  .nav {
+    justify-content: center;
+    padding: 0 24px;
+  }
+
+  .nav__logo {
+    left: 24px;
+  }
+
+  .nav__links {
+    gap: 20px;
+  }
+
+  .hero {
+    min-height: calc(100vh - 72px);
+    flex-direction: row;
+    padding: 0;
+  }
+
+  .hero::before {
+    clip-path: polygon(58% 0%, 100% 0%, 100% 100%, 30% 100%);
+  }
+
+  .hero__left {
+    width: 42%;
+    padding: 0 18px 30px 36px;
+  }
+
+  .hero__right {
+    width: 58%;
+    padding: 30px 46px 30px 46px;
+  }
+
+  .cards {
+    max-width: 300px;
+  }
+
+  .card {
+    min-height: 84px;
+  }
+
+  .card__icon {
+    width: 58px;
+  }
+
+  .card__content {
+    padding: 12px 14px;
+  }
+
+  .card__title {
+    font-size: 0.9rem;
+  }
+
+  .card__desc {
+    font-size: 0.72rem;
+  }
+
+  .card--entdecken {
+    --x: 24px;
+    --y: -10px;
+  }
+
+  .card--lernen {
+    --x: 0px;
+    --y: 0px;
+  }
+
+  .card--spielen {
+    --x: -20px;
+    --y: 14px;
+  }
+
+  .card--werkzeuge {
+    --x: -40px;
+    --y: 24px;
+  }
+
+  .subtopics {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .tools__right {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  html,
+  body,
+  .page {
+    overflow-x: hidden;
+  }
+
+  .nav {
+    width: calc(100% - 32px);
+    margin: 16px auto 0;
+    min-height: 82px;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 0;
+    padding: 0 18px;
+    border-radius: 8px;
+  }
+
+  .nav__links,
+  .nav__actions,
+  .nav__contact,
+  .nav__feedback,
+  .nav__divider {
+    display: none !important;
+  }
+
+  .nav__menu-btn {
+    display: flex;
+  }
+
+  .hero,
+  .discover,
+  .tools,
+  .play,
+  .topics {
+    flex-direction: column;
+    padding: 50px 18px 60px;
+  }
+
+  .hero::before,
+  .discover::before,
+  .tools::before {
+    clip-path: polygon(0 52%, 100% 44%, 100% 100%, 0 100%);
+  }
+
+  .hero__left,
+  .hero__right,
+  .discover__left,
+  .discover__right,
+  .tools__left,
+  .tools__right {
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    text-align: center;
+    align-items: center;
+  }
+
+  .hero__right,
+  .discover__right,
+  .tools__right {
+    padding-top: 50px;
+  }
+
+  .cards {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .card {
+    min-height: 112px;
+    flex-direction: row;
+    transform: none !important;
+  }
+
+  .card__icon {
+    width: 72px;
+    min-width: 72px;
+  }
+
+  .card--entdecken,
+  .card--lernen,
+  .card--spielen,
+  .card--werkzeuge {
+    --x: 0px;
+    --y: 0px;
+  }
+
+  .subtopics,
+  .tools__right,
+  .game-grid {
+    grid-template-columns: 1fr;
   }
 }
 

@@ -7,11 +7,47 @@ document.querySelectorAll(".topic__head").forEach((head) => {
   });
 });
 
-const navToggle = document.querySelector(".nav__toggle");
-const navLinks = document.querySelector(".nav__links");
+const menuBtn = document.querySelector(".nav__menu-btn");
+const mobileMenu = document.querySelector(".mobile-menu");
+const closeBtn = document.querySelector(".mobile-menu__close");
 
-if (navToggle && navLinks) {
-  navToggle.addEventListener("click", () => {
-    navLinks.classList.toggle("nav__links--open");
+if (menuBtn && mobileMenu) {
+  menuBtn.addEventListener("click", () => {
+    mobileMenu.classList.add("mobile-menu--open");
   });
 }
+
+if (closeBtn && mobileMenu) {
+  closeBtn.addEventListener("click", () => {
+    mobileMenu.classList.remove("mobile-menu--open");
+  });
+}
+
+mobileMenu?.addEventListener("click", (e) => {
+  if (e.target === mobileMenu) {
+    mobileMenu.classList.remove("mobile-menu--open");
+  }
+});
+
+const contactButtons = document.querySelectorAll(
+  ".nav__contact-button, .contact-modal-trigger",
+);
+
+const contactModal = document.querySelector(".contact-modal");
+const contactClose = document.querySelector(".contact-modal__close");
+
+contactButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    contactModal?.classList.add("contact-modal--open");
+  });
+});
+
+contactClose?.addEventListener("click", () => {
+  contactModal?.classList.remove("contact-modal--open");
+});
+
+contactModal?.addEventListener("click", (e) => {
+  if (e.target === contactModal) {
+    contactModal.classList.remove("contact-modal--open");
+  }
+});

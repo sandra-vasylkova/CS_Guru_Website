@@ -332,23 +332,23 @@ body:has(.play-page) {
 }
 
 .card--lernen {
-  --x: 100px;
-  --y: -30px;
-}
-
-.card--spielen {
   --x: 0px;
   --y: 0px;
 }
 
-.card--werkzeuge {
+.card--spielen {
   --x: -100px;
   --y: 30px;
 }
 
-.card--entdecken {
+.card--werkzeuge {
   --x: -200px;
   --y: 60px;
+}
+
+.card--entdecken {
+  --x: 100px;
+  --y: -30px;
 }
 
 .card__icon {

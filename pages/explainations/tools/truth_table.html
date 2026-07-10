@@ -3,9 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CS Guru | Entdecken</title>
+    <title>CS Guru | Wahrheitstabelle</title>
     <link rel="stylesheet" href="/style.css" />
-    <script src="../app.js" defer></script>
+    <script src="/app.js" defer></script>
+    <script src="./truth_table.js" defer></script>
     <link
       rel="icon"
       type="image/png"
@@ -16,30 +17,32 @@
     <link rel="shortcut icon" href="/assets/favicon.ico" />
     <link rel="manifest" href="/assets/site.webmanifest" />
     <meta name="theme-color" content="#000000" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   </head>
 
   <body>
-    <div class="page discover-page">
+    <div class="page tool-app-page">
       <nav class="nav">
         <a href="/index.html" class="nav__logo">
-          <img src="/assets/favicon.ico" alt="CS Guru" class="nav__favicon" />
-          <span class="nav__brand"
-            >CS <span style="color: var(--amber)">Guru</span></span
-          >
+          <img
+            src="/assets/favicon_green.ico"
+            alt="CS Guru"
+            class="nav__favicon"
+          />
+          <span class="nav__brand">CS <span>Guru</span></span>
         </a>
 
         <ul class="nav__links">
           <li><a href="/index.html" class="nav__link">Home</a></li>
           <li>
-            <a href="discover.html" class="nav__link nav__link--active">
-              Entdecken
-            </a>
+            <a href="/pages/discover.html" class="nav__link">Entdecken</a>
           </li>
           <li><a href="/pages/learn.html" class="nav__link">Lernen</a></li>
-          <li><a href="play.html" class="nav__link">Spielen</a></li>
-          <li><a href="/pages/tools.html" class="nav__link">Werkzeuge</a></li>
+          <li><a href="/pages/play.html" class="nav__link">Spielen</a></li>
+          <li>
+            <a href="/pages/tools.html" class="nav__link nav__link--active">
+              Werkzeuge
+            </a>
+          </li>
         </ul>
 
         <div class="nav__actions">
@@ -84,14 +87,15 @@
           </div>
 
           <a href="/index.html" class="mobile-menu__link">Home</a>
+          <a href="/pages/discover.html" class="mobile-menu__link">Entdecken</a>
           <a href="/pages/learn.html" class="mobile-menu__link">Lernen</a>
           <a href="/pages/play.html" class="mobile-menu__link">Spielen</a>
-          <a href="/pages/tools.html" class="mobile-menu__link">Werkzeuge</a>
           <a
-            href="/pages/discover.html"
+            href="/pages/tools.html"
             class="mobile-menu__link mobile-menu__link--active"
-            >Entdecken</a
           >
+            Werkzeuge
+          </a>
 
           <div class="mobile-menu__actions">
             <button
@@ -109,102 +113,89 @@
         </div>
       </div>
 
-      <main class="discover">
-        <section class="discover__left">
-          <h1 class="discover__title">Entdecken<span>.</span></h1>
-          <div class="discover__line"></div>
+      <main class="tool-app">
+        <section class="tool-shell truth-shell" aria-labelledby="tool-title">
+          <header class="tool-header">
+            <div class="tool-header__num">02</div>
+            <div>
+              <h1 id="tool-title">Wahrheitstabelle</h1>
+              <p>Erstelle Wahrheitstabellen für logische Ausdrücke.</p>
+            </div>
+          </header>
 
-          <h2 class="discover__subtitle">Die Webseite im Überblick</h2>
+          <section
+            class="tool-panel truth-panel"
+            aria-label="Wahrheitstabelle Formular"
+          >
+            <label class="tool-field">
+              <span class="tool-panel__title truth-label"
+                >Logischer Ausdruck</span
+              >
+              <div class="tool-input-wrap">
+                <input
+                  id="expression-input"
+                  class="tool-control tool-control--input truth-input"
+                  type="text"
+                  value="(A ∧ B) → C"
+                  placeholder="z. B. (A ∧ B) → C"
+                  autocomplete="off"
+                  spellcheck="false"
+                />
+                <button
+                  id="clear-btn"
+                  class="tool-clear"
+                  type="button"
+                  aria-label="Eingabe leeren"
+                >
+                  ×
+                </button>
+              </div>
 
-          <p class="discover__text">
-            Eine Online-Plattform, auf der du alle für deine Klausur relevanten
-            Themen so schnell lernst, dass es sich
-            <em style="color: var(--amber); font-weight: 700">ILLEGAL</em>
-            anfühlt.
-          </p>
-          <p class="discover__text" style="margin-top: 10px; font-size: 10px">
-            Und das beste daran: ganz ohne Zwischenschritte.
-          </p>
+              <div class="operator-row" aria-label="Logische Operatoren">
+                <button type="button" class="operator-btn" data-insert=" ∧ ">
+                  ∧
+                </button>
+                <button type="button" class="operator-btn" data-insert=" ∨ ">
+                  ∨
+                </button>
+                <button type="button" class="operator-btn" data-insert="¬">
+                  ¬
+                </button>
+                <button type="button" class="operator-btn" data-insert=" → ">
+                  →
+                </button>
+                <button type="button" class="operator-btn" data-insert=" ↔ ">
+                  ↔
+                </button>
+                <button type="button" class="operator-btn" data-insert=" ⊕ ">
+                  ⊕
+                </button>
+              </div>
+            </label>
 
-          <a style="text-decoration: none; color: var(--amber)" href="#">
-            <div class="discover__icon">&lt;/&gt;</div>
-          </a>
-        </section>
+            <p id="error-message" class="tool-error" aria-live="polite"></p>
 
-        <section class="discover__right">
-          <div class="discover-guide">
-            <div class="discover-guide__head">
-              <div class="discover-guide__info">i</div>
-
-              <div>
-                <h2>So nutzt du CS Guru</h2>
-                <p class="discover-guide__tip">
-                  <span>Tipp:</span> Füge als App zum Homescreen hinzu für einen
-                  schnelleren Zugriff
-                </p>
+            <div
+              id="table-block"
+              class="truth-table-block truth-table-block--hidden"
+            >
+              <h2 class="tool-panel__title">Wahrheitstabelle</h2>
+              <div class="truth-table-wrap">
+                <table id="truth-table" class="truth-table"></table>
               </div>
             </div>
 
-            <div class="discover-guide__line"></div>
-
-            <div class="discover-guide__row">
-              <div class="discover-guide__icon">?</div>
-              <p class="discover-guide__num">01</p>
-              <h3>Lernen</h3>
-
-              <div class="discover-guide__text">
-                <p>
-                  Hier lernst du alle relevanten Themen für die Klausur und
-                  Alltagsleben: ohne Umschweife, direkt zur Sache.
-                </p>
-                <p>
-                  <strong>Du erlernst:</strong> Zahlensysteme, Schaltalgebra und
-                  Python Grundlagen.
-                </p>
-              </div>
-
-              <a href="/pages/learn.html" class="discover-guide__arrow">→</a>
+            <div class="truth-actions-row">
+              <button
+                id="generate-btn"
+                class="tool-btn tool-btn--primary"
+                type="button"
+                style="font-size: larger; font-weight: 600"
+              >
+                Tabelle generieren
+              </button>
             </div>
-
-            <div class="discover-guide__row">
-              <div class="discover-guide__icon">+</div>
-              <p class="discover-guide__num">02</p>
-              <h3>Spielen</h3>
-
-              <div class="discover-guide__text">
-                <p>
-                  Bist du dir deiner Kenntnisse sicher? Diese interaktiven
-                  Übungen werden entweder dein Ego streicheln oder es in Stücke
-                  reißen.
-                </p>
-                <p>
-                  <strong>Du erfährst:</strong> Ob du die Themen wirklich
-                  verstanden hast und wo du dich verbessern kannst.
-                </p>
-              </div>
-
-              <a href="/pages/play.html" class="discover-guide__arrow">→</a>
-            </div>
-
-            <div class="discover-guide__row">
-              <div class="discover-guide__icon">⚙</div>
-              <p class="discover-guide__num">03</p>
-              <h3>Werkzeuge</h3>
-
-              <div class="discover-guide__text">
-                <p>
-                  Nutze praktische Tools und Hilfsmittel, die dich beim Lernen
-                  unterstützen.
-                </p>
-                <p>
-                  <strong>Du entdeckst:</strong> Vereinfacher, Umwandler,
-                  Wahrheitstabellen-Generator und vieles mehr.
-                </p>
-              </div>
-
-              <a href="/pages/tools.html" class="discover-guide__arrow">→</a>
-            </div>
-          </div>
+          </section>
         </section>
       </main>
     </div>
@@ -251,7 +242,6 @@
           <svg
             class="teams__icon"
             xmlns="http://www.w3.org/2000/svg"
-            class="bi bi-microsoft-teams"
             viewBox="0 0 17 20"
           >
             <path

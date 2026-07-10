@@ -3,9 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CS Guru | Entdecken</title>
+    <title>CS Guru | The floor is lava</title>
     <link rel="stylesheet" href="/style.css" />
-    <script src="../app.js" defer></script>
+    <script src="/app.js" defer></script>
+    <script src="./two_pow.js" defer></script>
     <link
       rel="icon"
       type="image/png"
@@ -16,29 +17,31 @@
     <link rel="shortcut icon" href="/assets/favicon.ico" />
     <link rel="manifest" href="/assets/site.webmanifest" />
     <meta name="theme-color" content="#000000" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   </head>
 
   <body>
-    <div class="page discover-page">
+    <div class="page play-page two-pow-game-page">
       <nav class="nav">
         <a href="/index.html" class="nav__logo">
-          <img src="/assets/favicon.ico" alt="CS Guru" class="nav__favicon" />
-          <span class="nav__brand"
-            >CS <span style="color: var(--amber)">Guru</span></span
-          >
+          <img
+            src="/assets/favicon_red.ico"
+            alt="CS Guru"
+            class="nav__favicon"
+          />
+          <span class="nav__brand">CS <span>Guru</span></span>
         </a>
 
         <ul class="nav__links">
           <li><a href="/index.html" class="nav__link">Home</a></li>
           <li>
-            <a href="discover.html" class="nav__link nav__link--active">
-              Entdecken
-            </a>
+            <a href="/pages/discover.html" class="nav__link">Entdecken</a>
           </li>
           <li><a href="/pages/learn.html" class="nav__link">Lernen</a></li>
-          <li><a href="play.html" class="nav__link">Spielen</a></li>
+          <li>
+            <a href="/pages/play.html" class="nav__link nav__link--active">
+              Spielen
+            </a>
+          </li>
           <li><a href="/pages/tools.html" class="nav__link">Werkzeuge</a></li>
         </ul>
 
@@ -71,9 +74,9 @@
       <div class="mobile-menu" aria-hidden="true">
         <div class="mobile-menu__panel">
           <div class="mobile-menu__head">
-            <a href="/index.html" class="mobile-menu__brand"
-              >CS <span>Guru</span></a
-            >
+            <a href="/index.html" class="mobile-menu__brand">
+              CS <span>Guru</span>
+            </a>
             <button
               class="mobile-menu__close"
               type="button"
@@ -84,14 +87,14 @@
           </div>
 
           <a href="/index.html" class="mobile-menu__link">Home</a>
+          <a href="/pages/discover.html" class="mobile-menu__link">Entdecken</a>
           <a href="/pages/learn.html" class="mobile-menu__link">Lernen</a>
-          <a href="/pages/play.html" class="mobile-menu__link">Spielen</a>
-          <a href="/pages/tools.html" class="mobile-menu__link">Werkzeuge</a>
           <a
-            href="/pages/discover.html"
+            href="/pages/play.html"
             class="mobile-menu__link mobile-menu__link--active"
-            >Entdecken</a
+            >Spielen</a
           >
+          <a href="/pages/tools.html" class="mobile-menu__link">Werkzeuge</a>
 
           <div class="mobile-menu__actions">
             <button
@@ -109,102 +112,73 @@
         </div>
       </div>
 
-      <main class="discover">
-        <section class="discover__left">
-          <h1 class="discover__title">Entdecken<span>.</span></h1>
-          <div class="discover__line"></div>
+      <main class="lava-game">
+        <section class="lava-shell" aria-labelledby="lava-title">
+          <header class="lava-header">
+            <div class="lava-header__num">03</div>
+            <div>
+              <h1 id="lava-title">The Floor is Lava</h1>
+              <p>
+                Rechne fallende 2ⁿ-Blöcke aus, bevor sie die Lava erreichen.
+              </p>
+            </div>
+          </header>
 
-          <h2 class="discover__subtitle">Die Webseite im Überblick</h2>
+          <section class="lava-panel" aria-label="Zweierpotenzen Spiel">
+            <div class="lava-topline">
+              <div class="lava-score">
+                <span>Punkte: <strong id="score">0</strong></span>
+                <span>Serie: <strong id="streak">0</strong></span>
+                <span>Leben: <strong id="lives">3</strong></span>
+              </div>
+              <div id="speed-label" class="lava-mode">Tempo 1</div>
+            </div>
 
-          <p class="discover__text">
-            Eine Online-Plattform, auf der du alle für deine Klausur relevanten
-            Themen so schnell lernst, dass es sich
-            <em style="color: var(--amber); font-weight: 700">ILLEGAL</em>
-            anfühlt.
-          </p>
-          <p class="discover__text" style="margin-top: 10px; font-size: 10px">
-            Und das beste daran: ganz ohne Zwischenschritte.
-          </p>
-
-          <a style="text-decoration: none; color: var(--amber)" href="#">
-            <div class="discover__icon">&lt;/&gt;</div>
-          </a>
-        </section>
-
-        <section class="discover__right">
-          <div class="discover-guide">
-            <div class="discover-guide__head">
-              <div class="discover-guide__info">i</div>
-
-              <div>
-                <h2>So nutzt du CS Guru</h2>
-                <p class="discover-guide__tip">
-                  <span>Tipp:</span> Füge als App zum Homescreen hinzu für einen
-                  schnelleren Zugriff
-                </p>
+            <div id="lava-board" class="lava-board">
+              <div class="lava-board-grid"></div>
+              <div
+                id="answer-bubble"
+                class="lava-answer-bubble lava-answer-bubble--hidden"
+              >
+                <input
+                  id="answer-input"
+                  class="lava-input"
+                  type="text"
+                  inputmode="numeric"
+                  autocomplete="off"
+                  aria-label="Ergebnis eingeben"
+                  placeholder="Antwort"
+                />
+              </div>
+              <div class="lava-floor">
+                <span>Lava</span>
               </div>
             </div>
 
-            <div class="discover-guide__line"></div>
+            <p id="feedback" class="lava-feedback" aria-live="polite">
+              Drücke Start.
+            </p>
 
-            <div class="discover-guide__row">
-              <div class="discover-guide__icon">?</div>
-              <p class="discover-guide__num">01</p>
-              <h3>Lernen</h3>
-
-              <div class="discover-guide__text">
-                <p>
-                  Hier lernst du alle relevanten Themen für die Klausur und
-                  Alltagsleben: ohne Umschweife, direkt zur Sache.
-                </p>
-                <p>
-                  <strong>Du erlernst:</strong> Zahlensysteme, Schaltalgebra und
-                  Python Grundlagen.
-                </p>
-              </div>
-
-              <a href="/pages/learn.html" class="discover-guide__arrow">→</a>
+            <div class="lava-actions">
+              <button
+                id="start-btn"
+                class="lava-btn lava-btn--primary"
+                type="button"
+              >
+                Start
+              </button>
+              <button id="pause-btn" class="lava-btn" type="button" disabled>
+                Pause
+              </button>
+              <button
+                id="reset-btn"
+                class="lava-btn lava-btn--ghost"
+                type="button"
+              >
+                Neu
+              </button>
             </div>
-
-            <div class="discover-guide__row">
-              <div class="discover-guide__icon">+</div>
-              <p class="discover-guide__num">02</p>
-              <h3>Spielen</h3>
-
-              <div class="discover-guide__text">
-                <p>
-                  Bist du dir deiner Kenntnisse sicher? Diese interaktiven
-                  Übungen werden entweder dein Ego streicheln oder es in Stücke
-                  reißen.
-                </p>
-                <p>
-                  <strong>Du erfährst:</strong> Ob du die Themen wirklich
-                  verstanden hast und wo du dich verbessern kannst.
-                </p>
-              </div>
-
-              <a href="/pages/play.html" class="discover-guide__arrow">→</a>
-            </div>
-
-            <div class="discover-guide__row">
-              <div class="discover-guide__icon">⚙</div>
-              <p class="discover-guide__num">03</p>
-              <h3>Werkzeuge</h3>
-
-              <div class="discover-guide__text">
-                <p>
-                  Nutze praktische Tools und Hilfsmittel, die dich beim Lernen
-                  unterstützen.
-                </p>
-                <p>
-                  <strong>Du entdeckst:</strong> Vereinfacher, Umwandler,
-                  Wahrheitstabellen-Generator und vieles mehr.
-                </p>
-              </div>
-
-              <a href="/pages/tools.html" class="discover-guide__arrow">→</a>
-            </div>
-          </div>
+          </section>
         </section>
       </main>
     </div>
@@ -251,7 +225,6 @@
           <svg
             class="teams__icon"
             xmlns="http://www.w3.org/2000/svg"
-            class="bi bi-microsoft-teams"
             viewBox="0 0 17 20"
           >
             <path

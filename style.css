@@ -7495,3 +7495,234 @@ body:has(.lesson-page) {
     height: 24px;
   }
 }
+
+/*  Mobile learning-page fixes  */
+@media (max-width: 700px) {
+  /* Prevent the topic cards from keeping the later two-column tablet layout. */
+  .topics,
+  .topics__list,
+  .topic,
+  .subtopics,
+  .subtopic {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .topics {
+    overflow-x: clip;
+  }
+
+  .subtopics {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .topic__head {
+    grid-template-columns: 50px 38px minmax(0, 1fr) 26px;
+    gap: 12px;
+  }
+
+  .topic__divider {
+    display: none;
+  }
+
+  .topic h2,
+  .subtopic h3,
+  .subtopic p {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .subtopic {
+    grid-template-columns: 42px minmax(0, 1fr) 18px;
+  }
+
+  .subtopic > div:nth-child(2) {
+    min-width: 0;
+  }
+
+  /* Keep lesson cards and code examples inside the phone viewport. */
+  .lesson,
+  .lesson__shell,
+  .lesson-content,
+  .lesson-hero,
+  .lesson-section,
+  .lesson-code {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .lesson__shell {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .lesson-code pre {
+    overflow-x: hidden;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .lesson-code code,
+  .lesson-compare code {
+    font-size: clamp(0.78rem, 3.8vw, 0.95rem);
+    line-height: 1.55;
+  }
+}
+
+@media (max-width: 430px) {
+  .lesson {
+    padding-inline: 14px;
+  }
+
+  .lesson-section {
+    padding-inline: 16px;
+  }
+
+  .lesson-code pre {
+    padding: 16px 14px;
+  }
+
+  .lesson-code__head {
+    padding-inline: 14px;
+  }
+}
+
+/*  Final mobile navigation fix  */
+@media (max-width: 700px) {
+  .nav {
+    width: calc(100% - 32px);
+    min-height: 72px;
+    margin: 16px auto 0;
+    padding: 0 16px;
+    gap: 12px;
+    border-radius: 8px;
+    justify-content: space-between;
+  }
+
+  .nav__logo {
+    position: static;
+    min-width: 0;
+    flex: 0 1 auto;
+  }
+
+  .nav__favicon {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+  }
+
+  .nav__brand {
+    font-size: 1rem;
+  }
+
+  .nav__links,
+  .nav__actions,
+  .nav__contact,
+  .nav__feedback,
+  .nav__divider {
+    display: none !important;
+  }
+
+  .nav__menu-btn {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    border: none;
+    background: transparent;
+  }
+
+  .nav__menu-btn span {
+    width: 24px;
+    height: 3px;
+    border-radius: 999px;
+    background: var(--white);
+  }
+}
+
+/*  Final mobile topic-card layout  */
+@media (max-width: 700px) {
+  .topics {
+    padding: 38px 18px 56px;
+  }
+
+  .topics__intro {
+    margin-bottom: 28px;
+  }
+
+  .topics__intro h1 {
+    margin-bottom: 16px;
+  }
+
+  .topic__head {
+    min-height: 112px;
+    grid-template-columns: 52px minmax(0, 1fr) 24px;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      "icon title arrow"
+      "number title arrow";
+    column-gap: 14px;
+    row-gap: 4px;
+    padding: 18px 16px;
+  }
+
+  .topic__icon {
+    grid-area: icon;
+    width: 50px;
+    height: 50px;
+    align-self: end;
+  }
+
+  .topic__num {
+    grid-area: number;
+    align-self: start;
+    justify-self: center;
+    font-size: 1rem;
+  }
+
+  .topic__divider {
+    display: none;
+  }
+
+  .topic h2 {
+    grid-area: title;
+    align-self: center;
+    min-width: 0;
+    font-size: 1.08rem;
+    line-height: 1.2;
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: auto;
+  }
+
+  .topic__arrow {
+    grid-area: arrow;
+    align-self: center;
+    justify-self: end;
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 390px) {
+  .topic__head {
+    grid-template-columns: 48px minmax(0, 1fr) 22px;
+    column-gap: 12px;
+    padding-inline: 14px;
+  }
+
+  .topic__icon {
+    width: 46px;
+    height: 46px;
+  }
+
+  .topic h2 {
+    font-size: 1rem;
+  }
+}

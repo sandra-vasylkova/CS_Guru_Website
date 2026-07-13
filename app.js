@@ -51,3 +51,36 @@ contactModal?.addEventListener("click", (e) => {
     contactModal.classList.remove("contact-modal--open");
   }
 });
+
+// Lesson sidebar scroll tracking
+const lessonSections = [...document.querySelectorAll(".lesson-section[id]")];
+const lessonSidebarLinks = [
+  ...document.querySelectorAll(".lesson-sidebar__link[href^='#']"),
+];
+
+if (lessonSections.length && lessonSidebarLinks.length) {
+  const setActiveLessonLink = (sectionId) => {
+    lessonSidebarLinks.forEach((link) => {
+      const isActive = link.getAttribute("href") === `#${sectionId}`;
+      link.classList.toggle("lesson-sidebar__link--active", isActive);
+    });
+  };
+
+  const lessonObserver = new IntersectionObserver(
+    (entries) => {
+      const visibleSections = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+      if (visibleSections[0]) {
+        setActiveLessonLink(visibleSections[0].target.id);
+      }
+    },
+    {
+      rootMargin: "-18% 0px -62% 0px",
+      threshold: [0, 0.15, 0.35, 0.6],
+    },
+  );
+
+  lessonSections.forEach((section) => lessonObserver.observe(section));
+}

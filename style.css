@@ -7014,8 +7014,8 @@ body:has(.lesson-page) {
   display: grid;
   grid-template-columns: 62px minmax(0, 1fr);
   gap: 24px;
-  margin-top: 22px;
-  padding: 34px 36px;
+  margin-top: 16px;
+  padding: 26px 32px;
   border-radius: 14px;
   scroll-margin-top: 100px;
 }
@@ -7039,7 +7039,7 @@ body:has(.lesson-page) {
 }
 
 .lesson-section h2 {
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   color: var(--white);
   font-size: clamp(1.6rem, 3vw, 2.2rem);
   line-height: 1.15;
@@ -7053,7 +7053,7 @@ body:has(.lesson-page) {
 }
 
 .lesson-section p + p {
-  margin-top: 18px;
+  margin-top: 12px;
 }
 
 .lesson-section strong {
@@ -7071,7 +7071,7 @@ body:has(.lesson-page) {
 }
 
 .lesson-code {
-  margin-top: 24px;
+  margin-top: 18px;
   overflow: hidden;
   border: 1px solid rgba(34, 214, 205, 0.32);
   border-radius: 10px;
@@ -7170,15 +7170,19 @@ body:has(.lesson-page) {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
-  margin-top: 24px;
+  margin-top: 18px;
 }
 
 .lesson-mini-card,
 .lesson-compare__card {
   padding: 10px 14px;
   border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 10px;
-  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  background: linear-gradient(
+    158deg,
+    rgba(255, 255, 255, 0.045),
+    rgba(0, 0, 0, 0.22) 65%
+  );
 }
 
 .lesson-mini-card__label,
@@ -7192,9 +7196,9 @@ body:has(.lesson-page) {
 
 .lesson-mini-card strong {
   display: block;
-  margin: 14px 0 10px;
+  margin: 8px 0;
   color: var(--white);
-  font-size: 1.3rem;
+  font-size: 1.2rem;
 }
 
 .lesson-mini-card p,
@@ -7216,6 +7220,65 @@ body:has(.lesson-page) {
 
 .lesson-compare__card--bad {
   border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Operator cards — shared by comparison and boolean operator sections */
+.lesson-operators {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.lesson-operator {
+  position: relative;
+  overflow: hidden;
+  padding: 18px 18px 16px;
+  border: 1px solid rgba(34, 214, 205, 0.22);
+  border-radius: 12px;
+  background: linear-gradient(
+    158deg,
+    rgba(34, 214, 205, 0.1),
+    rgba(0, 0, 0, 0.22) 62%
+  );
+}
+
+.lesson-operator::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--turquoise), transparent 80%);
+  opacity: 0.75;
+}
+
+.lesson-operator__symbol {
+  display: inline-block;
+  color: var(--turquoise);
+  font-family: Consolas, Monaco, monospace;
+  font-size: 1.5rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.lesson-operator__meaning {
+  display: block;
+  margin-top: 10px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+@media (max-width: 700px) {
+  .lesson-operators {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 440px) {
+  .lesson-operators {
+    grid-template-columns: 1fr;
+  }
 }
 
 .lesson-flow {

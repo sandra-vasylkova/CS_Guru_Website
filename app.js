@@ -84,3 +84,16 @@ if (lessonSections.length && lessonSidebarLinks.length) {
 
   lessonSections.forEach((section) => lessonObserver.observe(section));
 }
+(() => {
+  const answerButton = document.getElementById("show-conditions-answer");
+  const answer = document.getElementById("conditions-answer");
+
+  answerButton?.addEventListener("click", () => {
+    const isVisible = answer.classList.toggle("conditions-answer--visible");
+
+    answerButton.setAttribute("aria-expanded", String(isVisible));
+    answerButton.textContent = isVisible
+      ? "Antwort ausblenden"
+      : "Antwort zeigen";
+  });
+})();

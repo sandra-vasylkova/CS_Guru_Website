@@ -242,12 +242,60 @@
               </div>
             </section>
 
+            <section class="lesson-section" id="umwandlung">
+              <div class="lesson-section__number">06</div>
+              <div class="lesson-section__body">
+                <h2>Typumwandlung</h2>
+                <p>
+                  Manchmal liegt ein Wert im falschen Datentyp vor und muss
+                  umgewandelt werden. Dafür stellt Python eigene Funktionen
+                  bereit, die den Namen des Zieldatentyps tragen.
+                </p>
+
+                <div class="lesson-operators">
+                  <div class="lesson-operator">
+                    <span class="lesson-operator__symbol">str()</span>
+                    <span class="lesson-operator__meaning">zu Text</span>
+                  </div>
+                  <div class="lesson-operator">
+                    <span class="lesson-operator__symbol">int()</span>
+                    <span class="lesson-operator__meaning">zu ganzer Zahl</span>
+                  </div>
+                  <div class="lesson-operator">
+                    <span class="lesson-operator__symbol">float()</span>
+                    <span class="lesson-operator__meaning">zu Kommazahl</span>
+                  </div>
+                </div>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>Datentyp umwandeln</span>
+                  </div>
+                  <pre><code><span class="code-name">alter_text</span> <span class="code-operator">=</span> <span class="code-value">"17"</span>
+<span class="code-name">alter_zahl</span> <span class="code-operator">=</span> <span class="code-name">int</span>(<span class="code-name">alter_text</span>)
+
+<span class="code-name">print</span>(<span class="code-name">alter_zahl</span> <span class="code-operator">+</span> <span class="code-value">1</span>)
+<span class="code-comment"># Ausgabe: 18</span></code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  <strong>Tipp:</strong> Das begegnet dir vor allem bei
+                  <code>input()</code>. Eine Eingabe wird immer als String
+                  zurückgegeben und muss für Berechnungen zuerst in eine Zahl
+                  umgewandelt werden. Mehr dazu im Thema „Print &amp; Input“.
+                </p>
+              </div>
+            </section>
+
             <div class="lesson-next">
               <div>
                 <span>Nächstes Thema</span>
                 <strong>3. Print &amp; Input</strong>
               </div>
-              <a href="#" aria-label="Zum Thema Print und Input">›</a>
+              <a href="print_input.html" aria-label="Zum Thema Print und Input"
+                >›</a
+              >
             </div>
           </article>
         </div>

@@ -215,8 +215,41 @@
               </div>
             </section>
 
-            <section class="lesson-section" id="veraendern">
+            <section class="lesson-section" id="regeln">
               <div class="lesson-section__number">04</div>
+              <div class="lesson-section__body">
+                <h2>Regeln für Variablennamen</h2>
+                <p>
+                  Ein Variablenname darf nur aus Buchstaben, Zahlen und
+                  Unterstrichen bestehen, aber nicht mit einer Zahl beginnen.
+                  Leerzeichen sind nicht erlaubt, nutze stattdessen einen
+                  Unterstrich.
+                </p>
+
+                <div class="lesson-compare">
+                  <div class="lesson-compare__card lesson-compare__card--good">
+                    <span>Erlaubt</span>
+                    <pre><code><span class="code-name">mein_alter</span> <span class="code-operator">=</span> <span class="code-value">17</span></code></pre>
+                  </div>
+
+                  <div class="lesson-compare__card lesson-compare__card--bad">
+                    <span>Nicht erlaubt</span>
+                    <pre><code><span class="code-name">2alter</span> <span class="code-operator">=</span> <span class="code-value">17</span></code></pre>
+                  </div>
+                </div>
+
+                <p style="margin-top: 14px">
+                  Achtung: Groß- und Kleinschreibung zählt.
+                  <code>alter</code> und <code>Alter</code> sind zwei
+                  verschiedene Variablen. Auch reservierte Wörter wie
+                  <code>if</code> oder <code>True</code>
+                  sind nicht erlaubt.
+                </p>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="veraendern">
+              <div class="lesson-section__number">05</div>
               <div class="lesson-section__body">
                 <h2>Werte verändern</h2>
                 <p>
@@ -234,11 +267,50 @@
 <span class="code-comment"># später im Programm</span>
 <span class="code-name">aktuelle_punktzahl</span> <span class="code-operator">=</span> <span class="code-value">15</span></code></pre>
                 </div>
+
+                <p style="margin-top: 18px">
+                  Die Zeile mit <code>#</code> ist ein Kommentar: Alles hinter
+                  der Raute ist nur für Menschen gedacht und wird von Python
+                  ignoriert. So kannst du deinen Code erklären.
+                </p>
+
+                <p style="margin-top: 10px">
+                  Ein neuer Wert darf sich auch aus dem alten ergeben. Python
+                  berechnet dabei zuerst die rechte Seite und speichert das
+                  Ergebnis anschließend wieder in der Variable.
+                </p>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>Wert weiterverwenden</span>
+                  </div>
+                  <pre><code><span class="code-name">aktuelle_punktzahl</span> <span class="code-operator">=</span> <span class="code-value">10</span>
+<span class="code-name">aktuelle_punktzahl</span> <span class="code-operator">=</span> <span class="code-name">aktuelle_punktzahl</span> <span class="code-operator">+</span> <span class="code-value">5</span>
+
+<span class="code-name">print</span>(<span class="code-name">aktuelle_punktzahl</span>)
+<span class="code-comment"># Ausgabe: 15</span></code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Für diesen häufigen Fall gibt es eine Kurzschreibweise.
+                  Genauso funktionieren <code>-=</code>, <code>*=</code> und
+                  <code>/=</code>.
+                </p>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>Kurzschreibweise mit +=</span>
+                  </div>
+                  <pre><code><span class="code-comment"># kurz für: aktuelle_punktzahl = aktuelle_punktzahl + 5</span>
+<span class="code-name">aktuelle_punktzahl</span> <span class="code-operator">+=</span> <span class="code-value">5</span></code></pre>
+                </div>
               </div>
             </section>
 
             <section class="lesson-section" id="konstanten">
-              <div class="lesson-section__number">05</div>
+              <div class="lesson-section__number">06</div>
               <div class="lesson-section__body">
                 <h2>Konstanten</h2>
                 <p>
@@ -253,6 +325,21 @@
                   </div>
                   <pre><code><span class="code-constant">ALTER</span> <span class="code-operator">=</span> <span class="code-value">17</span></code></pre>
                 </div>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="fazit">
+              <div class="lesson-section__number">07</div>
+              <div class="lesson-section__body">
+                <h2>Tipp</h2>
+                <p>
+                  Verwende Variablen, wenn ein Wert eine bestimmte Bedeutung
+                  hat, später erneut verwendet oder verändert werden soll.
+                  Anfangs mag das manchmal überflüssig erscheinen, aber wenn
+                  deine Projekte an Umfang zunehmen, wirst du feststellen, dass
+                  sinnvoll benannte Variablen die Lesbarkeit deines Codes
+                  erheblich verbessern.
+                </p>
               </div>
             </section>
 

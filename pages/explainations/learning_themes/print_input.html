@@ -1,0 +1,364 @@
+<!doctype html>
+
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta
+      content="Grundlagen zu print() und input() in Python: Ausgaben anzeigen, Eingaben einlesen und Datentypen umwandeln."
+      name="description"
+    />
+    <title>CS Guru | Print &amp; Input</title>
+    <link href="/style.css" rel="stylesheet" />
+    <script defer="" src="/app.js"></script>
+    <link
+      href="/assets/favicon-96x96.png"
+      rel="icon"
+      sizes="96x96"
+      type="image/png"
+    />
+    <link href="/assets/favicon.svg" rel="icon" type="image/svg+xml" />
+    <link href="/assets/favicon.ico" rel="shortcut icon" />
+  </head>
+  <body>
+    <div class="page learn-page lesson-page">
+      <nav class="nav">
+        <a class="nav__logo" href="/index.html">
+          <img
+            alt="CS Guru"
+            class="nav__favicon"
+            src="/assets/favicon_turquise.ico"
+          />
+          <span class="nav__brand">CS <span>Guru</span></span>
+        </a>
+        <ul class="nav__links">
+          <li><a class="nav__link" href="/index.html">Home</a></li>
+          <li>
+            <a class="nav__link" href="/pages/discover.html">Entdecken</a>
+          </li>
+          <li>
+            <a class="nav__link nav__link--active" href="/pages/learn.html"
+              >Lernen</a
+            >
+          </li>
+          <li><a class="nav__link" href="/pages/play.html">Spielen</a></li>
+          <li><a class="nav__link" href="/pages/tools.html">Werkzeuge</a></li>
+        </ul>
+        <div class="nav__actions">
+          <button class="nav__action nav__contact-button" type="button">
+            <span class="nav__action-icon">✉</span>
+            Kontakt
+          </button>
+          <a
+            class="nav__action"
+            href="https://docs.google.com/forms/d/e/1FAIpQLSfCC80uccvA9SUJwrB5Bua7r2RKt3ISvhj3x3Ljcr7EUbyqyQ/viewform?usp=header"
+          >
+            <span class="nav__action-icon">✎</span>
+            Feedback
+          </a>
+        </div>
+        <button
+          aria-expanded="false"
+          aria-label="Menü öffnen"
+          class="nav__menu-btn"
+          type="button"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </nav>
+      <div aria-hidden="true" class="mobile-menu">
+        <div class="mobile-menu__panel">
+          <div class="mobile-menu__head">
+            <a class="mobile-menu__brand" href="/index.html"
+              >CS <span>Guru</span></a
+            >
+            <button
+              aria-label="Menü schließen"
+              class="mobile-menu__close"
+              type="button"
+            >
+              ×
+            </button>
+          </div>
+          <a class="mobile-menu__link" href="/index.html">Home</a>
+          <a
+            class="mobile-menu__link mobile-menu__link--active"
+            href="/pages/learn.html"
+            >Lernen</a
+          >
+          <a class="mobile-menu__link" href="/pages/play.html">Spielen</a>
+          <a class="mobile-menu__link" href="/pages/tools.html">Werkzeuge</a>
+          <a class="mobile-menu__link" href="/pages/discover.html">Entdecken</a>
+          <div class="mobile-menu__actions">
+            <button
+              class="mobile-menu__link mobile-menu__contact contact-modal-trigger"
+              type="button"
+            >
+              Kontakt
+            </button>
+            <a
+              class="mobile-menu__link"
+              href="https://docs.google.com/forms/d/e/1FAIpQLSfCC80uccvA9SUJwrB5Bua7r2RKt3ISvhj3x3Ljcr7EUbyqyQ/viewform?usp=header"
+              >Feedback</a
+            >
+          </div>
+        </div>
+      </div>
+      <main class="lesson">
+        <div aria-hidden="true" class="lesson__glow"></div>
+        <div class="lesson__shell">
+          <article class="lesson-content" style="grid-column: 1 / -1">
+            <header class="lesson-hero">
+              <div class="lesson-hero__index">03</div>
+              <div>
+                <p class="lesson-hero__eyebrow">Python Grundlagen</p>
+                <h1>Print &amp; Input<span>.</span></h1>
+                <p class="lesson-hero__intro">
+                  Mit <code>print()</code> gibst du Texte und Werte aus. Mit
+                  <code>input()</code> liest du Eingaben des Benutzers ein.
+                </p>
+              </div>
+            </header>
+            <section class="lesson-section" id="print">
+              <div class="lesson-section__number">01</div>
+              <div class="lesson-section__body">
+                <h2>Print</h2>
+                <p>
+                  <code>print()</code> ist eine der grundlegendsten Funktionen
+                  in Python. Mit ihr kann ein Programm Texte und Werte in der
+                  Konsole ausgeben. Sie kann mit allen üblichen
+                  Python-Datentypen verwendet werden.
+                </p>
+                <p>
+                  Der Wert, der ausgegeben werden soll, wird in die Klammern
+                  geschrieben.
+                </p>
+                <div
+                  aria-label="Python-Beispiele für print"
+                  class="lesson-code"
+                >
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>Strings, Zahlen und Variablen ausgeben</span>
+                  </div>
+                  <pre><code><span class="code-name">print</span>(<span class="code-value">"Hello World"</span>)
+<span class="code-name">print</span>(<span class="code-value">6</span>)
+
+<span class="code-name">alter</span> <span class="code-operator">=</span> <span class="code-value">6</span>
+<span class="code-name">print</span>(<span class="code-name">alter</span>)</code></pre>
+                </div>
+              </div>
+            </section>
+            <section class="lesson-section" id="kombinieren">
+              <div class="lesson-section__number">02</div>
+              <div class="lesson-section__body">
+                <h2>Mehrere Werte kombinieren</h2>
+                <p>
+                  Mit <code>print()</code> können mehrere Werte gemeinsam
+                  ausgegeben werden. Dafür werden sie durch Kommas getrennt.
+                  Python fügt zwischen den Werten automatisch Leerzeichen ein.
+                </p>
+                <div aria-label="Mehrere Werte ausgeben" class="lesson-code">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>Ausgabe mit Kommas</span>
+                  </div>
+                  <pre><code><span class="code-name">print</span>(<span class="code-value">"Ich bin"</span>,<span class="code-value">6</span>,<span class="code-value">"Jahre alt"</span>)
+
+<span class="code-name">alter</span> <span class="code-operator">=</span> <span class="code-value">6</span>
+<span class="code-name">print</span>(<span class="code-value">"Ich bin"</span>,<span class="code-name">alter</span>,<span class="code-value">"Jahre alt"</span>)</code></pre>
+                </div>
+              </div>
+            </section>
+            <section class="lesson-section" id="ausgabe-steuern">
+              <div class="lesson-section__number">03</div>
+              <div class="lesson-section__body">
+                <h2>Ausgabe steuern: sep und end</h2>
+                <p>
+                  <code>print()</code> hat zwei praktische Zusätze. Mit
+                  <code>sep</code> legst du fest, was zwischen den Werten steht,
+                  mit <code>end</code>, was am Ende der Ausgabe steht.
+                  Standardmäßig ist <code>sep</code> ein Leerzeichen und
+                  <code>end</code> ein Zeilenumbruch.
+                </p>
+                <div
+                  aria-label="Python-Beispiel für sep und end"
+                  class="lesson-code"
+                >
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>Trennzeichen und Zeilenende anpassen</span>
+                  </div>
+                  <pre><code><span class="code-name">print</span>(<span class="code-value">"2025"</span>,<span class="code-value">"07"</span>,<span class="code-value">"23"</span>, <span class="code-name">sep</span><span class="code-operator">=</span><span class="code-value">"-"</span>)
+<span class="code-comment"># Ausgabe: 2025-07-23</span>
+
+<span class="code-name">print</span>(<span class="code-value">"Laden ..."</span>, <span class="code-name">end</span><span class="code-operator">=</span><span class="code-value">""</span>)
+<span class="code-name">print</span>(<span class="code-value">"fertig"</span>)
+<span class="code-comment"># Ausgabe: Laden ...fertig</span></code></pre>
+                </div>
+              </div>
+            </section>
+            <section class="lesson-section" id="f-strings">
+              <div class="lesson-section__number">04</div>
+              <div class="lesson-section__body">
+                <h2>f-Strings</h2>
+                <p>
+                  Eine weitere Möglichkeit ist ein sogenannter
+                  <strong>f-String</strong>. Dabei wird vor den
+                  Anführungszeichen der Buchstabe <code>f</code> geschrieben.
+                  Variablen werden innerhalb des Strings in geschweifte Klammern
+                  gesetzt.
+                </p>
+                <div
+                  aria-label="Python-Beispiel für einen f-String"
+                  class="lesson-code"
+                >
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>Variable in einen String einsetzen</span>
+                  </div>
+                  <pre><code><span class="code-name">alter</span> <span class="code-operator">=</span> <span class="code-value">6</span>
+<span class="code-name">print</span>(<span class="code-value">f"Ich bin {alter} Jahre alt"</span>)
+
+<span class="code-comment"># Ausgabe: Ich bin 6 Jahre alt</span></code></pre>
+                </div>
+              </div>
+            </section>
+            <section class="lesson-section" id="input">
+              <div class="lesson-section__number">05</div>
+              <div class="lesson-section__body">
+                <h2>Input</h2>
+                <p>
+                  <code>input()</code> ähnelt in ihrer Schreibweise der Funktion
+                  <code>print()</code>, hat jedoch eine andere Aufgabe. Mit
+                  <code>input()</code> kann ein Programm Eingaben des Benutzers
+                  einlesen. Die Funktion gibt die eingegebene Information
+                  zurück, damit sie beispielsweise in einer Variable gespeichert
+                  werden kann.
+                </p>
+                <div aria-label="Python-Beispiel für input" class="lesson-code">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>Benutzereingabe speichern</span>
+                  </div>
+                  <pre><code><span class="code-name">name</span> <span class="code-operator">=</span> <span class="code-name">input</span>(<span class="code-value">"Wie heißt du? "</span>)
+<span class="code-name">print</span>(<span class="code-value">f"Dein Name ist {name}"</span>)</code></pre>
+                </div>
+                <p style="margin-top: 20px">
+                  Zuerst wird die Frage angezeigt. Die Antwort des Benutzers
+                  wird von <code>input()</code> zurückgegeben und anschließend
+                  in der Variable <code>name</code> gespeichert.
+                </p>
+                <div
+                  aria-label="Möglicher Ablauf in der Konsole"
+                  class="lesson-code"
+                >
+                  <div class="lesson-code__head">
+                    <span>Konsole</span>
+                    <span>Beispielausgabe</span>
+                  </div>
+                  <pre><code><span class="code-name">Konsole:</span> Wie heißt du?
+<span class="code-name">Benutzer:</span> Albert
+<span class="code-name">Konsole:</span> Dein Name ist Albert</code></pre>
+                </div>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="zahlen">
+              <div class="lesson-section__number">06</div>
+              <div class="lesson-section__body">
+                <h2>Zahlen einlesen</h2>
+                <p>
+                  <strong>Wichtig:</strong> <code>input()</code> liefert eine
+                  Eingabe zunächst immer als String zurück. Soll eine Zahl
+                  eingegeben werden, muss der Wert deshalb in den passenden
+                  Datentyp umgewandelt werden.
+                </p>
+
+                <div aria-label="Zahleneingaben in Python" class="lesson-code">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>Datentyp der Eingabe umwandeln</span>
+                  </div>
+                  <pre><code><span class="code-name">alter</span> <span class="code-operator">=</span> <span class="code-name">int</span>(<span class="code-name">input</span>(<span class="code-value">"Wie alt bist du? "</span>))
+
+<span class="code-name">pi_zahl</span> <span class="code-operator">=</span> <span class="code-name">float</span>(<span class="code-name">input</span>(<span class="code-value">"Wie lautet Pi auf drei Nachkommastellen? "</span>))</code></pre>
+                </div>
+                <p style="margin-top: 18px; color: rgba(255, 255, 255, 0.58)">
+                  Mit <code>input()</code> kann ein Programm Daten direkt vom
+                  Benutzer erhalten und anschließend weiterverarbeiten. Ein
+                  ausführlicheres Beispiel folgt im Thema „Bedingungen“.
+                </p>
+              </div>
+            </section>
+            <div class="lesson-next">
+              <div>
+                <span>Nächstes Thema</span>
+                <strong>4. Bedingungen</strong>
+              </div>
+              <a aria-label="Zum Thema Bedingungen" href="conditions.html">›</a>
+            </div>
+          </article>
+        </div>
+      </main>
+    </div>
+    <div aria-hidden="true" class="contact-modal">
+      <div
+        aria-labelledby="contact-title"
+        aria-modal="true"
+        class="contact-modal__box"
+        role="dialog"
+      >
+        <button
+          aria-label="Kontaktfenster schließen"
+          class="contact-modal__close"
+          type="button"
+        >
+          ×
+        </button>
+        <h2 id="contact-title">Kontakt</h2>
+        <div class="contact-modal__line"></div>
+        <p class="contact-modal__intro">
+          Bei Fragen, Anregungen oder Problemen kannst du mich gerne
+          kontaktieren.
+        </p>
+        <a
+          class="contact-modal__row"
+          href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=sandravasylkova@gmail.com"
+          rel="noopener"
+          target="_blank"
+        >
+          <span class="contact-modal__icon">✉</span>
+          <span>
+            <strong>Email</strong>
+            <small>sandravasylkova@gmail.com</small>
+          </span>
+        </a>
+        <a
+          class="contact-modal__row"
+          href="https://www.microsoft.com/en-us/microsoft-teams/log-in"
+        >
+          <svg
+            aria-hidden="true"
+            class="teams__icon"
+            viewbox="0 0 17 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M9.186 4.797a2.42 2.42 0 1 0-2.86-2.448h1.178c.929 0 1.682.753 1.682 1.682zm-4.295 7.738h2.613c.929 0 1.682-.753 1.682-1.682V5.58h2.783a.7.7 0 0 1 .682.716v4.294a4.197 4.197 0 0 1-4.093 4.293c-1.618-.04-3-.99-3.667-2.35Zm10.737-9.372a1.674 1.674 0 1 1-3.349 0 1.674 1.674 0 0 1 3.349 0m-2.238 9.488-.12-.002a5.2 5.2 0 0 0 .381-2.07V6.306a1.7 1.7 0 0 0-.15-.725h1.792c.39 0 .707.317.707.707v3.765a2.6 2.6 0 0 1-2.598 2.598z"
+            ></path>
+            <path
+              d="M.682 3.349h6.822c.377 0 .682.305.682.682v6.822a.68.68 0 0 1-.682.682H.682A.68.68 0 0 1 0 10.853V4.03c0-.377.305-.682.682-.682Zm5.206 2.596v-.72h-3.59v.72h1.357V9.66h.87V5.945z"
+            ></path>
+          </svg>
+          <span>
+            <strong>Teams</strong>
+            <small>Oleksandra Vasylkova</small>
+          </span>
+        </a>
+      </div>
+    </div>
+  </body>
+</html>

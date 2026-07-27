@@ -138,7 +138,28 @@
       <main class="lesson">
         <div aria-hidden="true" class="lesson__glow"></div>
         <div class="lesson__shell">
-          <article class="lesson-content" style="grid-column: 1 / -1">
+          <aside class="lesson-sidebar">
+            <a class="lesson-sidebar__back" href="/pages/learn.html">
+              <span>‹</span> Alle Themen
+            </a>
+            <div class="lesson-sidebar__topic">
+              <span class="lesson-sidebar__eyebrow">Python Grundlagen</span>
+              <strong>Bedingungen</strong>
+            </div>
+            <nav class="lesson-sidebar__nav" aria-label="Themenübersicht">
+              <a class="lesson-sidebar__link" href="#grundlagen">Grundlagen</a>
+              <a class="lesson-sidebar__link" href="#if">if-Bedingung</a>
+              <a class="lesson-sidebar__link" href="#else">else-Block</a>
+              <a class="lesson-sidebar__link" href="#elif">elif</a>
+              <a class="lesson-sidebar__link" href="#operatoren"
+                >Boolesche Operatoren</a
+              >
+              <a class="lesson-sidebar__link" href="#aufgabe">Aufgabe</a>
+              <a class="lesson-sidebar__link" href="#input">Mit input</a>
+            </nav>
+          </aside>
+
+          <article class="lesson-content">
             <header class="lesson-hero">
               <div class="lesson-hero__index">04</div>
               <div>
@@ -180,18 +201,22 @@
                   </div>
                   <div class="lesson-operator">
                     <span class="lesson-operator__symbol">&gt;=</span>
-                    <span class="lesson-operator__meaning">größer oder gleich</span>
+                    <span class="lesson-operator__meaning"
+                      >größer oder gleich</span
+                    >
                   </div>
                   <div class="lesson-operator">
                     <span class="lesson-operator__symbol">&lt;=</span>
-                    <span class="lesson-operator__meaning">kleiner oder gleich</span>
+                    <span class="lesson-operator__meaning"
+                      >kleiner oder gleich</span
+                    >
                   </div>
                 </div>
                 <p class="conditions-note">
                   Wichtig: <code>=</code> weist einer Variable einen Wert zu.
-                  <code>==</code> vergleicht zwei Werte. Vergleiche funktionieren
-                  übrigens nicht nur mit Zahlen, sondern auch mit Strings, etwa
-                  <code>passwort == "geheim"</code>.
+                  <code>==</code> vergleicht zwei Werte. Vergleiche
+                  funktionieren übrigens nicht nur mit Zahlen, sondern auch mit
+                  Strings, etwa <code>passwort == "geheim"</code>.
                 </p>
               </div>
             </section>
@@ -300,8 +325,8 @@
                 <h2>Boolesche Operatoren</h2>
                 <p>
                   Mit <code>and</code>, <code>or</code> und
-                  <code>not</code> können mehrere Prüfungen miteinander
-                  verbunden werden.
+                  <code>not</code> kannst du mehrere Prüfungen miteinander
+                  verbinden.
                 </p>
                 <div class="lesson-operators">
                   <div class="lesson-operator">
@@ -377,15 +402,13 @@
                   <p>
                     <strong>Beispiel mit or:</strong> Ausgabe „Eintritt ist
                     Erlaubt“. <code>alter</code> ist zwar kleiner als 18, aber
-                    <code>hat_muttizettel</code> ist <code>True</code> – bei
-                    <code>or</code> genügt eine wahre Aussage.
+                    <code>hat_muttizettel</code> ist <code>True</code>.
                   </p>
                   <p>
                     <strong>Beispiel mit and und not:</strong> Ausgabe
                     „Willkommen“. <code>alter&nbsp;&gt;=&nbsp;18</code> und
                     <code>hat_ticket</code> treffen beide zu. Die zweite Prüfung
-                    <code>not hat_ticket</code> ist <code>False</code>, deshalb
-                    wird „Bitte zuerst ein Ticket kaufen“ nicht ausgegeben.
+                    <code>not hat_ticket</code> ist <code>False</code>.
                   </p>
                 </div>
               </div>
@@ -418,7 +441,11 @@
                 <span>Nächstes Thema</span>
                 <strong>5. Datenstrukturen</strong>
               </div>
-              <a aria-label="Zum Thema Datenstrukturen" href="#">›</a>
+              <a
+                aria-label="Zum Thema Datenstrukturen"
+                href="data_structures.html"
+                >›</a
+              >
             </div>
           </article>
         </div>

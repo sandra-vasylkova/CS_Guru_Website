@@ -119,7 +119,28 @@
         <div class="lesson__glow" aria-hidden="true"></div>
 
         <div class="lesson__shell">
-          <article class="lesson-content" style="grid-column: 1 / -1">
+          <aside class="lesson-sidebar">
+            <a class="lesson-sidebar__back" href="/pages/learn.html">
+              <span>‹</span> Alle Themen
+            </a>
+            <div class="lesson-sidebar__topic">
+              <span class="lesson-sidebar__eyebrow">Python Grundlagen</span>
+              <strong>Variablen</strong>
+            </div>
+            <nav class="lesson-sidebar__nav" aria-label="Themenübersicht">
+              <a class="lesson-sidebar__link" href="#variable">Variable</a>
+              <a class="lesson-sidebar__link" href="#literal">Literal</a>
+              <a class="lesson-sidebar__link" href="#namen">Passende Namen</a>
+              <a class="lesson-sidebar__link" href="#regeln">Namensregeln</a>
+              <a class="lesson-sidebar__link" href="#veraendern"
+                >Werte verändern</a
+              >
+              <a class="lesson-sidebar__link" href="#konstanten">Konstanten</a>
+              <a class="lesson-sidebar__link" href="#fazit">Tipp</a>
+            </nav>
+          </aside>
+
+          <article class="lesson-content">
             <header class="lesson-hero">
               <div class="lesson-hero__index">01</div>
               <div>
@@ -182,9 +203,8 @@
               <div class="lesson-section__body">
                 <h2>Passende Namen verwenden</h2>
                 <p>
-                  Für ein besseres Verständnis des Codes solltest du Variablen
-                  passende Namen geben. Dadurch ist sofort erkennbar, welchen
-                  Wert sie speichern.
+                  Damit man sich beim Lesen deines Codes nicht die Augen
+                  auskratzen möchte, gib den Variablen doch passende Namen.
                 </p>
 
                 <div class="lesson-compare">
@@ -198,20 +218,6 @@
                     <pre><code><span class="code-name">x</span> <span class="code-operator">=</span> <span class="code-value">17</span></code></pre>
                   </div>
                 </div>
-
-                <p style="margin-top: 10px">
-                  In Python werden Variablennamen normalerweise
-                  kleingeschrieben. Wenn du mehrere Wörter verbinden möchtest,
-                  trenne diese mit einem Unterstrich.
-                </p>
-
-                <div class="lesson-code" aria-label="Python-Beispiel">
-                  <div class="lesson-code__head">
-                    <span>Python</span>
-                    <span>Mehrteiliger Variablenname</span>
-                  </div>
-                  <pre><code><span class="code-name">aktuelle_punktzahl</span> <span class="code-operator">=</span> <span class="code-value">10</span></code></pre>
-                </div>
               </div>
             </section>
 
@@ -222,7 +228,7 @@
                 <p>
                   Ein Variablenname darf nur aus Buchstaben, Zahlen und
                   Unterstrichen bestehen, aber nicht mit einer Zahl beginnen.
-                  Leerzeichen sind nicht erlaubt, nutze stattdessen einen
+                  Leerzeichen kannst du nicht verwenden, nutze stattdessen einen
                   Unterstrich.
                 </p>
 
@@ -242,9 +248,99 @@
                   Achtung: Groß- und Kleinschreibung zählt.
                   <code>alter</code> und <code>Alter</code> sind zwei
                   verschiedene Variablen. Auch reservierte Wörter wie
-                  <code>if</code> oder <code>True</code>
+                  <code>if</code>, <code>while</code> oder <code>True</code>
                   sind nicht erlaubt.
                 </p>
+
+                <div
+                  class="lesson-exercise"
+                  data-exercise="multi"
+                  data-generate="varnames"
+                >
+                  <span class="lesson-exercise__label">Quick-Check</span>
+                  <p>
+                    Welche dieser Namen sind <strong>ungültig</strong>? Tippe
+                    alle ungültigen an und prüfe dich.
+                  </p>
+                  <div class="lesson-exercise__options">
+                    <button
+                      class="lesson-exercise__option"
+                      type="button"
+                      aria-pressed="false"
+                      data-correct="false"
+                    >
+                      mein_alter
+                    </button>
+                    <button
+                      class="lesson-exercise__option"
+                      type="button"
+                      aria-pressed="false"
+                      data-correct="true"
+                      data-reason="beginnt mit einer Zahl"
+                    >
+                      2fast
+                    </button>
+                    <button
+                      class="lesson-exercise__option"
+                      type="button"
+                      aria-pressed="false"
+                      data-correct="true"
+                      data-reason="enthält ein Leerzeichen"
+                    >
+                      user name
+                    </button>
+                    <button
+                      class="lesson-exercise__option"
+                      type="button"
+                      aria-pressed="false"
+                      data-correct="false"
+                    >
+                      alter
+                    </button>
+                    <button
+                      class="lesson-exercise__option"
+                      type="button"
+                      aria-pressed="false"
+                      data-correct="true"
+                      data-reason="ist ein reserviertes Wort"
+                    >
+                      if
+                    </button>
+                    <button
+                      class="lesson-exercise__option"
+                      type="button"
+                      aria-pressed="false"
+                      data-correct="false"
+                    >
+                      _temp
+                    </button>
+                    <button
+                      class="lesson-exercise__option"
+                      type="button"
+                      aria-pressed="false"
+                      data-correct="true"
+                      data-reason="enthält ein ungültiges Zeichen (€)"
+                    >
+                      preis€
+                    </button>
+                    <button
+                      class="lesson-exercise__option"
+                      type="button"
+                      aria-pressed="false"
+                      data-correct="false"
+                    >
+                      score1
+                    </button>
+                  </div>
+                  <button class="lesson-exercise__check" type="button">
+                    Prüfen
+                  </button>
+                  <div
+                    class="lesson-exercise__feedback"
+                    aria-live="polite"
+                    hidden
+                  ></div>
+                </div>
               </div>
             </section>
 
@@ -314,8 +410,8 @@
               <div class="lesson-section__body">
                 <h2>Konstanten</h2>
                 <p>
-                  Um eine bestimmte Variable im weiteren Code als unveränderlich
-                  zu kennzeichnen, werden in Python Großbuchstaben verwendet.
+                  Wenn eine Variable als Konstante gedacht ist, schreibt man
+                  ihren Namen üblicherweise in Großbuchstaben.
                 </p>
 
                 <div class="lesson-code" aria-label="Python-Beispiel">
@@ -333,12 +429,10 @@
               <div class="lesson-section__body">
                 <h2>Tipp</h2>
                 <p>
-                  Verwende Variablen, wenn ein Wert eine bestimmte Bedeutung
-                  hat, später erneut verwendet oder verändert werden soll.
-                  Anfangs mag das manchmal überflüssig erscheinen, aber wenn
-                  deine Projekte an Umfang zunehmen, wirst du feststellen, dass
-                  sinnvoll benannte Variablen die Lesbarkeit deines Codes
-                  erheblich verbessern.
+                  Zunächst mag die Verwendung von Variablen überflüssig
+                  erscheinen. Aber glaub mir, nutze sie am Anfang so oft wie
+                  möglich. Wenn deine Projekte umfangreicher werden, wirst du
+                  mir dafür dankbar sein.
                 </p>
               </div>
             </section>

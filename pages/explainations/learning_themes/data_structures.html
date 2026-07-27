@@ -1,0 +1,1466 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Grundlagen zu Datenstrukturen in Python: String, List, Tuple, Dictionary und Set."
+    />
+    <title>CS Guru | Datenstrukturen</title>
+
+    <link rel="stylesheet" href="/style.css" />
+    <script src="/app.js" defer></script>
+
+    <link
+      rel="icon"
+      type="image/png"
+      href="/assets/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+    <link rel="shortcut icon" href="/assets/favicon.ico" />
+
+    <style>
+      .lesson-section h3 {
+        margin-top: 26px;
+        margin-bottom: 4px;
+        color: var(--white);
+        font-size: 1.2rem;
+        font-weight: 800;
+      }
+
+      .lesson-callout {
+        margin: 20px 0;
+        padding: 16px 20px;
+        border-left: 4px solid var(--turquoise);
+        border-radius: 8px;
+        background: rgba(34, 214, 205, 0.08);
+      }
+
+      .lesson-callout p {
+        margin: 0;
+      }
+
+      .lesson-callout__label {
+        display: block;
+        margin-bottom: 6px;
+        color: var(--turquoise);
+        font-size: 0.78rem;
+        font-weight: 900;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="page learn-page lesson-page">
+      <nav class="nav">
+        <a href="/index.html" class="nav__logo">
+          <img
+            src="/assets/favicon_turquise.ico"
+            alt="CS Guru"
+            class="nav__favicon"
+          />
+          <span class="nav__brand">CS <span>Guru</span></span>
+        </a>
+
+        <ul class="nav__links">
+          <li><a href="/index.html" class="nav__link">Home</a></li>
+          <li>
+            <a href="/pages/discover.html" class="nav__link">Entdecken</a>
+          </li>
+          <li>
+            <a href="/pages/learn.html" class="nav__link nav__link--active"
+              >Lernen</a
+            >
+          </li>
+          <li><a href="/pages/play.html" class="nav__link">Spielen</a></li>
+          <li><a href="/pages/tools.html" class="nav__link">Werkzeuge</a></li>
+        </ul>
+
+        <div class="nav__actions">
+          <button class="nav__action nav__contact-button" type="button">
+            <span class="nav__action-icon">✉</span>
+            Kontakt
+          </button>
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSfCC80uccvA9SUJwrB5Bua7r2RKt3ISvhj3x3Ljcr7EUbyqyQ/viewform?usp=header"
+            class="nav__action"
+          >
+            <span class="nav__action-icon">✎</span>
+            Feedback
+          </a>
+        </div>
+
+        <button
+          class="nav__menu-btn"
+          type="button"
+          aria-label="Menü öffnen"
+          aria-expanded="false"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </nav>
+
+      <div class="mobile-menu" aria-hidden="true">
+        <div class="mobile-menu__panel">
+          <div class="mobile-menu__head">
+            <a href="/index.html" class="mobile-menu__brand"
+              >CS <span>Guru</span></a
+            >
+            <button
+              class="mobile-menu__close"
+              type="button"
+              aria-label="Menü schließen"
+            >
+              ×
+            </button>
+          </div>
+
+          <a href="/index.html" class="mobile-menu__link">Home</a>
+          <a
+            href="/pages/learn.html"
+            class="mobile-menu__link mobile-menu__link--active"
+            >Lernen</a
+          >
+          <a href="/pages/play.html" class="mobile-menu__link">Spielen</a>
+          <a href="/pages/tools.html" class="mobile-menu__link">Werkzeuge</a>
+          <a href="/pages/discover.html" class="mobile-menu__link">Entdecken</a>
+
+          <div class="mobile-menu__actions">
+            <button
+              class="mobile-menu__link mobile-menu__contact contact-modal-trigger"
+              type="button"
+            >
+              Kontakt
+            </button>
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSfCC80uccvA9SUJwrB5Bua7r2RKt3ISvhj3x3Ljcr7EUbyqyQ/viewform?usp=header"
+              class="mobile-menu__link"
+              >Feedback</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <main class="lesson">
+        <div class="lesson__glow" aria-hidden="true"></div>
+
+        <div class="lesson__shell">
+          <aside class="lesson-sidebar">
+            <a class="lesson-sidebar__back" href="/pages/learn.html">
+              <span>‹</span> Alle Themen
+            </a>
+            <div class="lesson-sidebar__topic">
+              <span class="lesson-sidebar__eyebrow">Python Grundlagen</span>
+              <strong>Datenstrukturen</strong>
+            </div>
+            <nav class="lesson-sidebar__nav" aria-label="Themenübersicht">
+              <a class="lesson-sidebar__link" href="#grundlagen">Grundlagen</a>
+              <a class="lesson-sidebar__link" href="#funktion-methode"
+                >Funktion &amp; Methode</a
+              >
+              <a class="lesson-sidebar__link" href="#string">String</a>
+              <a class="lesson-sidebar__link" href="#list">List</a>
+              <a class="lesson-sidebar__link" href="#tuple">Tuple</a>
+              <a class="lesson-sidebar__link" href="#dictionary">Dictionary</a>
+              <a class="lesson-sidebar__link" href="#set">Set</a>
+              <a class="lesson-sidebar__link" href="#wahl">Welche Struktur?</a>
+            </nav>
+          </aside>
+
+          <article class="lesson-content">
+            <header class="lesson-hero">
+              <div class="lesson-hero__index">05</div>
+              <div>
+                <p class="lesson-hero__eyebrow">Python Grundlagen</p>
+                <h1>Datenstrukturen<span>.</span></h1>
+                <p class="lesson-hero__intro">
+                  Eine Datenstruktur hält viele Werte auf einmal. Hier lernst du
+                  String, List, Tuple und Dictionary kennen.
+                </p>
+              </div>
+            </header>
+
+            <section class="lesson-section" id="grundlagen">
+              <div class="lesson-section__number">01</div>
+              <div class="lesson-section__body">
+                <h2>Grundlagen</h2>
+                <p>
+                  In Python gibt es vier grundlegende Datenstrukturen:
+                  <strong>String, Tuple, List und Dictionary</strong>. Der
+                  Unterschied zu einfachen Datentypen wie <code>int</code> oder
+                  <code>bool</code>: Die halten genau einen Wert. Eine
+                  Datenstruktur hält viele Werte auf einmal.
+                </p>
+                <p style="color: rgba(255, 255, 255, 0.58)">
+                  (Es gibt noch eine fünfte, das Set. Die schauen wir uns ganz
+                  am Ende kurz an.)
+                </p>
+                <p>
+                  Alle vier teilen sich in veränderbare und unveränderbare auf.
+                  Modern ausgedrückt: <strong>mutable</strong> und
+                  <strong>immutable</strong>.
+                </p>
+
+                <div class="lesson-example-grid">
+                  <div class="lesson-mini-card">
+                    <span class="lesson-mini-card__label">Unveränderbar</span>
+                    <strong>String, Tuple</strong>
+                  </div>
+                  <div class="lesson-mini-card">
+                    <span class="lesson-mini-card__label">Veränderbar</span>
+                    <strong>List, Dictionary</strong>
+                  </div>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Aber was heißt das überhaupt? Hier ist ein Beispiel.
+                </p>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>mutable vs. immutable</span>
+                  </div>
+                  <pre><code>text <span class="code-operator">=</span> <span class="code-value">"hallo"</span>
+text.upper()
+print(text)          <span class="code-comment"># hallo, nichts hat sich geändert!</span>
+
+zahlen <span class="code-operator">=</span> [<span class="code-value">3</span>, <span class="code-value">1</span>, <span class="code-value">2</span>]
+zahlen.sort()
+print(zahlen)        <span class="code-comment"># [1, 2, 3], hier schon</span></code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  <code>text.upper()</code> verändert den String nicht, sondern
+                  baut einen <strong>neuen</strong>. Und der wird nicht
+                  gespeichert, weil du ihn nirgends aufgefangen hast.
+                  <code>zahlen.sort()</code> dagegen greift in die bestehende
+                  Liste hinein und sortiert sie direkt um.
+                </p>
+                <p>
+                  Willst du das Ergebnis bei unveränderbaren Strukturen
+                  behalten, musst du es einer Variable zuweisen:
+                </p>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>Ergebnis auffangen</span>
+                  </div>
+                  <pre><code>text <span class="code-operator">=</span> <span class="code-value">"hallo"</span>
+text <span class="code-operator">=</span> text.upper()
+print(text)          <span class="code-comment"># HALLO</span></code></pre>
+                </div>
+
+                <p style="margin-top: 20px">
+                  Außerdem gilt für alle Strukturen außer dem Dictionary: Jedes
+                  Element hat seinen eigenen <strong>Index</strong>, es kennt
+                  sozusagen seinen Platz. Nimm dir ein Beispiel daran.
+                </p>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="funktion-methode">
+              <div class="lesson-section__number">02</div>
+              <div class="lesson-section__body">
+                <h2>Funktion oder Methode?</h2>
+                <p>Ich wusste den Unterschied bisher auch nicht, sei besser.</p>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>Funktion vs. Methode</span>
+                  </div>
+                  <pre><code>len(liste)          <span class="code-comment"># Funktion: steht für sich, das Objekt kommt in die Klammern</span>
+liste.append(<span class="code-value">5</span>)     <span class="code-comment"># Methode: hängt über einen Punkt am Objekt dran</span></code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Eine <strong>Funktion</strong> ist eigenständig und
+                  funktioniert oft mit verschiedenen Typen. <code>len()</code>
+                  zählt Zeichen im String genauso wie Elemente in der Liste.
+                </p>
+                <p>
+                  Eine <strong>Methode</strong> gehört zu einem bestimmten Typ.
+                  <code>.append()</code> gibt es nur bei Listen,
+                  <code>.upper()</code> nur bei Strings.
+                </p>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="string">
+              <div class="lesson-section__number">03</div>
+              <div class="lesson-section__body">
+                <h2>String</h2>
+                <p>
+                  Jedes Zeichen eines Strings ist ein eigenes Element, das du
+                  über seinen Index abrufen kannst. Achte darauf: Indizes fangen
+                  in Python bei <strong>0</strong> an.
+                </p>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>Index und Slicing</span>
+                  </div>
+                  <pre><code>name <span class="code-operator">=</span> <span class="code-value">"Albert"</span>
+print(name[<span class="code-value">2</span>])       <span class="code-comment"># b</span>
+print(name[<span class="code-value">0</span>:<span class="code-value">3</span>])     <span class="code-comment"># Alb</span>
+print(name[<span class="code-value">4</span>:])      <span class="code-comment"># rt</span>
+print(name[<span class="code-value">-2</span>:])     <span class="code-comment"># rt</span>
+print(name[::<span class="code-value">2</span>])     <span class="code-comment"># Abr</span>
+print(name[::<span class="code-value">-1</span>])    <span class="code-comment"># treblA</span></code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Für einen Ausschnitt benutzt du <strong>Slicing</strong> in
+                  der Form <code>sequenz[start:stop:schritt]</code>. Der
+                  Stop-Wert ist dabei nicht mehr enthalten. Gibst du nur den
+                  Start an, geht es bis zum Ende. Negative Indizes zählen von
+                  hinten: <code>-1</code> ist das letzte Zeichen. Ein negativer
+                  Schritt dreht das Wort um.
+                </p>
+
+                <p>
+                  Und hier unterscheiden sich Strings von Listen: Auslesen
+                  darfst du jedes Zeichen, überschreiben leider nicht.
+                </p>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>Unveränderbarkeit</span>
+                  </div>
+                  <pre><code>name <span class="code-operator">=</span> <span class="code-value">"Albert"</span>
+name[<span class="code-value">0</span>] <span class="code-operator">=</span> <span class="code-value">"H"</span>   <span class="code-comment"># TypeError: 'str' object does not support item assignment</span></code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Willst du das Literal verändern, baust du dir einen neuen
+                  String zusammen:
+                </p>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>Neuen String bauen</span>
+                  </div>
+                  <pre><code>name <span class="code-operator">=</span> <span class="code-value">"Albert"</span>
+name <span class="code-operator">=</span> <span class="code-value">"H"</span> <span class="code-operator">+</span> name[<span class="code-value">1</span>:]
+print(name)          <span class="code-comment"># Halbert</span></code></pre>
+                </div>
+
+                <h3>Nützliche Funktionen und Methoden für Strings</h3>
+                <div class="method-list">
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call">len(name)</span>
+                      <span class="method__desc">Anzahl der Zeichen</span>
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>name <span class="code-operator">=</span> <span class="code-value">"Albert"</span>
+print(len(name))   <span class="code-comment"># 6</span></code></pre>
+                    </div>
+                  </details>
+
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call">name.upper()</span>
+                      <span class="method__desc">in Großbuchstaben</span>
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>name <span class="code-operator">=</span> <span class="code-value">"Albert"</span>
+print(name.upper())   <span class="code-comment"># ALBERT</span></code></pre>
+                    </div>
+                  </details>
+
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call">name.lower()</span>
+                      <span class="method__desc">in Kleinbuchstaben</span>
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>name <span class="code-operator">=</span> <span class="code-value">"Albert"</span>
+print(name.lower())   <span class="code-comment"># albert</span></code></pre>
+                    </div>
+                  </details>
+
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call">name.strip()</span>
+                      <span class="method__desc"
+                        >Leerzeichen am Rand entfernen</span
+                      >
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>name <span class="code-operator">=</span> <span class="code-value">"  Albert  "</span>
+print(name.strip())   <span class="code-comment"># Albert</span></code></pre>
+                    </div>
+                  </details>
+
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call"
+                        >name.replace(<span class="code-value">"A"</span>,
+                        <span class="code-value">"H"</span>)</span
+                      >
+                      <span class="method__desc">Zeichen ersetzen</span>
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>name <span class="code-operator">=</span> <span class="code-value">"Albert"</span>
+print(name.replace(<span class="code-value">"A"</span>, <span class="code-value">"H"</span>))   <span class="code-comment"># Hlbert</span></code></pre>
+                    </div>
+                  </details>
+
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call"
+                        >name.split(<span class="code-value">" "</span>)</span
+                      >
+                      <span class="method__desc"
+                        >String in eine Liste zerlegen</span
+                      >
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>satz <span class="code-operator">=</span> <span class="code-value">"ich mag Python"</span>
+print(satz.split(<span class="code-value">" "</span>))   <span class="code-comment"># ['ich', 'mag', 'Python']</span></code></pre>
+                    </div>
+                  </details>
+
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call"
+                        ><span class="code-value">" "</span>.join([<span
+                          class="code-value"
+                          >"a"</span
+                        >, <span class="code-value">"b"</span>])</span
+                      >
+                      <span class="method__desc"
+                        >Liste zu String verbinden</span
+                      >
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>teile <span class="code-operator">=</span> [<span class="code-value">"a"</span>, <span class="code-value">"b"</span>, <span class="code-value">"c"</span>]
+print(<span class="code-value">" "</span>.join(teile))   <span class="code-comment"># a b c</span></code></pre>
+                    </div>
+                  </details>
+
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call"
+                        >name.count(<span class="code-value">"l"</span>)</span
+                      >
+                      <span class="method__desc">Vorkommen zählen</span>
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>name <span class="code-operator">=</span> <span class="code-value">"Albert"</span>
+print(name.count(<span class="code-value">"l"</span>))   <span class="code-comment"># 1</span></code></pre>
+                    </div>
+                  </details>
+
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call"
+                        >name.find(<span class="code-value">"b"</span>)</span
+                      >
+                      <span class="method__desc">Position finden</span>
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>name <span class="code-operator">=</span> <span class="code-value">"Albert"</span>
+print(name.find(<span class="code-value">"b"</span>))   <span class="code-comment"># 2</span></code></pre>
+                    </div>
+                  </details>
+
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call"
+                        ><span class="code-value">"lbe"</span> in name</span
+                      >
+                      <span class="method__desc">ist enthalten?</span>
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>name <span class="code-operator">=</span> <span class="code-value">"Albert"</span>
+print(<span class="code-value">"lbe"</span> in name)   <span class="code-comment"># True</span></code></pre>
+                    </div>
+                  </details>
+
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call"
+                        >name.startswith(<span class="code-value">"Al"</span
+                        >)</span
+                      >
+                      <span class="method__desc">beginnt mit?</span>
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>name <span class="code-operator">=</span> <span class="code-value">"Albert"</span>
+print(name.startswith(<span class="code-value">"Al"</span>))   <span class="code-comment"># True</span></code></pre>
+                    </div>
+                  </details>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Denk dran: Keine davon verändert <code>name</code> selbst. Sie
+                  geben alle einen neuen String zurück.
+                </p>
+
+                <div
+                  class="lesson-exercise"
+                  data-exercise="slice"
+                  data-sample="name[4:]"
+                >
+                  <span class="lesson-exercise__label">Quick-Check</span>
+                  <p>
+                    Gib einen Index oder Slice ein, der die gesuchte Ausgabe
+                    erzeugt.
+                  </p>
+                  <div class="lesson-exercise__slice">
+                    <div class="lesson-exercise__given">
+                      <span class="code-name">name</span>
+                      <span class="code-operator">=</span>
+                      <span class="code-value"
+                        >"<span class="lesson-exercise__word">Albert</span
+                        >"</span
+                      >
+                    </div>
+                    <p class="lesson-exercise__prompt">
+                      Gesucht:
+                      <span class="lesson-exercise__target">rt</span>
+                    </p>
+                    <input
+                      class="lesson-exercise__input"
+                      type="text"
+                      spellcheck="false"
+                      autocomplete="off"
+                      autocapitalize="off"
+                      placeholder="name[…]"
+                      aria-label="Dein Slice-Ausdruck"
+                    />
+                  </div>
+                  <div class="lesson-exercise__actions">
+                    <button class="lesson-exercise__check" type="button">
+                      Prüfen
+                    </button>
+                    <button class="lesson-exercise__reveal" type="button">
+                      Lösung zeigen
+                    </button>
+                  </div>
+                  <div
+                    class="lesson-exercise__feedback"
+                    aria-live="polite"
+                    hidden
+                  ></div>
+                </div>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="list">
+              <div class="lesson-section__number">04</div>
+              <div class="lesson-section__body">
+                <h2>List</h2>
+                <p>
+                  Eine Liste ist genau das, wonach es klingt: eine Sammlung
+                  verschiedener Elemente. Die Typen dürfen dabei bunt gemischt
+                  sein. Erkennbar ist sie an den
+                  <strong>eckigen Klammern</strong>.
+                </p>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>Liste erstellen</span>
+                  </div>
+                  <pre><code>liste <span class="code-operator">=</span> [<span class="code-value">"Kugel"</span>, <span class="code-value">2</span>, <span class="code-value">"Apfel"</span>]
+einkaufsliste <span class="code-operator">=</span> [<span class="code-value">"Milch"</span>, <span class="code-value">"Brot"</span>, <span class="code-value">"C4"</span>, <span class="code-value">"Kekse"</span>]</code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Es gibt außerdem die Funktion <code>list()</code>. Die
+                  verwandelt eine vorhandene Sammlung in eine Liste, zum
+                  Beispiel einen String in seine einzelnen Buchstaben:
+                </p>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>list()</span>
+                  </div>
+                  <pre><code>print(list(<span class="code-value">"Milch"</span>))     <span class="code-comment"># ['M', 'i', 'l', 'c', 'h']</span></code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Indizes und Slicing funktionieren genau wie beim String. Der
+                  Unterschied: Hier darfst du auch schreiben, nicht nur lesen.
+                </p>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>Lesen und schreiben</span>
+                  </div>
+                  <pre><code>print(einkaufsliste[<span class="code-value">0</span>])      <span class="code-comment"># Milch</span>
+print(einkaufsliste[<span class="code-value">-1</span>])     <span class="code-comment"># Kekse</span>
+print(einkaufsliste[<span class="code-value">0</span>:<span class="code-value">2</span>])    <span class="code-comment"># ['Milch', 'Brot']</span>
+
+einkaufsliste[<span class="code-value">0</span>] <span class="code-operator">=</span> <span class="code-value">"Kaffee"</span>
+print(einkaufsliste)         <span class="code-comment"># ['Kaffee', 'Brot', 'C4', 'Kekse']</span></code></pre>
+                </div>
+
+                <h3>Nützliche Funktionen und Methoden für Listen</h3>
+                <p class="method-hint">
+                  Tippe auf eine Zeile für ein vollständiges Beispiel.
+                </p>
+                <div class="method-list">
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call">len(liste)</span>
+                      <span class="method__desc">Anzahl der Elemente</span>
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>liste <span class="code-operator">=</span> [<span class="code-value">"Milch"</span>, <span class="code-value">"Brot"</span>, <span class="code-value">"Kekse"</span>]
+print(len(liste))   <span class="code-comment"># 3</span></code></pre>
+                    </div>
+                  </details>
+
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call"
+                        >liste.append(<span class="code-value">"Käse"</span
+                        >)</span
+                      >
+                      <span class="method__desc">hinten anhängen</span>
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>liste <span class="code-operator">=</span> [<span class="code-value">"Milch"</span>, <span class="code-value">"Brot"</span>]
+liste.append(<span class="code-value">"Käse"</span>)
+print(liste)   <span class="code-comment"># ['Milch', 'Brot', 'Käse']</span></code></pre>
+                    </div>
+                  </details>
+
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call"
+                        >liste.insert(<span class="code-value">0</span>,
+                        <span class="code-value">"Tee"</span>)</span
+                      >
+                      <span class="method__desc">an Position einfügen</span>
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>liste <span class="code-operator">=</span> [<span class="code-value">"Milch"</span>, <span class="code-value">"Brot"</span>]
+liste.insert(<span class="code-value">0</span>, <span class="code-value">"Tee"</span>)
+print(liste)   <span class="code-comment"># ['Tee', 'Milch', 'Brot']</span></code></pre>
+                    </div>
+                  </details>
+
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call"
+                        >liste.remove(<span class="code-value">"Brot"</span
+                        >)</span
+                      >
+                      <span class="method__desc"
+                        >Element mit Wert entfernen</span
+                      >
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>liste <span class="code-operator">=</span> [<span class="code-value">"Milch"</span>, <span class="code-value">"Brot"</span>, <span class="code-value">"Kekse"</span>]
+liste.remove(<span class="code-value">"Brot"</span>)
+print(liste)   <span class="code-comment"># ['Milch', 'Kekse']</span></code></pre>
+                    </div>
+                  </details>
+
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call">liste.pop()</span>
+                      <span class="method__desc"
+                        >letztes entfernen und zurückgeben</span
+                      >
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>liste <span class="code-operator">=</span> [<span class="code-value">"Milch"</span>, <span class="code-value">"Brot"</span>, <span class="code-value">"Kekse"</span>]
+letztes <span class="code-operator">=</span> liste.pop()
+print(letztes)   <span class="code-comment"># Kekse</span>
+print(liste)     <span class="code-comment"># ['Milch', 'Brot']</span></code></pre>
+                    </div>
+                  </details>
+
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call"
+                        >liste.pop(<span class="code-value">0</span>)</span
+                      >
+                      <span class="method__desc">an Position entfernen</span>
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>liste <span class="code-operator">=</span> [<span class="code-value">"Milch"</span>, <span class="code-value">"Brot"</span>, <span class="code-value">"Kekse"</span>]
+erstes <span class="code-operator">=</span> liste.pop(<span class="code-value">0</span>)
+print(erstes)   <span class="code-comment"># Milch</span></code></pre>
+                    </div>
+                  </details>
+
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call"
+                        >liste.index(<span class="code-value">"Kekse"</span
+                        >)</span
+                      >
+                      <span class="method__desc">Position finden</span>
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>liste <span class="code-operator">=</span> [<span class="code-value">"Milch"</span>, <span class="code-value">"Brot"</span>, <span class="code-value">"Kekse"</span>]
+print(liste.index(<span class="code-value">"Kekse"</span>))   <span class="code-comment"># 2</span></code></pre>
+                    </div>
+                  </details>
+
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call"
+                        >liste.count(<span class="code-value">"Milch"</span
+                        >)</span
+                      >
+                      <span class="method__desc">Vorkommen zählen</span>
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>liste <span class="code-operator">=</span> [<span class="code-value">"Milch"</span>, <span class="code-value">"Brot"</span>, <span class="code-value">"Milch"</span>]
+print(liste.count(<span class="code-value">"Milch"</span>))   <span class="code-comment"># 2</span></code></pre>
+                    </div>
+                  </details>
+
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call">liste.sort()</span>
+                      <span class="method__desc">Liste selbst sortieren</span>
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>liste <span class="code-operator">=</span> [<span class="code-value">3</span>, <span class="code-value">1</span>, <span class="code-value">2</span>]
+liste.sort()
+print(liste)   <span class="code-comment"># [1, 2, 3]</span></code></pre>
+                    </div>
+                  </details>
+
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call">sorted(liste)</span>
+                      <span class="method__desc"
+                        >neue sortierte Liste, Original bleibt</span
+                      >
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>liste <span class="code-operator">=</span> [<span class="code-value">3</span>, <span class="code-value">1</span>, <span class="code-value">2</span>]
+print(sorted(liste))   <span class="code-comment"># [1, 2, 3]</span>
+print(liste)           <span class="code-comment"># [3, 1, 2]</span></code></pre>
+                    </div>
+                  </details>
+
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call">liste.reverse()</span>
+                      <span class="method__desc">Reihenfolge umdrehen</span>
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>liste <span class="code-operator">=</span> [<span class="code-value">"Milch"</span>, <span class="code-value">"Brot"</span>, <span class="code-value">"Kekse"</span>]
+liste.reverse()
+print(liste)   <span class="code-comment"># ['Kekse', 'Brot', 'Milch']</span></code></pre>
+                    </div>
+                  </details>
+
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call">liste.copy()</span>
+                      <span class="method__desc">echte Kopie erstellen</span>
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>liste <span class="code-operator">=</span> [<span class="code-value">1</span>, <span class="code-value">2</span>, <span class="code-value">3</span>]
+kopie <span class="code-operator">=</span> liste.copy()
+kopie.append(<span class="code-value">4</span>)
+print(liste)   <span class="code-comment"># [1, 2, 3]</span></code></pre>
+                    </div>
+                  </details>
+
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call"
+                        >sum([<span class="code-value">1</span>,
+                        <span class="code-value">2</span>,
+                        <span class="code-value">3</span>])</span
+                      >
+                      <span class="method__desc">Summe (nur Zahlen)</span>
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>print(sum([<span class="code-value">1</span>, <span class="code-value">2</span>, <span class="code-value">3</span>]))   <span class="code-comment"># 6</span></code></pre>
+                    </div>
+                  </details>
+
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call"
+                        >min([<span class="code-value">3</span>,
+                        <span class="code-value">1</span>,
+                        <span class="code-value">2</span>])</span
+                      >
+                      <span class="method__desc">kleinster Wert</span>
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>print(min([<span class="code-value">3</span>, <span class="code-value">1</span>, <span class="code-value">2</span>]))   <span class="code-comment"># 1</span></code></pre>
+                    </div>
+                  </details>
+
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call"
+                        >max([<span class="code-value">3</span>,
+                        <span class="code-value">1</span>,
+                        <span class="code-value">2</span>])</span
+                      >
+                      <span class="method__desc">größter Wert</span>
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>print(max([<span class="code-value">3</span>, <span class="code-value">1</span>, <span class="code-value">2</span>]))   <span class="code-comment"># 3</span></code></pre>
+                    </div>
+                  </details>
+
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call"
+                        ><span class="code-value">"Milch"</span> in liste</span
+                      >
+                      <span class="method__desc">ist enthalten?</span>
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>liste <span class="code-operator">=</span> [<span class="code-value">"Milch"</span>, <span class="code-value">"Brot"</span>, <span class="code-value">"Kekse"</span>]
+print(<span class="code-value">"Milch"</span> in liste)   <span class="code-comment"># True</span></code></pre>
+                    </div>
+                  </details>
+                </div>
+
+                <h3>Zwei Fallen, in die jeder einmal tappt</h3>
+                <p>
+                  <strong>Erstens:</strong> <code>.append()</code> gibt nichts
+                  zurück. Schreib es ohne Zuweisung, sonst ist deine Liste weg.
+                  Das gilt für alle Methoden, die eine Liste direkt verändern:
+                  <code>.sort()</code>, <code>.reverse()</code>,
+                  <code>.remove()</code>.
+                </p>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>Falle 1</span>
+                  </div>
+                  <pre><code>einkaufsliste.append(<span class="code-value">"Käse"</span>)
+print(einkaufsliste)         <span class="code-comment"># ['Milch', 'Brot', 'C4', 'Kekse', 'Käse']</span></code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  <strong>Zweitens:</strong> <code>b = a</code> erzeugt keine
+                  Kopie.
+                </p>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>Falle 2</span>
+                  </div>
+                  <pre><code>a <span class="code-operator">=</span> [<span class="code-value">1</span>, <span class="code-value">2</span>, <span class="code-value">3</span>]
+b <span class="code-operator">=</span> a
+b.append(<span class="code-value">4</span>)
+print(a)                     <span class="code-comment"># [1, 2, 3, 4]</span></code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Überraschung, <code>a</code> hat sich mitverändert. Es gibt
+                  nämlich gar keine zwei Listen, sondern eine Liste mit zwei
+                  Namen. Willst du wirklich eine zweite, nimm
+                  <code>b = a.copy()</code>.
+                </p>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="tuple">
+              <div class="lesson-section__number">05</div>
+              <div class="lesson-section__body">
+                <h2>Tuple</h2>
+                <p>
+                  Ein Tuple ist im Grunde eine Liste, die sich nichts mehr sagen
+                  lässt: gleiche Reihenfolge, gleiche Indizes, gleiches Slicing,
+                  nur eben unveränderbar. Statt eckiger Klammern nimmst du
+                  <strong>runde</strong>.
+                </p>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>Tuple lesen</span>
+                  </div>
+                  <pre><code>punkt <span class="code-operator">=</span> (<span class="code-value">3</span>, <span class="code-value">5</span>)
+print(punkt[<span class="code-value">0</span>])       <span class="code-comment"># 3</span>
+print(punkt[<span class="code-value">-1</span>])      <span class="code-comment"># 5</span>
+
+punkt[<span class="code-value">0</span>] <span class="code-operator">=</span> <span class="code-value">7</span>          <span class="code-comment"># TypeError: 'tuple' object does not support item assignment</span></code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Und jetzt die berechtigte Frage: Und was soll ich bitte mit
+                  einer Liste, die ich nicht mal bearbeiten kann? Genau
+                  deswegen. Ein Tuple sagt jedem, der deinen Code liest (als ob
+                  es jemand außer deinem Lehrer wäre): „Diese Werte hängen
+                  voneinander ab und sollen sich nicht ändern.“ Koordinaten
+                  <code>(3, 5)</code>, ein Farbwert <code>(255, 0, 0)</code>,
+                  ein Datensatz <code>("Albert", 1879)</code>. Wenn dein
+                  Programm später versehentlich daran herumschreibt, kracht es
+                  sofort, statt still falsche Ergebnisse zu liefern.
+                </p>
+
+                <p>
+                  Besonders praktisch ist das <strong>Unpacking</strong>. Du
+                  kannst mehrere Variablen auf einmal befüllen:
+                </p>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>Unpacking</span>
+                  </div>
+                  <pre><code>punkt <span class="code-operator">=</span> (<span class="code-value">3</span>, <span class="code-value">5</span>)
+x, y <span class="code-operator">=</span> punkt
+print(x)             <span class="code-comment"># 3</span>
+print(y)             <span class="code-comment"># 5</span></code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Links so viele Variablen wie rechts Elemente, und Python
+                  verteilt sie der Reihe nach.
+                </p>
+
+                <div class="lesson-callout">
+                  <span class="lesson-callout__label"
+                    >Die klassische Falle</span
+                  >
+                  <p>
+                    Ein Tuple mit nur einem Element: Die Klammern allein machen
+                    noch kein Tuple, das <strong>Komma</strong> macht es.
+                  </p>
+                </div>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>Ein-Element-Tuple</span>
+                  </div>
+                  <pre><code>einzel <span class="code-operator">=</span> (<span class="code-value">5</span>)
+print(type(einzel))          <span class="code-comment"># &lt;class 'int'&gt;</span>
+
+einzel <span class="code-operator">=</span> (<span class="code-value">5</span>,)
+print(type(einzel))          <span class="code-comment"># &lt;class 'tuple'&gt;</span></code></pre>
+                </div>
+
+                <h3>Funktionen und Methoden für Tuples</h3>
+                <p>
+                  Die Liste ist kurz, was logisch ist: Alles, was verändert,
+                  fällt weg. Übrig bleiben:
+                </p>
+
+                <p class="method-hint">
+                  Tippe auf eine Zeile für ein vollständiges Beispiel.
+                </p>
+                <div class="method-list">
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call">len(punkt)</span>
+                      <span class="method__desc">Anzahl der Elemente</span>
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>punkt <span class="code-operator">=</span> (<span class="code-value">3</span>, <span class="code-value">5</span>)
+print(len(punkt))   <span class="code-comment"># 2</span></code></pre>
+                    </div>
+                  </details>
+
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call"
+                        >punkt.count(<span class="code-value">3</span>)</span
+                      >
+                      <span class="method__desc">Vorkommen zählen</span>
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>punkt <span class="code-operator">=</span> (<span class="code-value">3</span>, <span class="code-value">5</span>, <span class="code-value">3</span>)
+print(punkt.count(<span class="code-value">3</span>))   <span class="code-comment"># 2</span></code></pre>
+                    </div>
+                  </details>
+
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call"
+                        >punkt.index(<span class="code-value">5</span>)</span
+                      >
+                      <span class="method__desc">Position finden</span>
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>punkt <span class="code-operator">=</span> (<span class="code-value">3</span>, <span class="code-value">5</span>)
+print(punkt.index(<span class="code-value">5</span>))   <span class="code-comment"># 1</span></code></pre>
+                    </div>
+                  </details>
+
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call"
+                        ><span class="code-value">3</span> in punkt</span
+                      >
+                      <span class="method__desc">ist enthalten?</span>
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>punkt <span class="code-operator">=</span> (<span class="code-value">3</span>, <span class="code-value">5</span>)
+print(<span class="code-value">3</span> in punkt)   <span class="code-comment"># True</span></code></pre>
+                    </div>
+                  </details>
+
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call"
+                        >tuple([<span class="code-value">1</span>,
+                        <span class="code-value">2</span>,
+                        <span class="code-value">3</span>])</span
+                      >
+                      <span class="method__desc">Liste zu Tuple</span>
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>print(tuple([<span class="code-value">1</span>, <span class="code-value">2</span>, <span class="code-value">3</span>]))   <span class="code-comment"># (1, 2, 3)</span></code></pre>
+                    </div>
+                  </details>
+
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call"
+                        >list((<span class="code-value">1</span>,
+                        <span class="code-value">2</span>,
+                        <span class="code-value">3</span>))</span
+                      >
+                      <span class="method__desc">Tuple zu Liste</span>
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>print(list((<span class="code-value">1</span>, <span class="code-value">2</span>, <span class="code-value">3</span>)))   <span class="code-comment"># [1, 2, 3]</span></code></pre>
+                    </div>
+                  </details>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Wenn du doch etwas ändern musst: Wandle das Tuple in eine
+                  Liste um, ändere es dort und mach wieder ein Tuple daraus.
+                </p>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="dictionary">
+              <div class="lesson-section__number">06</div>
+              <div class="lesson-section__body">
+                <h2>Dictionary</h2>
+                <p>
+                  Alle bisherigen Strukturen greifen über die Position zu. Beim
+                  Dictionary läuft es anders. Dort hat jeder Wert einen
+                  <strong>Schlüssel</strong>, über den du ihn ansprichst.
+                </p>
+                <p>
+                  Deshalb auch der Name: Du schlägst nach wie im Wörterbuch (Ja,
+                  geenau das ist die Übersetzung). Erkennbar ist es an den
+                  <strong>geschweiften Klammern</strong>. Drinnen stehen Paare
+                  aus Schlüssel und Wert, getrennt durch einen Doppelpunkt.
+                </p>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>Dictionary erstellen</span>
+                  </div>
+                  <pre><code>user <span class="code-operator">=</span> {<span class="code-value">"name"</span>: <span class="code-value">"Albert"</span>, <span class="code-value">"alter"</span>: <span class="code-value">25</span>, <span class="code-value">"stadt"</span>: <span class="code-value">"Berlin"</span>}
+print(user[<span class="code-value">"name"</span>])          <span class="code-comment"># Albert</span></code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Zahlen sind hier keine Positionen mehr, sondern ganz normale
+                  Schlüssel. <code>user[0]</code> funktioniert also nur dann,
+                  wenn du tatsächlich einen Schlüssel namens
+                  <code>0</code> angelegt hast. Neue Einträge legst du einfach
+                  durch Zuweisen an:
+                </p>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>Einträge hinzufügen</span>
+                  </div>
+                  <pre><code>user[<span class="code-value">"beruf"</span>] <span class="code-operator">=</span> <span class="code-value">"Physiker"</span>
+user[<span class="code-value">"alter"</span>] <span class="code-operator">=</span> <span class="code-value">26</span>            <span class="code-comment"># bestehender Schlüssel wird überschrieben</span>
+print(user)
+<span class="code-comment"># {'name': 'Albert', 'alter': 26, 'stadt': 'Berlin', 'beruf': 'Physiker'}</span></code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Ein Schlüssel kann also nur einmal vorkommen. Leider ist ein
+                  Service für Duplikate hier nicht vorgesehen. Schreibst du auf
+                  einen bestehenden, ersetzt du den alten Wert. Löschen geht
+                  über
+                  <code>del</code> oder <code>.pop()</code>:
+                </p>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>Einträge löschen</span>
+                  </div>
+                  <pre><code>del user[<span class="code-value">"stadt"</span>]
+alter <span class="code-operator">=</span> user.pop(<span class="code-value">"alter"</span>)     <span class="code-comment"># entfernt und gibt den Wert zurück</span></code></pre>
+                </div>
+
+                <div class="lesson-callout">
+                  <span class="lesson-callout__label">Die häufigste Falle</span>
+                  <p>
+                    Der <strong>KeyError</strong>, wenn ein Schlüssel fehlt.
+                  </p>
+                </div>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>KeyError vermeiden</span>
+                  </div>
+                  <pre><code>print(user[<span class="code-value">"telefon"</span>])                    <span class="code-comment"># KeyError: 'telefon'</span>
+
+print(user.get(<span class="code-value">"telefon"</span>))                <span class="code-comment"># None</span>
+print(user.get(<span class="code-value">"telefon"</span>, <span class="code-value">"nicht bekannt"</span>)) <span class="code-comment"># nicht bekannt</span></code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Wenn du nicht sicher bist, ob ein Schlüssel existiert, nimm
+                  <code>.get()</code>. Das stürzt nicht ab, sondern gibt
+                  <code>None</code> zurück, oder einen Ersatzwert, wenn du einen
+                  angibst. Und aufgepasst beim <code>in</code>: Es prüft die
+                  <strong>Schlüssel</strong>, nicht die Werte.
+                </p>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>in prüft Schlüssel</span>
+                  </div>
+                  <pre><code>print(<span class="code-value">"name"</span> in user)         <span class="code-comment"># True</span>
+print(<span class="code-value">"Albert"</span> in user)       <span class="code-comment"># False</span></code></pre>
+                </div>
+
+                <h3>Verschachtelte Strukturen</h3>
+                <p>
+                  Das ist der Punkt, an dem alles ernst wird. Echte Daten, etwa
+                  aus einer Datei oder Datenbank, sehen fast immer so aus: eine
+                  Liste voller Dictionaries.
+                </p>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>Liste voller Dictionaries</span>
+                  </div>
+                  <pre><code>users <span class="code-operator">=</span> [
+    {<span class="code-value">"name"</span>: <span class="code-value">"Anna"</span>, <span class="code-value">"alter"</span>: <span class="code-value">20</span>},
+    {<span class="code-value">"name"</span>: <span class="code-value">"Ben"</span>, <span class="code-value">"alter"</span>: <span class="code-value">34</span>},
+    {<span class="code-value">"name"</span>: <span class="code-value">"Sophie"</span>, <span class="code-value">"alter"</span>: <span class="code-value">27</span>},
+]
+
+print(users[<span class="code-value">1</span>][<span class="code-value">"name"</span>])      <span class="code-comment"># Ben</span></code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Lies das von links nach rechts: <code>users[1]</code> holt das
+                  zweite Dictionary aus der Liste, <code>["name"]</code> holt
+                  daraus den Wert zum Schlüssel <code>name</code>.
+                </p>
+
+                <h3>Nützliche Funktionen und Methoden für Dictionaries</h3>
+                <p class="method-hint">
+                  Tippe auf eine Zeile für ein vollständiges Beispiel.
+                </p>
+                <div class="method-list">
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call">len(user)</span>
+                      <span class="method__desc">Anzahl der Paare</span>
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>user <span class="code-operator">=</span> {<span class="code-value">"name"</span>: <span class="code-value">"Albert"</span>, <span class="code-value">"alter"</span>: <span class="code-value">25</span>}
+print(len(user))   <span class="code-comment"># 2</span></code></pre>
+                    </div>
+                  </details>
+
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call"
+                        >user.get(<span class="code-value">"name"</span>)</span
+                      >
+                      <span class="method__desc">Wert holen, ohne Absturz</span>
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>user <span class="code-operator">=</span> {<span class="code-value">"name"</span>: <span class="code-value">"Albert"</span>}
+print(user.get(<span class="code-value">"name"</span>))   <span class="code-comment"># Albert</span></code></pre>
+                    </div>
+                  </details>
+
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call">user.keys()</span>
+                      <span class="method__desc">alle Schlüssel</span>
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>user <span class="code-operator">=</span> {<span class="code-value">"name"</span>: <span class="code-value">"Albert"</span>, <span class="code-value">"alter"</span>: <span class="code-value">25</span>}
+print(user.keys())   <span class="code-comment"># dict_keys(['name', 'alter'])</span></code></pre>
+                    </div>
+                  </details>
+
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call">user.values()</span>
+                      <span class="method__desc">alle Werte</span>
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>user <span class="code-operator">=</span> {<span class="code-value">"name"</span>: <span class="code-value">"Albert"</span>, <span class="code-value">"alter"</span>: <span class="code-value">25</span>}
+print(user.values())   <span class="code-comment"># dict_values(['Albert', 25])</span></code></pre>
+                    </div>
+                  </details>
+
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call">user.items()</span>
+                      <span class="method__desc">alle Paare</span>
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>user <span class="code-operator">=</span> {<span class="code-value">"name"</span>: <span class="code-value">"Albert"</span>, <span class="code-value">"alter"</span>: <span class="code-value">25</span>}
+print(user.items())   <span class="code-comment"># dict_items([('name', 'Albert'), ('alter', 25)])</span></code></pre>
+                    </div>
+                  </details>
+
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call"
+                        >user.pop(<span class="code-value">"alter"</span>)</span
+                      >
+                      <span class="method__desc"
+                        >Eintrag entfernen und zurückgeben</span
+                      >
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>user <span class="code-operator">=</span> {<span class="code-value">"name"</span>: <span class="code-value">"Albert"</span>, <span class="code-value">"alter"</span>: <span class="code-value">25</span>}
+alter <span class="code-operator">=</span> user.pop(<span class="code-value">"alter"</span>)
+print(alter)   <span class="code-comment"># 25</span>
+print(user)    <span class="code-comment"># {'name': 'Albert'}</span></code></pre>
+                    </div>
+                  </details>
+
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call"
+                        >user.update({<span class="code-value">"stadt"</span>:
+                        <span class="code-value">"Ulm"</span>})</span
+                      >
+                      <span class="method__desc"
+                        >mehrere Einträge hinzufügen</span
+                      >
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>user <span class="code-operator">=</span> {<span class="code-value">"name"</span>: <span class="code-value">"Albert"</span>}
+user.update({<span class="code-value">"stadt"</span>: <span class="code-value">"Ulm"</span>})
+print(user)   <span class="code-comment"># {'name': 'Albert', 'stadt': 'Ulm'}</span></code></pre>
+                    </div>
+                  </details>
+
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call">user.clear()</span>
+                      <span class="method__desc">alles löschen</span>
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>user <span class="code-operator">=</span> {<span class="code-value">"name"</span>: <span class="code-value">"Albert"</span>, <span class="code-value">"alter"</span>: <span class="code-value">25</span>}
+user.clear()
+print(user)   <span class="code-comment"># {}</span></code></pre>
+                    </div>
+                  </details>
+
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call"
+                        ><span class="code-value">"name"</span> in user</span
+                      >
+                      <span class="method__desc">prüft die Schlüssel</span>
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>user <span class="code-operator">=</span> {<span class="code-value">"name"</span>: <span class="code-value">"Albert"</span>, <span class="code-value">"alter"</span>: <span class="code-value">25</span>}
+print(<span class="code-value">"name"</span> in user)   <span class="code-comment"># True</span></code></pre>
+                    </div>
+                  </details>
+                </div>
+
+                <p style="margin-top: 18px">
+                  <code>.keys()</code>, <code>.values()</code> und
+                  <code>.items()</code> brauchst du vor allem dann, wenn du ein
+                  ganzes Dictionary durchgehen willst. Wie das geht, kommt im
+                  Kapitel Schleifen.
+                </p>
+
+                <div class="lesson-callout">
+                  <span class="lesson-callout__label">Hinweis für später</span>
+                  <p>
+                    Als Schlüssel taugt nur, was unveränderbar ist, also
+                    Strings, Zahlen und Tuples. Eine Liste als Schlüssel wirft
+                    einen
+                    <code>TypeError</code>. Auch dafür sind Tuples also gut.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="set">
+              <div class="lesson-section__number">07</div>
+              <div class="lesson-section__body">
+                <h2>Set</h2>
+                <p>
+                  Das Set ist die fünfte Struktur, die ich am Anfang
+                  unterschlagen habe. Es ist eine Sammlung ohne Reihenfolge und
+                  <strong>ohne Duplikate</strong>, jeder Wert kommt also genau
+                  einmal vor. Indizes gibt es deshalb nicht.
+                </p>
+                <p>
+                  Am häufigsten begegnet es dir als Trick gegen doppelte
+                  Einträge:
+                </p>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>Duplikate entfernen</span>
+                  </div>
+                  <pre><code>zahlen <span class="code-operator">=</span> [<span class="code-value">1</span>, <span class="code-value">2</span>, <span class="code-value">2</span>, <span class="code-value">3</span>, <span class="code-value">3</span>, <span class="code-value">3</span>]
+print(list(set(zahlen)))     <span class="code-comment"># [1, 2, 3]</span></code></pre>
+                </div>
+
+                <p style="margin-top: 18px">Für den Anfang reicht dir das.</p>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="wahl">
+              <div class="lesson-section__number">08</div>
+              <div class="lesson-section__body">
+                <h2>Welche Struktur nehme ich denn nun?</h2>
+
+                <div class="lesson-example-grid">
+                  <div class="lesson-mini-card">
+                    <strong>String</strong>
+                    <p>Für Text. Unveränderbar.</p>
+                  </div>
+                  <div class="lesson-mini-card">
+                    <strong>List</strong>
+                    <p>
+                      Mehrere Werte in fester Reihenfolge, die sich ändern
+                      dürfen. Dein Standardwerkzeug.
+                    </p>
+                  </div>
+                  <div class="lesson-mini-card">
+                    <strong>Tuple</strong>
+                    <p>
+                      Wenn sich nichts ändern soll. Für zusammengehörige Werte
+                      wie Koordinaten.
+                    </p>
+                  </div>
+                  <div class="lesson-mini-card">
+                    <strong>Dictionary</strong>
+                    <p>
+                      Wenn jeder Wert einen Namen braucht statt einer Nummer
+                      (KEINE WITZE HIER).
+                    </p>
+                  </div>
+                  <div class="lesson-mini-card">
+                    <strong>Set</strong>
+                    <p>Wenn jeder Wert nur einmal vorkommen darf.</p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <div class="lesson-next">
+              <div>
+                <span>Nächstes Thema</span>
+                <strong>6. Schleifen</strong>
+              </div>
+              <a
+                href="/pages/explainations/learning_themes/schleifen.html"
+                aria-label="Zum Thema Schleifen"
+                >›</a
+              >
+            </div>
+          </article>
+        </div>
+      </main>
+    </div>
+
+    <div class="contact-modal" aria-hidden="true">
+      <div
+        class="contact-modal__box"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="contact-title"
+      >
+        <button
+          class="contact-modal__close"
+          type="button"
+          aria-label="Kontaktfenster schließen"
+        >
+          ×
+        </button>
+
+        <h2 id="contact-title">Kontakt</h2>
+        <div class="contact-modal__line"></div>
+        <p class="contact-modal__intro">
+          Bei Fragen, Anregungen oder Problemen kannst du mich gerne
+          kontaktieren.
+        </p>
+
+        <a
+          href="https://mail.google.com/mail/?view=cm&fs=1&to=sandravasylkova@gmail.com"
+          target="_blank"
+          rel="noopener"
+          class="contact-modal__row"
+        >
+          <span class="contact-modal__icon">✉</span>
+          <span>
+            <strong>Email</strong>
+            <small>sandravasylkova@gmail.com</small>
+          </span>
+        </a>
+
+        <a
+          href="https://www.microsoft.com/en-us/microsoft-teams/log-in"
+          class="contact-modal__row"
+        >
+          <svg
+            class="teams__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 17 20"
+            aria-hidden="true"
+          >
+            <path
+              d="M9.186 4.797a2.42 2.42 0 1 0-2.86-2.448h1.178c.929 0 1.682.753 1.682 1.682zm-4.295 7.738h2.613c.929 0 1.682-.753 1.682-1.682V5.58h2.783a.7.7 0 0 1 .682.716v4.294a4.197 4.197 0 0 1-4.093 4.293c-1.618-.04-3-.99-3.667-2.35Zm10.737-9.372a1.674 1.674 0 1 1-3.349 0 1.674 1.674 0 0 1 3.349 0m-2.238 9.488-.12-.002a5.2 5.2 0 0 0 .381-2.07V6.306a1.7 1.7 0 0 0-.15-.725h1.792c.39 0 .707.317.707.707v3.765a2.6 2.6 0 0 1-2.598 2.598z"
+            />
+            <path
+              d="M.682 3.349h6.822c.377 0 .682.305.682.682v6.822a.68.68 0 0 1-.682.682H.682A.68.68 0 0 1 0 10.853V4.03c0-.377.305-.682.682-.682Zm5.206 2.596v-.72h-3.59v.72h1.357V9.66h.87V5.945z"
+            />
+          </svg>
+          <span>
+            <strong>Teams</strong>
+            <small>Oleksandra Vasylkova</small>
+          </span>
+        </a>
+      </div>
+    </div>
+  </body>
+</html>

@@ -119,7 +119,27 @@
         <div class="lesson__glow" aria-hidden="true"></div>
 
         <div class="lesson__shell">
-          <article class="lesson-content" style="grid-column: 1 / -1">
+          <aside class="lesson-sidebar">
+            <a class="lesson-sidebar__back" href="/pages/learn.html">
+              <span>‹</span> Alle Themen
+            </a>
+            <div class="lesson-sidebar__topic">
+              <span class="lesson-sidebar__eyebrow">Python Grundlagen</span>
+              <strong>Datentypen</strong>
+            </div>
+            <nav class="lesson-sidebar__nav" aria-label="Themenübersicht">
+              <a class="lesson-sidebar__link" href="#grundlagen">Grundlagen</a>
+              <a class="lesson-sidebar__link" href="#string">String</a>
+              <a class="lesson-sidebar__link" href="#integer">Integer</a>
+              <a class="lesson-sidebar__link" href="#float">Float</a>
+              <a class="lesson-sidebar__link" href="#boolean">Boolean</a>
+              <a class="lesson-sidebar__link" href="#umwandlung"
+                >Typumwandlung</a
+              >
+            </nav>
+          </aside>
+
+          <article class="lesson-content">
             <header class="lesson-hero">
               <div class="lesson-hero__index">02</div>
               <div>
@@ -187,9 +207,8 @@
               <div class="lesson-section__body">
                 <h2>Integer</h2>
                 <p>
-                  Zum Datentyp Integer gehören ganze Zahlen. Damit Python eine
-                  Zahl als Integer erkennt, werden keine zusätzlichen Zeichen
-                  benötigt.
+                  Zum Datentyp Integer gehören ganze Zahlen. Es müssen keine
+                  Anführungszeichen verwendet werden.
                 </p>
 
                 <div class="lesson-code" aria-label="Python-Beispiel">
@@ -248,8 +267,7 @@
                 <h2>Typumwandlung</h2>
                 <p>
                   Manchmal liegt ein Wert im falschen Datentyp vor und muss
-                  umgewandelt werden. Dafür stellt Python eigene Funktionen
-                  bereit, die den Namen des Zieldatentyps tragen.
+                  umgewandelt werden. Dafür gibt es integrierte Funktionen.
                 </p>
 
                 <div class="lesson-operators">
@@ -285,6 +303,43 @@
                   zurückgegeben und muss für Berechnungen zuerst in eine Zahl
                   umgewandelt werden. Mehr dazu im Thema „Print &amp; Input“.
                 </p>
+
+                <div
+                  class="lesson-exercise"
+                  data-exercise="match"
+                  data-generate="datatypes"
+                >
+                  <span class="lesson-exercise__label">Quick-Check</span>
+                  <p>Ordne jedem Wert seinen Datentyp zu.</p>
+                  <div class="lesson-exercise__rows">
+                    <div class="lesson-exercise__row" data-answer="int">
+                      <span class="lesson-exercise__literal">17</span>
+                    </div>
+                    <div class="lesson-exercise__row" data-answer="str">
+                      <span class="lesson-exercise__literal">"hallo"</span>
+                    </div>
+                    <div class="lesson-exercise__row" data-answer="float">
+                      <span class="lesson-exercise__literal">3.14</span>
+                    </div>
+                    <div class="lesson-exercise__row" data-answer="bool">
+                      <span class="lesson-exercise__literal">True</span>
+                    </div>
+                    <div class="lesson-exercise__row" data-answer="str">
+                      <span class="lesson-exercise__literal">"17"</span>
+                    </div>
+                    <div class="lesson-exercise__row" data-answer="float">
+                      <span class="lesson-exercise__literal">19.0</span>
+                    </div>
+                  </div>
+                  <button class="lesson-exercise__check" type="button">
+                    Prüfen
+                  </button>
+                  <div
+                    class="lesson-exercise__feedback"
+                    aria-live="polite"
+                    hidden
+                  ></div>
+                </div>
               </div>
             </section>
 

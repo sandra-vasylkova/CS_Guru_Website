@@ -1,0 +1,795 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Schleifen in Python: for, while, range(), enumerate(), break, continue und Endlosschleifen."
+    />
+    <title>CS Guru | Schleifen</title>
+
+    <link rel="stylesheet" href="/style.css" />
+    <script src="/app.js" defer></script>
+
+    <link
+      rel="icon"
+      type="image/png"
+      href="/assets/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+    <link rel="shortcut icon" href="/assets/favicon.ico" />
+
+    <style>
+      .lesson-section h3 {
+        margin-top: 26px;
+        margin-bottom: 4px;
+        color: var(--white);
+        font-size: 1.2rem;
+        font-weight: 800;
+      }
+
+      .lesson-callout {
+        margin: 20px 0;
+        padding: 16px 20px;
+        border-left: 4px solid var(--turquoise);
+        border-radius: 8px;
+        background: rgba(34, 214, 205, 0.08);
+      }
+
+      .lesson-callout p {
+        margin: 0;
+      }
+
+      .lesson-callout__label {
+        display: block;
+        margin-bottom: 6px;
+        color: var(--turquoise);
+        font-size: 0.78rem;
+        font-weight: 900;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .conditions-answer {
+        display: none;
+        margin-top: 14px;
+        color: rgba(255, 255, 255, 0.78);
+      }
+
+      .conditions-answer--visible {
+        display: block;
+      }
+
+      .conditions-answer-btn {
+        min-height: 46px;
+        margin-top: 16px;
+        padding: 0 20px;
+        border: 1px solid var(--turquoise);
+        border-radius: 8px;
+        background: rgba(34, 214, 205, 0.08);
+        color: var(--white);
+        font: inherit;
+        font-weight: 800;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="page learn-page lesson-page">
+      <nav class="nav">
+        <a href="/index.html" class="nav__logo">
+          <img
+            src="/assets/favicon_turquise.ico"
+            alt="CS Guru"
+            class="nav__favicon"
+          />
+          <span class="nav__brand">CS <span>Guru</span></span>
+        </a>
+
+        <ul class="nav__links">
+          <li><a href="/index.html" class="nav__link">Home</a></li>
+          <li>
+            <a href="/pages/discover.html" class="nav__link">Entdecken</a>
+          </li>
+          <li>
+            <a href="/pages/learn.html" class="nav__link nav__link--active"
+              >Lernen</a
+            >
+          </li>
+          <li><a href="/pages/play.html" class="nav__link">Spielen</a></li>
+          <li><a href="/pages/tools.html" class="nav__link">Werkzeuge</a></li>
+        </ul>
+
+        <div class="nav__actions">
+          <button class="nav__action nav__contact-button" type="button">
+            <span class="nav__action-icon">✉</span>
+            Kontakt
+          </button>
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSfCC80uccvA9SUJwrB5Bua7r2RKt3ISvhj3x3Ljcr7EUbyqyQ/viewform?usp=header"
+            class="nav__action"
+          >
+            <span class="nav__action-icon">✎</span>
+            Feedback
+          </a>
+        </div>
+
+        <button
+          class="nav__menu-btn"
+          type="button"
+          aria-label="Menü öffnen"
+          aria-expanded="false"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </nav>
+
+      <div class="mobile-menu" aria-hidden="true">
+        <div class="mobile-menu__panel">
+          <div class="mobile-menu__head">
+            <a href="/index.html" class="mobile-menu__brand"
+              >CS <span>Guru</span></a
+            >
+            <button
+              class="mobile-menu__close"
+              type="button"
+              aria-label="Menü schließen"
+            >
+              ×
+            </button>
+          </div>
+
+          <a href="/index.html" class="mobile-menu__link">Home</a>
+          <a
+            href="/pages/learn.html"
+            class="mobile-menu__link mobile-menu__link--active"
+            >Lernen</a
+          >
+          <a href="/pages/play.html" class="mobile-menu__link">Spielen</a>
+          <a href="/pages/tools.html" class="mobile-menu__link">Werkzeuge</a>
+          <a href="/pages/discover.html" class="mobile-menu__link">Entdecken</a>
+
+          <div class="mobile-menu__actions">
+            <button
+              class="mobile-menu__link mobile-menu__contact contact-modal-trigger"
+              type="button"
+            >
+              Kontakt
+            </button>
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSfCC80uccvA9SUJwrB5Bua7r2RKt3ISvhj3x3Ljcr7EUbyqyQ/viewform?usp=header"
+              class="mobile-menu__link"
+              >Feedback</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <main class="lesson">
+        <div class="lesson__glow" aria-hidden="true"></div>
+
+        <div class="lesson__shell">
+          <aside class="lesson-sidebar">
+            <a class="lesson-sidebar__back" href="/pages/learn.html">
+              <span>‹</span> Alle Themen
+            </a>
+            <div class="lesson-sidebar__topic">
+              <span class="lesson-sidebar__eyebrow">Python Grundlagen</span>
+              <strong>Schleifen</strong>
+            </div>
+            <nav class="lesson-sidebar__nav" aria-label="Themenübersicht">
+              <a class="lesson-sidebar__link" href="#for">for-Schleife</a>
+              <a class="lesson-sidebar__link" href="#range">range()</a>
+              <a class="lesson-sidebar__link" href="#enumerate">enumerate()</a>
+              <a class="lesson-sidebar__link" href="#break-continue"
+                >break &amp; continue</a
+              >
+              <a class="lesson-sidebar__link" href="#while">while-Schleife</a>
+              <a class="lesson-sidebar__link" href="#endlos">Endlosschleife</a>
+              <a class="lesson-sidebar__link" href="#wahl">Welche Schleife?</a>
+            </nav>
+          </aside>
+
+          <article class="lesson-content">
+            <header class="lesson-hero">
+              <div class="lesson-hero__index">06</div>
+              <div>
+                <p class="lesson-hero__eyebrow">Python Grundlagen</p>
+                <h1>Schleifen<span>.</span></h1>
+                <p class="lesson-hero__intro">
+                  Mit einer Schleife schreibst du einen Codeblock einmal und
+                  wiederholst ihn beliebig oft.
+                </p>
+              </div>
+            </header>
+
+            <section class="lesson-section" id="for">
+              <div class="lesson-section__number">01</div>
+              <div class="lesson-section__body">
+                <h2>Die for-Schleife</h2>
+                <p>
+                  Schleifen sind praktisch, weil du einen Codeblock einmal
+                  schreibst und ihn dann beliebig oft wiederholen kannst. Statt
+                  dieselbe Zeile zehnmal zu tippen, geh lieber raus und fass mal
+                  Gras an. Glaub mir.
+                </p>
+                <p>
+                  In Python gibt es zwei Arten von Schleifen:
+                  <code>for</code> und <code>while</code>. Die
+                  <code>for</code>-Schleife könnte man einen Iterator nennen.
+                  Mit ihr kannst du zum Beispiel jedes Element einer Liste
+                  durchgehen.
+                </p>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>Liste durchgehen</span>
+                  </div>
+                  <pre><code>lebensziele <span class="code-operator">=</span> [<span class="code-value">"Schule beenden"</span>, <span class="code-value">"Programmieren"</span>, <span class="code-value">"Python lernen"</span>, <span class="code-value">"Wasser trinken"</span>]
+
+<span class="code-keyword">for</span> ziel <span class="code-keyword">in</span> lebensziele:
+    print(ziel)
+
+<span class="code-comment"># Ausgabe:</span>
+<span class="code-comment"># Schule beenden</span>
+<span class="code-comment"># Programmieren</span>
+<span class="code-comment"># Python lernen</span>
+<span class="code-comment"># Wasser trinken</span></code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Kurz übersetzt: Für jedes Ziel aus der Liste
+                  <code>lebensziele</code> wird das Ziel ausgegeben.
+                  <code>ziel</code> ist eine Variable, der bei jedem Durchgang
+                  ein neuer Wert aus der Liste zugewiesen wird, bis die Elemente
+                  ausgehen. Du kannst sie nennen, wie du willst, meinetwegen
+                  auch Shrek, aber dann wünsche ich deinem Lehrer schon mal viel
+                  Kraft und Geduld.
+                </p>
+                <p>
+                  Also: Nimm dir den Rat aus dem ersten Thema zu vernünftigen
+                  Variablennamen zu Herzen und mach dir und allen anderen das
+                  Leben leichter.
+                </p>
+
+                <div class="lesson-callout">
+                  <span class="lesson-callout__label">Wichtig</span>
+                  <p>
+                    Wie schon bei den Bedingungen brauchst du einen Doppelpunkt
+                    und eine Einrückung von vier Leerzeichen. Alles, was
+                    eingerückt ist, wird bei jedem Durchgang wiederholt. Code
+                    ohne Einrückung läuft erst weiter, nachdem die Schleife
+                    beendet ist. Und denk dran: Python liest den Code von oben
+                    nach unten.
+                  </p>
+                </div>
+
+                <p>
+                  Da ein String genau wie eine Liste eine Datenstruktur ist,
+                  funktioniert die Iteration auch mit ihm.
+                </p>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>String durchgehen</span>
+                  </div>
+                  <pre><code>fach <span class="code-operator">=</span> <span class="code-value">"Mathe"</span>
+
+<span class="code-keyword">for</span> char <span class="code-keyword">in</span> fach:
+    print(char)
+
+<span class="code-comment"># Ausgabe:</span>
+<span class="code-comment"># M</span>
+<span class="code-comment"># a</span>
+<span class="code-comment"># t</span>
+<span class="code-comment"># h</span>
+<span class="code-comment"># e</span></code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Falls du dich fragst: <code>char</code> ist die Abkürzung für
+                  <em>character</em> 😉
+                </p>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="range">
+              <div class="lesson-section__number">02</div>
+              <div class="lesson-section__body">
+                <h2>Die Funktion range()</h2>
+                <p>
+                  Das ist wohl die meistgenutzte Funktion in Verbindung mit
+                  einer
+                  <code>for</code>-Schleife. Wenn du eine Folge von Zahlen
+                  brauchst (ich frag gar nicht erst, wozu) oder eine bestimmte
+                  Aktion n-mal wiederholen willst, ist
+                  <code>range()</code> genau das Richtige für dich.
+                </p>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>range(5)</span>
+                  </div>
+                  <pre><code><span class="code-keyword">for</span> i <span class="code-keyword">in</span> range(<span class="code-value">5</span>):
+    print(i)
+
+<span class="code-comment"># Ausgabe:</span>
+<span class="code-comment"># 0</span>
+<span class="code-comment"># 1</span>
+<span class="code-comment"># 2</span>
+<span class="code-comment"># 3</span>
+<span class="code-comment"># 4</span></code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  <code>range(5)</code> erzeugt die Zahlen von 0 bis 4. Die
+                  angegebene Endzahl 5 ist also nicht mehr enthalten. Da bei 0
+                  angefangen wird, entstehen trotzdem genau fünf Zahlen.
+                </p>
+                <p>
+                  Wenn du auch die Zahl 5 ausgeben möchtest, erhöhst du das Ende
+                  um 1.
+                </p>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>Ende einschließen</span>
+                  </div>
+                  <pre><code>n <span class="code-operator">=</span> <span class="code-value">5</span>
+
+<span class="code-keyword">for</span> i <span class="code-keyword">in</span> range(n <span class="code-operator">+</span> <span class="code-value">1</span>):
+    print(i)
+
+<span class="code-comment"># Ausgabe:</span>
+<span class="code-comment"># 0</span>
+<span class="code-comment"># 1</span>
+<span class="code-comment"># 2</span>
+<span class="code-comment"># 3</span>
+<span class="code-comment"># 4</span>
+<span class="code-comment"># 5</span></code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  So ist die in der Variable gespeicherte Zahl ebenfalls
+                  enthalten. Du kannst außerdem einen Start- und Endpunkt
+                  angeben:
+                  <code>range(n, k)</code> läuft von <code>n</code> bis
+                  <code>k</code>, wobei <code>k</code> selbst nicht mehr
+                  enthalten ist.
+                </p>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>Bereich festlegen</span>
+                  </div>
+                  <pre><code><span class="code-keyword">for</span> i <span class="code-keyword">in</span> range(<span class="code-value">2</span>, <span class="code-value">5</span>):
+    print(i)
+
+<span class="code-comment"># Ausgabe:</span>
+<span class="code-comment"># 2</span>
+<span class="code-comment"># 3</span>
+<span class="code-comment"># 4</span></code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Mit einem dritten Wert bestimmst du die Schrittweite:
+                  <code>range(n, k, m)</code>.
+                </p>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>Schrittweite</span>
+                  </div>
+                  <pre><code><span class="code-keyword">for</span> i <span class="code-keyword">in</span> range(<span class="code-value">0</span>, <span class="code-value">10</span>, <span class="code-value">2</span>):
+    print(i)
+
+<span class="code-comment"># Ausgabe:</span>
+<span class="code-comment"># 0</span>
+<span class="code-comment"># 2</span>
+<span class="code-comment"># 4</span>
+<span class="code-comment"># 6</span>
+<span class="code-comment"># 8</span></code></pre>
+                </div>
+
+                <div class="lesson-callout">
+                  <span class="lesson-callout__label">Warum i und _?</span>
+                  <p>
+                    <code>i</code> wird oft als Abkürzung für <em>index</em>
+                    verwendet. Bei kurzen Schleifen hat sich dieser Name einfach
+                    eingebürgert. Und wenn du nur markieren willst, dass eine
+                    Aktion mehrmals ausgeführt wird, nimm den Unterstrich
+                    <code>_</code>.
+                  </p>
+                </div>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>Nur wiederholen</span>
+                  </div>
+                  <pre><code>lieblingsort <span class="code-operator">=</span> <span class="code-value">"Schule"</span>
+
+<span class="code-keyword">for</span> _ <span class="code-keyword">in</span> range(<span class="code-value">3</span>):
+    print(lieblingsort)
+
+<span class="code-comment"># Ausgabe:</span>
+<span class="code-comment"># Schule</span>
+<span class="code-comment"># Schule</span>
+<span class="code-comment"># Schule</span></code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Hier steht der Unterstrich nur, damit die Schleife läuft,
+                  nicht weil die Variable selbst wichtig wäre.
+                </p>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="enumerate">
+              <div class="lesson-section__number">03</div>
+              <div class="lesson-section__body">
+                <h2>enumerate()</h2>
+                <p>
+                  Jetzt wird's schon interessanter. Sagen wir, du baust ein
+                  Alphabet und willst wissen, welcher Buchstabe an welcher
+                  Stelle kommt. Wie du weißt, hat jedes Element einer Liste
+                  seinen eigenen Index. Mit <code>enumerate()</code> gibt Python
+                  dir Index und Element zugleich.
+                </p>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>Index und Element</span>
+                  </div>
+                  <pre><code>alphabet <span class="code-operator">=</span> [<span class="code-value">"a"</span>, <span class="code-value">"b"</span>, <span class="code-value">"c"</span>, <span class="code-value">"d"</span>, <span class="code-value">"e"</span>, <span class="code-value">"f"</span>, <span class="code-value">"g"</span>, <span class="code-value">"h"</span>, <span class="code-value">"i"</span>, <span class="code-value">"j"</span>, <span class="code-value">"k"</span>, <span class="code-value">"l"</span>, <span class="code-value">"m"</span>, <span class="code-value">"n"</span>, <span class="code-value">"o"</span>, <span class="code-value">"p"</span>, <span class="code-value">"q"</span>, <span class="code-value">"r"</span>, <span class="code-value">"s"</span>, <span class="code-value">"t"</span>, <span class="code-value">"u"</span>, <span class="code-value">"v"</span>, <span class="code-value">"w"</span>, <span class="code-value">"x"</span>, <span class="code-value">"y"</span>, <span class="code-value">"z"</span>]
+
+<span class="code-keyword">for</span> index, letter <span class="code-keyword">in</span> enumerate(alphabet):
+    print(index, letter)
+
+<span class="code-comment"># Ausgabe:</span>
+<span class="code-comment"># 0 a</span>
+<span class="code-comment"># 1 b</span>
+<span class="code-comment"># 2 c</span>
+<span class="code-comment"># ...</span></code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Aber das ist doch nicht der nullte, sondern der erste
+                  Buchstabe des Alphabets, sagst du, und damit hast du recht.
+                  Mit
+                  <code>start=1</code> lässt du die Zählung bei 1 beginnen:
+                </p>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>Zählung ab 1</span>
+                  </div>
+                  <pre><code><span class="code-keyword">for</span> index, letter <span class="code-keyword">in</span> enumerate(alphabet, start<span class="code-operator">=</span><span class="code-value">1</span>):
+    print(<span class="code-value">f"{index}. {letter}"</span>)
+
+<span class="code-comment"># Ausgabe:</span>
+<span class="code-comment"># 1. a</span>
+<span class="code-comment"># 2. b</span>
+<span class="code-comment"># 3. c</span>
+<span class="code-comment"># ...</span></code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Mit dem f-String haben wir das Ganze auch noch hübsch gemacht.
+                </p>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="break-continue">
+              <div class="lesson-section__number">04</div>
+              <div class="lesson-section__body">
+                <h2>break und continue</h2>
+                <p>
+                  Mit <code>break</code> und <code>continue</code> steuerst du
+                  den Ablauf einer Schleife noch genauer.
+                </p>
+                <p>
+                  <code>break</code> beendet die Schleife sofort. Nehmen wir an,
+                  du brauchst alle Buchstaben bis <code>m</code>:
+                </p>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>break</span>
+                  </div>
+                  <pre><code><span class="code-keyword">for</span> index, letter <span class="code-keyword">in</span> enumerate(alphabet, start<span class="code-operator">=</span><span class="code-value">1</span>):
+    <span class="code-keyword">if</span> letter <span class="code-operator">==</span> <span class="code-value">"m"</span>:
+        print(<span class="code-value">f"{letter} ist der {index}. Buchstabe im Alphabet"</span>)
+        <span class="code-keyword">break</span>
+    print(letter)
+
+<span class="code-comment"># Ausgabe:</span>
+<span class="code-comment"># a</span>
+<span class="code-comment"># b</span>
+<span class="code-comment"># c</span>
+<span class="code-comment"># ...</span>
+<span class="code-comment"># k</span>
+<span class="code-comment"># l</span>
+<span class="code-comment"># m ist der 13. Buchstabe im Alphabet</span></code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Die restlichen Buchstaben werden gar nicht erst durchgegangen,
+                  weil die Schleife ihr Ziel erreicht hat. Sei wie die Schleife,
+                  erreiche deine Ziele!
+                </p>
+                <p>
+                  <code>continue</code> überspringt ein bestimmtes Element und
+                  macht ohne anzuhalten mit der Schleife weiter:
+                </p>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>continue</span>
+                  </div>
+                  <pre><code><span class="code-keyword">for</span> i <span class="code-keyword">in</span> range(<span class="code-value">5</span>):
+    <span class="code-keyword">if</span> i <span class="code-operator">==</span> <span class="code-value">2</span>:
+        <span class="code-keyword">continue</span>
+    print(i)
+
+<span class="code-comment"># Ausgabe:</span>
+<span class="code-comment"># 0</span>
+<span class="code-comment"># 1</span>
+<span class="code-comment"># 3</span>
+<span class="code-comment"># 4</span></code></pre>
+                </div>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="while">
+              <div class="lesson-section__number">05</div>
+              <div class="lesson-section__body">
+                <h2>Die while-Schleife</h2>
+                <p>
+                  Hier ist im Vergleich zu <code>for</code> alles ganz einfach.
+                  <code>while</code> wiederholt einen Codeblock so lange, wie
+                  eine Bedingung wahr ist. Im Grunde ist das der gute alte
+                  <code>if</code>, der sich immer und immer wieder wiederholt.
+                </p>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>while-Schleife</span>
+                  </div>
+                  <pre><code>count <span class="code-operator">=</span> <span class="code-value">0</span>
+
+<span class="code-keyword">while</span> count <span class="code-operator">&lt;</span> <span class="code-value">5</span>:
+    print(count)
+    count <span class="code-operator">+=</span> <span class="code-value">1</span>
+
+<span class="code-comment"># Ausgabe:</span>
+<span class="code-comment"># 0</span>
+<span class="code-comment"># 1</span>
+<span class="code-comment"># 2</span>
+<span class="code-comment"># 3</span>
+<span class="code-comment"># 4</span></code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Was hier passiert: Anfangs ist <code>count</code> gleich 0.
+                  Vor jedem Durchgang prüft <code>while</code>, ob
+                  <code>count &lt; 5</code> wahr ist. Danach wird
+                  <code>count</code> ausgegeben und durch
+                  <code>count += 1</code> um 1 erhöht. Sobald
+                  <code>count</code> den Wert 5 erreicht, ist die Bedingung
+                  falsch und die Schleife endet.
+                </p>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="endlos">
+              <div class="lesson-section__number">06</div>
+              <div class="lesson-section__body">
+                <h2>Endlosschleife</h2>
+                <p>
+                  Die Zeile <code>count += 1</code> ist nichts anderes als
+                  <code>count = count + 1</code>. Das ist hier das entscheidende
+                  Detail, denn ohne sie bleibt die Bedingung in jeder Runde
+                  wahr. <code>count</code> bleibt dann 0, was klar kleiner als 5
+                  ist, und die Schleife spammt deine Konsole mit Nullen zu. Ich
+                  rate dir, das nicht auszuprobieren, sondern mir einfach aufs
+                  Wort zu glauben.
+                </p>
+
+                <div class="lesson-callout">
+                  <span class="lesson-callout__label">Notausgang</span>
+                  <p>
+                    Falls du so eine Schleife doch startest: Mit
+                    <code>Strg + C</code> (auf dem Mac <code>Control + C</code>)
+                    brichst du sie ab.
+                  </p>
+                </div>
+
+                <p>
+                  Trotzdem ist eine Endlosschleife manchmal sogar nötig. Bei
+                  <code>while True</code> benutzt man häufig <code>break</code>,
+                  sobald die gewünschte Bedingung erfüllt ist. Als Beispiel
+                  bauen wir ein Mini-Spiel „Zahl erraten“:
+                </p>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>Mini-Spiel „Zahl erraten“</span>
+                  </div>
+                  <pre><code>zahl <span class="code-operator">=</span> <span class="code-value">5</span>
+
+<span class="code-keyword">while</span> <span class="code-constant">True</span>:
+    versuch <span class="code-operator">=</span> int(input(<span class="code-value">"Rate die Zahl: "</span>))
+    <span class="code-keyword">if</span> versuch <span class="code-operator">==</span> zahl:
+        print(<span class="code-value">"Richtig!"</span>)
+        <span class="code-keyword">break</span>
+    <span class="code-keyword">elif</span> versuch <span class="code-operator">&lt;</span> zahl:
+        print(<span class="code-value">"höher"</span>)
+    <span class="code-keyword">else</span>:
+        print(<span class="code-value">"niedriger"</span>)</code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  So fragt die Konsole den Benutzer so lange nach einer Zahl,
+                  bis er sie errät. An diesem Beispiel kannst du dich gleich auf
+                  all die vorherigen Themen testen.
+                </p>
+                <p>
+                  Für alle Fälle lasse ich dir noch eine ausführliche Erklärung
+                  da, die du garantiert nicht brauchen wirst 😀
+                </p>
+
+                <button
+                  aria-expanded="false"
+                  class="conditions-answer-btn"
+                  id="show-conditions-answer"
+                  type="button"
+                >
+                  Antwort zeigen
+                </button>
+                <div class="conditions-answer" id="conditions-answer">
+                  <p>
+                    <code>zahl = 5</code> legt die geheime Zahl fest.
+                    <code>while True</code> startet eine Schleife, die zunächst
+                    endlos läuft.
+                  </p>
+                  <p style="margin-top: 10px">
+                    In jedem Durchgang liest <code>int(input(...))</code> eine
+                    Eingabe ein und wandelt sie sofort in eine ganze Zahl um.
+                    Dann wird verglichen: Ist <code>versuch == zahl</code>,
+                    erscheint „Richtig!“ und <code>break</code> beendet die
+                    Schleife.
+                  </p>
+                  <p style="margin-top: 10px">
+                    Ist der Versuch kleiner als die Zahl, kommt der Hinweis
+                    „höher“, andernfalls „niedriger“. So wiederholt sich alles,
+                    bis die richtige Zahl getroffen ist.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="wahl">
+              <div class="lesson-section__number">07</div>
+              <div class="lesson-section__body">
+                <h2>Welche Schleife brauche ich?</h2>
+
+                <div class="lesson-example-grid">
+                  <div class="lesson-mini-card">
+                    <strong>for</strong>
+                    <p>
+                      dann, wenn die Anzahl der Wiederholungen und der Endpunkt
+                      bekannt sind. Das heißt, du weißt, was du durchgehst und
+                      wie oft du es durchgehst.
+                    </p>
+                  </div>
+                  <div class="lesson-mini-card">
+                    <strong>while</strong>
+                    <p>
+                      wähle, wenn du keinen Schimmer hast, wie oft du den Code
+                      wiederholen musst, aber den Endpunkt genau kennst.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="lesson-callout">
+                  <span class="lesson-callout__label">Kleines Geheimnis</span>
+                  <p>
+                    In den meisten Fällen brauchst du <code>for</code>. Also
+                    wenn du unsicher bist, <code>for</code> hilft dir immer
+                    weiter.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <div class="lesson-next">
+              <div>
+                <span>Nächstes Thema</span>
+                <strong>7. Funktionen</strong>
+              </div>
+              <a href="#" aria-label="Zum Thema Funktionen">›</a>
+            </div>
+          </article>
+        </div>
+      </main>
+    </div>
+
+    <div class="contact-modal" aria-hidden="true">
+      <div
+        class="contact-modal__box"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="contact-title"
+      >
+        <button
+          class="contact-modal__close"
+          type="button"
+          aria-label="Kontaktfenster schließen"
+        >
+          ×
+        </button>
+
+        <h2 id="contact-title">Kontakt</h2>
+        <div class="contact-modal__line"></div>
+        <p class="contact-modal__intro">
+          Bei Fragen, Anregungen oder Problemen kannst du mich gerne
+          kontaktieren.
+        </p>
+
+        <a
+          href="https://mail.google.com/mail/?view=cm&fs=1&to=sandravasylkova@gmail.com"
+          target="_blank"
+          rel="noopener"
+          class="contact-modal__row"
+        >
+          <span class="contact-modal__icon">✉</span>
+          <span>
+            <strong>Email</strong>
+            <small>sandravasylkova@gmail.com</small>
+          </span>
+        </a>
+
+        <a
+          href="https://www.microsoft.com/en-us/microsoft-teams/log-in"
+          class="contact-modal__row"
+        >
+          <svg
+            class="teams__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 17 20"
+            aria-hidden="true"
+          >
+            <path
+              d="M9.186 4.797a2.42 2.42 0 1 0-2.86-2.448h1.178c.929 0 1.682.753 1.682 1.682zm-4.295 7.738h2.613c.929 0 1.682-.753 1.682-1.682V5.58h2.783a.7.7 0 0 1 .682.716v4.294a4.197 4.197 0 0 1-4.093 4.293c-1.618-.04-3-.99-3.667-2.35Zm10.737-9.372a1.674 1.674 0 1 1-3.349 0 1.674 1.674 0 0 1 3.349 0m-2.238 9.488-.12-.002a5.2 5.2 0 0 0 .381-2.07V6.306a1.7 1.7 0 0 0-.15-.725h1.792c.39 0 .707.317.707.707v3.765a2.6 2.6 0 0 1-2.598 2.598z"
+            />
+            <path
+              d="M.682 3.349h6.822c.377 0 .682.305.682.682v6.822a.68.68 0 0 1-.682.682H.682A.68.68 0 0 1 0 10.853V4.03c0-.377.305-.682.682-.682Zm5.206 2.596v-.72h-3.59v.72h1.357V9.66h.87V5.945z"
+            />
+          </svg>
+          <span>
+            <strong>Teams</strong>
+            <small>Oleksandra Vasylkova</small>
+          </span>
+        </a>
+      </div>
+    </div>
+  </body>
+</html>

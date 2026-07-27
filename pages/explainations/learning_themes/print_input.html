@@ -109,7 +109,29 @@
       <main class="lesson">
         <div aria-hidden="true" class="lesson__glow"></div>
         <div class="lesson__shell">
-          <article class="lesson-content" style="grid-column: 1 / -1">
+          <aside class="lesson-sidebar">
+            <a class="lesson-sidebar__back" href="/pages/learn.html">
+              <span>‹</span> Alle Themen
+            </a>
+            <div class="lesson-sidebar__topic">
+              <span class="lesson-sidebar__eyebrow">Python Grundlagen</span>
+              <strong>Print &amp; Input</strong>
+            </div>
+            <nav class="lesson-sidebar__nav" aria-label="Themenübersicht">
+              <a class="lesson-sidebar__link" href="#print">Print</a>
+              <a class="lesson-sidebar__link" href="#kombinieren"
+                >Werte kombinieren</a
+              >
+              <a class="lesson-sidebar__link" href="#ausgabe-steuern"
+                >sep &amp; end</a
+              >
+              <a class="lesson-sidebar__link" href="#f-strings">f-Strings</a>
+              <a class="lesson-sidebar__link" href="#input">Input</a>
+              <a class="lesson-sidebar__link" href="#zahlen">Zahlen einlesen</a>
+            </nav>
+          </aside>
+
+          <article class="lesson-content">
             <header class="lesson-hero">
               <div class="lesson-hero__index">03</div>
               <div>
@@ -132,8 +154,8 @@
                   Python-Datentypen verwendet werden.
                 </p>
                 <p>
-                  Der Wert, der ausgegeben werden soll, wird in die Klammern
-                  geschrieben.
+                  Der Wert, der ausgegeben werden soll, schreibt man in
+                  klammern.
                 </p>
                 <div
                   aria-label="Python-Beispiele für print"
@@ -232,7 +254,7 @@
                 <h2>Input</h2>
                 <p>
                   <code>input()</code> ähnelt in ihrer Schreibweise der Funktion
-                  <code>print()</code>, hat jedoch eine andere Aufgabe. Mit
+                  <code>print()</code>, hat aber eine andere Aufgabe. Mit
                   <code>input()</code> kann ein Programm Eingaben des Benutzers
                   einlesen. Die Funktion gibt die eingegebene Information
                   zurück, damit sie beispielsweise in einer Variable gespeichert
@@ -276,7 +298,6 @@
                   eingegeben werden, muss der Wert deshalb in den passenden
                   Datentyp umgewandelt werden.
                 </p>
-
                 <div aria-label="Zahleneingaben in Python" class="lesson-code">
                   <div class="lesson-code__head">
                     <span>Python</span>

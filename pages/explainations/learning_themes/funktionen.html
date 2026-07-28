@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Funktionen in Python: eigene Funktionen mit def schreiben, Parameter, return, print(), None, Typangaben und main()."
+    />
+    <title>CS Guru | Funktionen</title>
+
+    <link rel="stylesheet" href="/style.css" />
+    <script src="/app.js" defer></script>
+
+    <link
+      rel="icon"
+      type="image/png"
+      href="/assets/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+    <link rel="shortcut icon" href="/assets/favicon.ico" />
+  </head>
+
+  <body>
+    <div class="page learn-page lesson-page">
+      <nav class="nav">
+        <a href="/index.html" class="nav__logo">
+          <img
+            src="/assets/favicon_turquise.ico"
+            alt="CS Guru"
+            class="nav__favicon"
+          />
+          <span class="nav__brand">CS <span>Guru</span></span>
+        </a>
+
+        <ul class="nav__links">
+          <li><a href="/index.html" class="nav__link">Home</a></li>
+          <li>
+            <a href="/pages/discover.html" class="nav__link">Entdecken</a>
+          </li>
+          <li>
+            <a href="/pages/learn.html" class="nav__link nav__link--active"
+              >Lernen</a
+            >
+          </li>
+          <li><a href="/pages/play.html" class="nav__link">Spielen</a></li>
+          <li><a href="/pages/tools.html" class="nav__link">Werkzeuge</a></li>
+        </ul>
+
+        <div class="nav__actions">
+          <button class="nav__action nav__contact-button" type="button">
+            <span class="nav__action-icon">✉</span>
+            Kontakt
+          </button>
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSfCC80uccvA9SUJwrB5Bua7r2RKt3ISvhj3x3Ljcr7EUbyqyQ/viewform?usp=header"
+            class="nav__action"
+          >
+            <span class="nav__action-icon">✎</span>
+            Feedback
+          </a>
+        </div>
+
+        <button
+          class="nav__menu-btn"
+          type="button"
+          aria-label="Menü öffnen"
+          aria-expanded="false"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </nav>
+
+      <div class="mobile-menu" aria-hidden="true">
+        <div class="mobile-menu__panel">
+          <div class="mobile-menu__head">
+            <a href="/index.html" class="mobile-menu__brand"
+              >CS <span>Guru</span></a
+            >
+            <button
+              class="mobile-menu__close"
+              type="button"
+              aria-label="Menü schließen"
+            >
+              ×
+            </button>
+          </div>
+
+          <a href="/index.html" class="mobile-menu__link">Home</a>
+          <a
+            href="/pages/learn.html"
+            class="mobile-menu__link mobile-menu__link--active"
+            >Lernen</a
+          >
+          <a href="/pages/play.html" class="mobile-menu__link">Spielen</a>
+          <a href="/pages/tools.html" class="mobile-menu__link">Werkzeuge</a>
+          <a href="/pages/discover.html" class="mobile-menu__link">Entdecken</a>
+
+          <div class="mobile-menu__actions">
+            <button
+              class="mobile-menu__link mobile-menu__contact contact-modal-trigger"
+              type="button"
+            >
+              Kontakt
+            </button>
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSfCC80uccvA9SUJwrB5Bua7r2RKt3ISvhj3x3Ljcr7EUbyqyQ/viewform?usp=header"
+              class="mobile-menu__link"
+              >Feedback</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <main class="lesson">
+        <div class="lesson__glow" aria-hidden="true"></div>
+
+        <div class="lesson__shell">
+          <aside class="lesson-sidebar">
+            <a class="lesson-sidebar__back" href="/pages/learn.html">
+              <span>‹</span> Alle Themen
+            </a>
+            <div class="lesson-sidebar__topic">
+              <span class="lesson-sidebar__eyebrow">Python Grundlagen</span>
+              <strong>Funktionen</strong>
+            </div>
+            <nav class="lesson-sidebar__nav" aria-label="Themenübersicht">
+              <a class="lesson-sidebar__link" href="#grundlagen">Grundlagen</a>
+              <a class="lesson-sidebar__link" href="#beispiel"
+                >Größeres Beispiel</a
+              >
+              <a class="lesson-sidebar__link" href="#print-return"
+                >print() oder return?</a
+              >
+              <a class="lesson-sidebar__link" href="#main"
+                >Hilfsfunktionen &amp; main</a
+              >
+            </nav>
+          </aside>
+
+          <article class="lesson-content">
+            <header class="lesson-hero">
+              <div class="lesson-hero__index">07</div>
+              <div>
+                <p class="lesson-hero__eyebrow">Python Grundlagen</p>
+                <h1>Funktionen<span>.</span></h1>
+                <p class="lesson-hero__intro">
+                  Eine Funktion ist ein Codeblock, den du jederzeit aufrufen
+                  kannst. Hier schreibst du deine eigenen.
+                </p>
+              </div>
+            </header>
+
+            <section class="lesson-section" id="grundlagen">
+              <div class="lesson-section__number">01</div>
+              <div class="lesson-section__body">
+                <h2>Was ist eine Funktion?</h2>
+                <p>
+                  Funktionen sind mein Lieblingsthema aus den Python-Grundlagen.
+                  Eine Funktion ist ein Codeblock, den du jederzeit „aufrufen“
+                  kannst. Übrigens kennst du ein paar von Pythons eingebauten
+                  Funktionen schon, zum Beispiel <code>print()</code> oder
+                  <code>input()</code>. In diesem Kapitel lernst du, eigene von
+                  Grund auf zu schreiben.
+                </p>
+                <p>
+                  Eine Funktion ist grob gesagt eine Formel. Am Anfang legst du
+                  die Parameter und die Formel selbst fest, die danach auf die
+                  Eingabedaten (die Argumente) angewendet wird.
+                </p>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>Eine eigene Funktion</span>
+                  </div>
+                  <pre><code><span class="code-keyword">def</span> addieren(a, b):
+    <span class="code-keyword">return</span> a <span class="code-operator">+</span> b
+
+print(addieren(<span class="code-value">3</span>, <span class="code-value">5</span>))
+
+<span class="code-comment"># Ausgabe: 8</span></code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Wie diese Funktion arbeitet: Zuerst wird mit
+                  <code>def</code> ihr Name festgelegt (<code>addieren</code>),
+                  und in den Klammern werden die Parameter definiert (<code
+                    >a, b</code
+                  >). Ein
+                  <span class="lesson-term" tabindex="0" data-term-values="a, b"
+                    >Parameter</span
+                  >
+                  ist grob gesagt ein Platzhalter für einen zukünftigen Wert
+                  (das
+                  <span
+                    class="lesson-term"
+                    tabindex="0"
+                    data-term-values="3, 5"
+                    data-term-tone="value"
+                    >Argument</span
+                  >).
+                </p>
+                <p>
+                  Nach dem Doppelpunkt steht der Codeblock, der auf die
+                  Argumente angewendet wird. In diesem Fall wollen wir die Summe
+                  zweier Zahlen. Da die Funktion uns diese Zahl „zurückgeben“
+                  soll, benutzen wir <code>return</code>.
+                </p>
+                <p>
+                  Damit das Ergebnis in der Konsole erscheint, brauchst du die
+                  eingebaute Funktion <code>print()</code>, denn
+                  <code>return</code> gibt den Wert nur zurück, es zeigt ihn
+                  nicht an.
+                </p>
+
+                <div class="lesson-callout">
+                  <span class="lesson-callout__label">Merk dir</span>
+                  <p>
+                    <code>return</code> gibt nicht nur einen Wert zurück,
+                    sondern beendet auch die Funktion. Alles, was danach steht,
+                    wird nicht mehr ausgeführt.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="beispiel">
+              <div class="lesson-section__number">02</div>
+              <div class="lesson-section__body">
+                <h2>Ein größeres Beispiel</h2>
+                <p>
+                  Bei diesem Beispiel fangen deine Gehirnzellen an zu arbeiten.
+                </p>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>Durchschnitt berechnen</span>
+                  </div>
+                  <pre><code><span class="code-keyword">def</span> durchschnitt(zahlen):
+    summe <span class="code-operator">=</span> sum(zahlen)
+    ergebnis <span class="code-operator">=</span> summe <span class="code-operator">/</span> len(zahlen)
+    <span class="code-keyword">return</span> ergebnis
+
+print(durchschnitt([<span class="code-value">2</span>, <span class="code-value">4</span>, <span class="code-value">6</span>]))
+
+<span class="code-comment"># Ausgabe: 4.0</span></code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Was hier passiert: Zuerst werden Name und
+                  <span
+                    class="lesson-term"
+                    tabindex="0"
+                    data-term-values="zahlen"
+                    >Parameter</span
+                  >
+                  festgelegt. Dann kommt der Codeblock, in dem als Erstes die
+                  Variable
+                  <code>summe</code> definiert wird. Diese Variable nutzt die
+                  eingebaute Funktion <code>sum()</code>, die alle Zahlen im
+                  Argument aufsummiert. Danach speichert die Variable
+                  <code>ergebnis</code> die Summe geteilt durch die Anzahl der
+                  Zahlen, mithilfe der Funktion <code>len()</code>. Ganz am Ende
+                  wird <code>ergebnis</code> zurückgegeben.
+                </p>
+
+                <p>
+                  Wie du richtig bemerkt hast, hat der Parameter keinen Typ.
+                  Trotzdem nimmt die Funktion eine Liste an. Ein Parameter ist
+                  nur ein Platzhalter, er legt fest, wie viele Argumente die
+                  Funktion braucht. In diesem Fall ist es eines. Den Typ kannst
+                  du aber trotzdem angeben:
+                </p>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>Typangabe</span>
+                  </div>
+                  <pre><code><span class="code-keyword">def</span> durchschnitt(zahlen: list):</code></pre>
+                  <pre><code><span class="code-keyword">...</span></code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Und ich würde dir genau diese Schreibweise sehr empfehlen. Das
+                  macht deinen Code noch lesbarer.
+                </p>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="print-return">
+              <div class="lesson-section__number">03</div>
+              <div class="lesson-section__body">
+                <h2>print() oder return?</h2>
+                <p>
+                  Manchmal brauchst du statt <code>return</code> ein
+                  <code>print()</code>, und so erkennst du das. Wenn du keine
+                  Berechnungen anstellen musst, sondern einfach nur einen
+                  bestimmten Text zusammen mit dem Argument ausgeben willst,
+                  brauchst du kein <code>return</code>.
+                </p>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>Nur ausgeben</span>
+                  </div>
+                  <pre><code><span class="code-keyword">def</span> begruessung(name):
+    print(<span class="code-value">f"Hallo, {name}!"</span>)
+
+begruessung(<span class="code-value">"Albert"</span>)
+
+<span class="code-comment"># Ausgabe: Hallo, Albert!</span></code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Die Aufgabe dieser Funktion besteht nur darin, Text in der
+                  Konsole auszugeben, deshalb ist die Wahl von
+                  <code>print()</code> hier absolut gerechtfertigt.
+                </p>
+                <p>
+                  Aber so einfach ist das hier nicht. Eine Funktion ohne
+                  <code>return</code> gibt nichts zurück, genauer gesagt gibt
+                  sie <code>None</code> zurück. Deshalb kannst du so ein
+                  Ergebnis nicht in einer Variable speichern:
+                </p>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>Der None-Haken</span>
+                  </div>
+                  <pre><code>gruss <span class="code-operator">=</span> begruessung(<span class="code-value">"Albert"</span>)
+print(gruss)
+
+<span class="code-comment"># Ausgabe:</span>
+<span class="code-comment"># Hallo, Albert!</span>
+<span class="code-comment"># None</span></code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Die erste Zeile ist das <code>print()</code> innerhalb der
+                  Funktion selbst. Und das <code>None</code> ist das, was die
+                  Funktion zurückgegeben hat, beziehungsweise eben nicht
+                  zurückgegeben hat.
+                </p>
+
+                <div class="lesson-callout">
+                  <span class="lesson-callout__label">Merk dir</span>
+                  <p>
+                    <code>print()</code> zeigt, <code>return</code> gibt zurück.
+                    Wenn du das Ergebnis weiterverwenden willst, brauchst du
+                    <code>return</code>.
+                  </p>
+                </div>
+
+                <p>
+                  Außerdem kannst du eine Funktion ganz ohne Parameter
+                  erstellen.
+                </p>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>Ohne Parameter</span>
+                  </div>
+                  <pre><code><span class="code-keyword">def</span> willkommen():
+    print(<span class="code-value">"Hallo und willkommen zu meiner Webseite!"</span>)
+
+willkommen()
+
+<span class="code-comment"># Ausgabe: Hallo und willkommen zu meiner Webseite!</span></code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Man könnte auch einfach ein normales <code>print()</code>
+                  verwenden, aber das ist Geschmackssache. Wenn die Begrüßung
+                  nur einmal vorkommt, ist die Funktion tatsächlich überflüssig.
+                  Aber wenn sie mehrmals erscheinen soll, ist die Funktion
+                  definitiv die bessere Wahl.
+                </p>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="main">
+              <div class="lesson-section__number">04</div>
+              <div class="lesson-section__body">
+                <h2>Hilfsfunktionen und main()</h2>
+                <p>
+                  Wenn du mehrere Funktionen hast, die zusammen benutzt werden
+                  sollen, werden sie zu sogenannten
+                  <strong>Hilfsfunktionen</strong>. Die werden später alle in
+                  der Hauptfunktion <code>main()</code> zusammengeführt.
+                </p>
+
+                <div class="lesson-code" aria-label="Python-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Python</span>
+                    <span>Alles in main() zusammenführen</span>
+                  </div>
+                  <pre><code><span class="code-keyword">def</span> begruessung(name):
+    print(<span class="code-value">f"Hallo, {name}!"</span>)
+
+<span class="code-keyword">def</span> durchschnitt(zahlen):
+    <span class="code-keyword">return</span> sum(zahlen) <span class="code-operator">/</span> len(zahlen)
+
+<span class="code-keyword">def</span> main():
+    begruessung(<span class="code-value">"Albert"</span>)
+    noten <span class="code-operator">=</span> [<span class="code-value">2</span>, <span class="code-value">4</span>, <span class="code-value">6</span>]
+    schnitt <span class="code-operator">=</span> durchschnitt(noten)
+    print(<span class="code-value">f"Dein Durchschnitt ist {schnitt}"</span>)
+
+main()
+
+<span class="code-comment"># Ausgabe:</span>
+<span class="code-comment"># Hallo, Albert!</span>
+<span class="code-comment"># Dein Durchschnitt ist 4.0</span></code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Wie du siehst, sind beide Hilfsfunktionen die Bauteile eines
+                  Konstrukteurs, der in der Hauptfunktion zusammengebaut wird.
+                  So sieht dein Code ordentlich und verständlich aus.
+                </p>
+
+                <div class="lesson-callout">
+                  <span class="lesson-callout__label">Profi-Tipp</span>
+                  <p>
+                    Wenn du der Liebling deiner Lehrkraft werden willst, benutz
+                    diese Schreibweise <strong>immer</strong> (fast).
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <div class="lesson-next">
+              <div>
+                <span>Geschafft</span>
+                <strong>Python Grundlagen abgeschlossen</strong>
+              </div>
+              <a href="/pages/learn.html" aria-label="Zurück zur Übersicht"
+                >›</a
+              >
+            </div>
+          </article>
+        </div>
+      </main>
+    </div>
+
+    <div class="contact-modal" aria-hidden="true">
+      <div
+        class="contact-modal__box"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="contact-title"
+      >
+        <button
+          class="contact-modal__close"
+          type="button"
+          aria-label="Kontaktfenster schließen"
+        >
+          ×
+        </button>
+
+        <h2 id="contact-title">Kontakt</h2>
+        <div class="contact-modal__line"></div>
+        <p class="contact-modal__intro">
+          Bei Fragen, Anregungen oder Problemen kannst du mich gerne
+          kontaktieren.
+        </p>
+
+        <a
+          href="https://mail.google.com/mail/?view=cm&fs=1&to=sandravasylkova@gmail.com"
+          target="_blank"
+          rel="noopener"
+          class="contact-modal__row"
+        >
+          <span class="contact-modal__icon">✉</span>
+          <span>
+            <strong>Email</strong>
+            <small>sandravasylkova@gmail.com</small>
+          </span>
+        </a>
+
+        <a
+          href="https://www.microsoft.com/en-us/microsoft-teams/log-in"
+          class="contact-modal__row"
+        >
+          <svg
+            class="teams__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 17 20"
+            aria-hidden="true"
+          >
+            <path
+              d="M9.186 4.797a2.42 2.42 0 1 0-2.86-2.448h1.178c.929 0 1.682.753 1.682 1.682zm-4.295 7.738h2.613c.929 0 1.682-.753 1.682-1.682V5.58h2.783a.7.7 0 0 1 .682.716v4.294a4.197 4.197 0 0 1-4.093 4.293c-1.618-.04-3-.99-3.667-2.35Zm10.737-9.372a1.674 1.674 0 1 1-3.349 0 1.674 1.674 0 0 1 3.349 0m-2.238 9.488-.12-.002a5.2 5.2 0 0 0 .381-2.07V6.306a1.7 1.7 0 0 0-.15-.725h1.792c.39 0 .707.317.707.707v3.765a2.6 2.6 0 0 1-2.598 2.598z"
+            />
+            <path
+              d="M.682 3.349h6.822c.377 0 .682.305.682.682v6.822a.68.68 0 0 1-.682.682H.682A.68.68 0 0 1 0 10.853V4.03c0-.377.305-.682.682-.682Zm5.206 2.596v-.72h-3.59v.72h1.357V9.66h.87V5.945z"
+            />
+          </svg>
+          <span>
+            <strong>Teams</strong>
+            <small>Oleksandra Vasylkova</small>
+          </span>
+        </a>
+      </div>
+    </div>
+  </body>
+</html>

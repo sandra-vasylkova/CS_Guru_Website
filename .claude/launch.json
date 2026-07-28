@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "static",
+      "runtimeExecutable": "C:/msys64/mingw64/bin/python.exe",
+      "runtimeArgs": ["-m", "http.server", "4173"],
+      "port": 4173
+    }
+  ]
+}

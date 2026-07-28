@@ -6781,8 +6781,20 @@ body:has(.lesson-page) {
   scroll-behavior: smooth;
 }
 
+/* A lesson page takes the accent colour of its topic in learn.html (.topic--*).
+   Default is the turquoise of "Python Grundlagen"; the nav and the contact modal
+   keep --page-accent, exactly like on the overview page. */
 .lesson-page {
+  --lesson-accent: var(--page-accent);
+  --lesson-operator: var(--turquoise);
   overflow: visible;
+}
+
+/* Turquoise operators would clash inside a yellow code block, so here the signs
+   step back into dim white and the yellow values carry the line. */
+.lesson-page--numbers {
+  --lesson-accent: #ffe100;
+  --lesson-operator: rgba(255, 255, 255, 0.5);
 }
 
 .lesson-page .nav__favicon {
@@ -6798,12 +6810,12 @@ body:has(.lesson-page) {
   background:
     radial-gradient(
       circle at 82% 12%,
-      rgba(34, 214, 205, 0.12),
+      color-mix(in srgb, var(--lesson-accent) 12%, transparent),
       transparent 26%
     ),
     radial-gradient(
       circle at 12% 76%,
-      rgba(34, 214, 205, 0.06),
+      color-mix(in srgb, var(--lesson-accent) 6%, transparent),
       transparent 30%
     ),
     #111111;
@@ -6817,8 +6829,8 @@ body:has(.lesson-page) {
     115deg,
     transparent 0%,
     transparent 62%,
-    rgba(34, 214, 205, 0.08) 80%,
-    rgba(34, 214, 205, 0.14) 100%
+    color-mix(in srgb, var(--lesson-accent) 8%, transparent) 80%,
+    color-mix(in srgb, var(--lesson-accent) 14%, transparent) 100%
   );
   pointer-events: none;
 }
@@ -6830,7 +6842,7 @@ body:has(.lesson-page) {
   width: 46vw;
   height: 46vw;
   border-radius: 50%;
-  background: rgba(34, 214, 205, 0.08);
+  background: color-mix(in srgb, var(--lesson-accent) 8%, transparent);
   filter: blur(90px);
   pointer-events: none;
 }
@@ -6855,12 +6867,12 @@ body:has(.lesson-page) {
   max-height: calc(100dvh - 112px);
   overflow-y: auto;
   padding: 24px;
-  border: 1px solid rgba(34, 214, 205, 0.32);
+  border: 1px solid color-mix(in srgb, var(--lesson-accent) 32%, transparent);
   border-radius: 14px;
   background: rgba(3, 11, 12, 0.82);
   box-shadow:
     0 24px 60px rgba(0, 0, 0, 0.42),
-    inset 0 0 22px rgba(34, 214, 205, 0.035);
+    inset 0 0 22px color-mix(in srgb, var(--lesson-accent) 3.5%, transparent);
   backdrop-filter: blur(12px);
 }
 
@@ -6877,7 +6889,7 @@ body:has(.lesson-page) {
 }
 
 .lesson-sidebar__back span {
-  color: var(--turquoise);
+  color: var(--lesson-accent);
   font-size: 1.7rem;
   line-height: 0;
 }
@@ -6894,7 +6906,7 @@ body:has(.lesson-page) {
 .lesson-sidebar__eyebrow,
 .lesson-hero__eyebrow {
   display: block;
-  color: var(--turquoise);
+  color: var(--lesson-accent);
   font-size: 0.78rem;
   font-weight: 900;
   letter-spacing: 0.12em;
@@ -6937,7 +6949,7 @@ body:has(.lesson-page) {
   width: 3px;
   height: 0;
   border-radius: 999px;
-  background: var(--turquoise);
+  background: var(--lesson-accent);
   transform: translateY(-50%);
   transition: height 0.2s ease;
 }
@@ -6945,7 +6957,7 @@ body:has(.lesson-page) {
 .lesson-sidebar__link:hover,
 .lesson-sidebar__link--active {
   color: var(--white);
-  background: rgba(34, 214, 205, 0.08);
+  background: color-mix(in srgb, var(--lesson-accent) 8%, transparent);
 }
 
 .lesson-sidebar__link:hover::before,
@@ -6961,15 +6973,15 @@ body:has(.lesson-page) {
 .lesson-exercise {
   margin-top: 24px;
   padding: 22px 24px;
-  border: 1px solid rgba(34, 214, 205, 0.3);
+  border: 1px solid color-mix(in srgb, var(--lesson-accent) 30%, transparent);
   border-radius: 14px;
-  background: rgba(34, 214, 205, 0.04);
+  background: color-mix(in srgb, var(--lesson-accent) 4%, transparent);
 }
 
 .lesson-exercise__label {
   display: block;
   margin-bottom: 10px;
-  color: var(--turquoise);
+  color: var(--lesson-accent);
   font-size: 0.78rem;
   font-weight: 900;
   letter-spacing: 0.08em;
@@ -6998,12 +7010,12 @@ body:has(.lesson-page) {
 }
 
 .lesson-exercise__option:hover {
-  border-color: rgba(34, 214, 205, 0.5);
+  border-color: color-mix(in srgb, var(--lesson-accent) 50%, transparent);
 }
 
 .lesson-exercise__option[aria-pressed="true"] {
-  border-color: var(--turquoise);
-  background: rgba(34, 214, 205, 0.14);
+  border-color: var(--lesson-accent);
+  background: color-mix(in srgb, var(--lesson-accent) 14%, transparent);
 }
 
 .lesson-exercise__option:disabled {
@@ -7011,18 +7023,18 @@ body:has(.lesson-page) {
 }
 
 .lesson-exercise__option.is-correct {
-  border-color: var(--turquoise);
-  background: rgba(34, 214, 205, 0.2);
+  border-color: var(--lesson-accent);
+  background: color-mix(in srgb, var(--lesson-accent) 20%, transparent);
 }
 
 .lesson-exercise__option.is-correct::after {
   content: " ✓";
-  color: var(--turquoise);
+  color: var(--lesson-accent);
 }
 
 .lesson-exercise__option.is-missed {
   border-style: dashed;
-  border-color: var(--turquoise);
+  border-color: var(--lesson-accent);
   color: rgba(255, 255, 255, 0.7);
 }
 
@@ -7044,7 +7056,7 @@ body:has(.lesson-page) {
   padding: 0 26px;
   border: none;
   border-radius: 8px;
-  background: var(--turquoise);
+  background: var(--lesson-accent);
   color: #04181c;
   font: inherit;
   font-weight: 800;
@@ -7057,7 +7069,7 @@ body:has(.lesson-page) {
 
 .lesson-exercise__check:hover {
   background: #3fe3da;
-  box-shadow: 0 0 16px rgba(34, 214, 205, 0.35);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--lesson-accent) 35%, transparent);
 }
 
 .lesson-exercise__feedback {
@@ -7070,7 +7082,7 @@ body:has(.lesson-page) {
 }
 
 .lesson-exercise__result--ok {
-  color: var(--turquoise);
+  color: var(--lesson-accent);
 }
 
 .lesson-exercise__reasons {
@@ -7110,7 +7122,7 @@ body:has(.lesson-page) {
 .lesson-exercise__select {
   min-height: 40px;
   padding: 0 12px;
-  border: 1px solid rgba(34, 214, 205, 0.4);
+  border: 1px solid color-mix(in srgb, var(--lesson-accent) 40%, transparent);
   border-radius: 8px;
   background: rgba(0, 0, 0, 0.4);
   color: var(--white);
@@ -7126,8 +7138,8 @@ body:has(.lesson-page) {
 }
 
 .lesson-exercise__row.is-correct {
-  border-color: var(--turquoise);
-  background: rgba(34, 214, 205, 0.12);
+  border-color: var(--lesson-accent);
+  background: color-mix(in srgb, var(--lesson-accent) 12%, transparent);
 }
 
 .lesson-exercise__row.is-wrong {
@@ -7137,7 +7149,7 @@ body:has(.lesson-page) {
 
 .lesson-exercise__solution {
   margin-left: 10px;
-  color: var(--turquoise);
+  color: var(--lesson-accent);
   font-size: 0.85rem;
   font-weight: 800;
   white-space: nowrap;
@@ -7159,8 +7171,8 @@ body:has(.lesson-page) {
 .lesson-exercise__target {
   padding: 2px 9px;
   border-radius: 6px;
-  background: rgba(34, 214, 205, 0.12);
-  color: var(--turquoise);
+  background: color-mix(in srgb, var(--lesson-accent) 12%, transparent);
+  color: var(--lesson-accent);
   font-family: Consolas, Monaco, monospace;
   font-weight: 700;
 }
@@ -7171,7 +7183,7 @@ body:has(.lesson-page) {
   min-height: 46px;
   margin-top: 14px;
   padding: 0 14px;
-  border: 1px solid rgba(34, 214, 205, 0.4);
+  border: 1px solid color-mix(in srgb, var(--lesson-accent) 40%, transparent);
   border-radius: 8px;
   background: rgba(0, 0, 0, 0.4);
   color: var(--white);
@@ -7182,12 +7194,12 @@ body:has(.lesson-page) {
 
 .lesson-exercise__input:focus {
   outline: none;
-  border-color: var(--turquoise);
+  border-color: var(--lesson-accent);
 }
 
 .lesson-exercise__input.is-correct {
-  border-color: var(--turquoise);
-  background: rgba(34, 214, 205, 0.08);
+  border-color: var(--lesson-accent);
+  background: color-mix(in srgb, var(--lesson-accent) 8%, transparent);
 }
 
 .lesson-exercise__input:disabled {
@@ -7216,7 +7228,9 @@ body:has(.lesson-page) {
   font: inherit;
   font-weight: 700;
   cursor: pointer;
-  transition: color 0.15s ease, border-color 0.15s ease;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
 }
 
 .lesson-exercise__reveal:hover {
@@ -7238,7 +7252,7 @@ body:has(.lesson-page) {
 .method-list {
   margin-top: 14px;
   overflow: hidden;
-  border: 1px solid rgba(34, 214, 205, 0.32);
+  border: 1px solid color-mix(in srgb, var(--lesson-accent) 32%, transparent);
   border-radius: 10px;
   background: rgba(0, 0, 0, 0.3);
 }
@@ -7265,7 +7279,7 @@ body:has(.lesson-page) {
 
 .method__head::before {
   content: "›";
-  color: var(--turquoise);
+  color: var(--lesson-accent);
   font-weight: 900;
   transition: transform 0.15s ease;
 }
@@ -7275,11 +7289,11 @@ body:has(.lesson-page) {
 }
 
 .method__head:hover {
-  background: rgba(34, 214, 205, 0.05);
+  background: color-mix(in srgb, var(--lesson-accent) 5%, transparent);
 }
 
 .method[open] > .method__head {
-  background: rgba(34, 214, 205, 0.07);
+  background: color-mix(in srgb, var(--lesson-accent) 7%, transparent);
 }
 
 .method__call {
@@ -7301,7 +7315,7 @@ body:has(.lesson-page) {
   overflow-x: auto;
   margin: 0;
   padding: 14px 16px;
-  border-left: 2px solid rgba(34, 214, 205, 0.4);
+  border-left: 2px solid color-mix(in srgb, var(--lesson-accent) 40%, transparent);
   border-radius: 0 8px 8px 0;
   background: rgba(0, 0, 0, 0.32);
 }
@@ -7313,14 +7327,75 @@ body:has(.lesson-page) {
   color: var(--white);
 }
 
+/* Lesson sub-heading (was inline per lesson page). */
+.lesson-section h3 {
+  margin-top: 26px;
+  margin-bottom: 4px;
+  color: var(--white);
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+/* Callout box for tips and warnings inside a lesson. */
+.lesson-callout {
+  margin: 20px 0;
+  padding: 16px 20px;
+  border-left: 4px solid var(--lesson-accent);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--lesson-accent) 8%, transparent);
+}
+
+.lesson-callout p {
+  margin: 0;
+}
+
+.lesson-callout__label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--lesson-accent);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Reveal-answer toggle (Bedingungen and Schleifen). */
+.conditions-note {
+  margin-top: 18px;
+  color: rgba(255, 255, 255, 0.58);
+}
+
+.conditions-answer {
+  display: none;
+  margin-top: 14px;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.conditions-answer--visible {
+  display: block;
+}
+
+.conditions-answer-btn {
+  min-height: 46px;
+  margin-top: 16px;
+  padding: 0 20px;
+  border: 1px solid var(--lesson-accent);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--lesson-accent) 8%, transparent);
+  color: var(--white);
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
 .lesson-hero,
 .lesson-section,
 .lesson-next {
-  border: 1px solid rgba(34, 214, 205, 0.28);
+  border: 1px solid color-mix(in srgb, var(--lesson-accent) 28%, transparent);
   background: rgba(4, 12, 14, 0.84);
   box-shadow:
     0 24px 60px rgba(0, 0, 0, 0.38),
-    inset 0 0 24px rgba(34, 214, 205, 0.025);
+    inset 0 0 24px color-mix(in srgb, var(--lesson-accent) 2.5%, transparent);
   backdrop-filter: blur(12px);
 }
 
@@ -7338,12 +7413,12 @@ body:has(.lesson-page) {
   height: 68px;
   display: grid;
   place-items: center;
-  border: 1px solid var(--turquoise);
+  border: 1px solid var(--lesson-accent);
   border-radius: 10px;
-  color: var(--turquoise);
+  color: var(--lesson-accent);
   font-size: 1.55rem;
   font-weight: 900;
-  box-shadow: 0 0 22px rgba(34, 214, 205, 0.16);
+  box-shadow: 0 0 22px color-mix(in srgb, var(--lesson-accent) 16%, transparent);
 }
 
 .lesson-hero h1 {
@@ -7356,7 +7431,7 @@ body:has(.lesson-page) {
 }
 
 .lesson-hero h1 span {
-  color: var(--turquoise);
+  color: var(--lesson-accent);
 }
 
 .lesson-hero__intro {
@@ -7377,14 +7452,14 @@ body:has(.lesson-page) {
 }
 
 .lesson-section:target {
-  border-color: var(--turquoise);
+  border-color: var(--lesson-accent);
   box-shadow:
-    0 0 26px rgba(34, 214, 205, 0.11),
+    0 0 26px color-mix(in srgb, var(--lesson-accent) 11%, transparent),
     0 24px 60px rgba(0, 0, 0, 0.42);
 }
 
 .lesson-section__number {
-  color: var(--turquoise);
+  color: var(--lesson-accent);
   font-size: 1.15rem;
   font-weight: 900;
   letter-spacing: 0.08em;
@@ -7418,18 +7493,92 @@ body:has(.lesson-page) {
 
 .lesson-section code:not(pre code) {
   padding: 0.12em 0.42em;
-  border: 1px solid rgba(34, 214, 205, 0.26);
+  border: 1px solid color-mix(in srgb, var(--lesson-accent) 26%, transparent);
   border-radius: 5px;
-  background: rgba(34, 214, 205, 0.06);
-  color: var(--turquoise);
+  background: color-mix(in srgb, var(--lesson-accent) 6%, transparent);
+  color: var(--lesson-accent);
   font-family: Consolas, Monaco, monospace;
   font-size: 0.92em;
+}
+
+/* Hover glossary: a term in the running text that shows the matching values
+   from the code example of its section. */
+.lesson-term {
+  position: relative;
+  display: inline-block;
+  color: var(--white);
+  font-weight: 800;
+  text-decoration: underline dotted color-mix(in srgb, var(--lesson-accent) 80%, transparent);
+  text-underline-offset: 4px;
+  cursor: help;
+}
+
+.lesson-term:hover,
+.lesson-term:focus-visible {
+  color: var(--lesson-accent);
+  outline: none;
+}
+
+.lesson-term__pop {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 50%;
+  z-index: 40;
+  display: grid;
+  gap: 6px;
+  width: max-content;
+  max-width: min(290px, calc(100vw - 32px));
+  padding: 12px 14px;
+  border: 1px solid color-mix(in srgb, var(--lesson-accent) 45%, transparent);
+  border-radius: 10px;
+  background: rgba(4, 12, 14, 0.97);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.5);
+  color: rgba(255, 255, 255, 0.78);
+  font-weight: 400;
+  text-align: left;
+  text-decoration: none;
+  visibility: hidden;
+  opacity: 0;
+  transform: translate(calc(-50% + var(--pop-shift, 0px)), -6px);
+  transition:
+    opacity 0.16s ease,
+    transform 0.16s ease;
+  pointer-events: none;
+}
+
+/* Little arrow, kept over the word even when the popup is nudged sideways. */
+.lesson-term__pop::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: calc(50% - var(--pop-shift, 0px));
+  width: 9px;
+  height: 9px;
+  border-top: 1px solid color-mix(in srgb, var(--lesson-accent) 45%, transparent);
+  border-left: 1px solid color-mix(in srgb, var(--lesson-accent) 45%, transparent);
+  border-radius: 2px 0 0 0;
+  background: rgba(4, 12, 14, 0.97);
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.lesson-term:hover .lesson-term__pop,
+.lesson-term:focus .lesson-term__pop {
+  visibility: visible;
+  opacity: 1;
+  transform: translate(calc(-50% + var(--pop-shift, 0px)), 0);
+}
+
+.lesson-term__pop-values {
+  color: var(--white);
+  font-family: Consolas, Monaco, monospace;
+  font-size: 1.05rem;
+  line-height: 1.3;
 }
 
 .lesson-code {
   margin-top: 18px;
   overflow: hidden;
-  border: 1px solid rgba(34, 214, 205, 0.32);
+  border: 1px solid color-mix(in srgb, var(--lesson-accent) 32%, transparent);
   border-radius: 10px;
   background: rgba(0, 0, 0, 0.3);
 }
@@ -7450,7 +7599,7 @@ body:has(.lesson-page) {
 }
 
 .lesson-code__head span:first-child {
-  color: var(--turquoise);
+  color: var(--lesson-accent);
 }
 
 .lesson-code pre,
@@ -7475,7 +7624,7 @@ body:has(.lesson-page) {
 }
 
 .code-operator {
-  color: var(--turquoise);
+  color: var(--lesson-operator);
 }
 
 .code-value {
@@ -7498,9 +7647,9 @@ body:has(.lesson-page) {
   align-items: center;
   margin-top: 22px;
   padding: 18px;
-  border: 1px solid rgba(34, 214, 205, 0.3);
+  border: 1px solid color-mix(in srgb, var(--lesson-accent) 30%, transparent);
   border-radius: 10px;
-  background: rgba(34, 214, 205, 0.055);
+  background: color-mix(in srgb, var(--lesson-accent) 5.5%, transparent);
 }
 
 .lesson-note__icon,
@@ -7509,9 +7658,9 @@ body:has(.lesson-page) {
   height: 42px;
   display: grid;
   place-items: center;
-  border: 1px solid var(--turquoise);
+  border: 1px solid var(--lesson-accent);
   border-radius: 50%;
-  color: var(--turquoise);
+  color: var(--lesson-accent);
   font-weight: 900;
 }
 
@@ -7543,7 +7692,7 @@ body:has(.lesson-page) {
 
 .lesson-mini-card__label,
 .lesson-compare__card > span {
-  color: var(--turquoise);
+  color: var(--lesson-accent);
   font-size: 0.78rem;
   font-weight: 900;
   letter-spacing: 0.08em;
@@ -7571,7 +7720,7 @@ body:has(.lesson-page) {
 }
 
 .lesson-compare__card--good {
-  border-color: rgba(34, 214, 205, 0.38);
+  border-color: color-mix(in srgb, var(--lesson-accent) 38%, transparent);
 }
 
 .lesson-compare__card--bad {
@@ -7579,6 +7728,91 @@ body:has(.lesson-page) {
 }
 
 /* Operator cards — shared by comparison and boolean operator sections */
+/* Place-value table of a byte: one column per bit, the stellen with a 1 are
+   highlighted (Bits, Bytes und Stellenwerte). */
+.bit-table {
+  margin-top: 18px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--lesson-accent) 32%, transparent);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.bit-table__scroll {
+  overflow-x: auto;
+}
+
+/* Fixed layout so all eight bit columns end up the same width; below the
+   min-width the wrapper scrolls instead of squeezing the stellenwerte. */
+.bit-table table {
+  width: 100%;
+  min-width: 430px;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.bit-table th,
+.bit-table td {
+  padding: 13px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.62);
+  font-family: Consolas, Monaco, monospace;
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: center;
+}
+
+.bit-table tr:last-child th,
+.bit-table tr:last-child td {
+  border-bottom: none;
+}
+
+.bit-table th[scope="row"] {
+  width: 128px;
+  padding-left: 16px;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--lesson-accent);
+  font-family: system-ui, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-align: left;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.bit-table .bit--on {
+  background: color-mix(in srgb, var(--lesson-accent) 10%, transparent);
+  color: var(--white);
+  font-weight: 700;
+}
+
+.bit-table__sum {
+  margin: 0;
+  padding: 14px 16px;
+  border-top: 1px solid color-mix(in srgb, var(--lesson-accent) 30%, transparent);
+  background: color-mix(in srgb, var(--lesson-accent) 6%, transparent);
+  color: rgba(255, 255, 255, 0.78);
+  font-family: Consolas, Monaco, monospace;
+}
+
+.bit-table__sum strong {
+  color: var(--lesson-accent);
+}
+
+@media (max-width: 430px) {
+  .bit-table th,
+  .bit-table td {
+    padding: 11px 7px;
+    font-size: 0.92rem;
+  }
+
+  .bit-table th[scope="row"] {
+    padding-left: 12px;
+    font-size: 0.7rem;
+  }
+}
+
 .lesson-operators {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -7590,11 +7824,11 @@ body:has(.lesson-page) {
   position: relative;
   overflow: hidden;
   padding: 18px 18px 16px;
-  border: 1px solid rgba(34, 214, 205, 0.22);
+  border: 1px solid color-mix(in srgb, var(--lesson-accent) 22%, transparent);
   border-radius: 12px;
   background: linear-gradient(
     158deg,
-    rgba(34, 214, 205, 0.1),
+    color-mix(in srgb, var(--lesson-accent) 10%, transparent),
     rgba(0, 0, 0, 0.22) 62%
   );
 }
@@ -7604,13 +7838,13 @@ body:has(.lesson-page) {
   position: absolute;
   inset: 0 0 auto 0;
   height: 2px;
-  background: linear-gradient(90deg, var(--turquoise), transparent 80%);
+  background: linear-gradient(90deg, var(--lesson-accent), transparent 80%);
   opacity: 0.75;
 }
 
 .lesson-operator__symbol {
   display: inline-block;
-  color: var(--turquoise);
+  color: var(--lesson-accent);
   font-family: Consolas, Monaco, monospace;
   font-size: 1.5rem;
   font-weight: 900;
@@ -7648,7 +7882,7 @@ body:has(.lesson-page) {
 .lesson-flow > div {
   min-width: 140px;
   padding: 18px 24px;
-  border: 1px solid rgba(34, 214, 205, 0.32);
+  border: 1px solid color-mix(in srgb, var(--lesson-accent) 32%, transparent);
   border-radius: 10px;
   background: rgba(0, 0, 0, 0.22);
   text-align: center;
@@ -7665,23 +7899,23 @@ body:has(.lesson-page) {
 .lesson-flow strong {
   display: block;
   margin-top: 8px;
-  color: var(--turquoise);
+  color: var(--lesson-accent);
   font-size: 2rem;
 }
 
 .lesson-flow .lesson-flow__arrow {
-  color: var(--turquoise);
+  color: var(--lesson-accent);
   font-size: 2.4rem;
 }
 
 .lesson-summary {
   margin-top: 26px;
-  background: rgba(34, 214, 205, 0.075);
+  background: color-mix(in srgb, var(--lesson-accent) 7.5%, transparent);
 }
 
 .lesson-summary h3 {
   margin-bottom: 5px;
-  color: var(--turquoise);
+  color: var(--lesson-accent);
   font-size: 1rem;
   font-weight: 900;
 }
@@ -7719,9 +7953,9 @@ body:has(.lesson-page) {
   height: 48px;
   display: grid;
   place-items: center;
-  border: 1px solid var(--turquoise);
+  border: 1px solid var(--lesson-accent);
   border-radius: 10px;
-  color: var(--turquoise);
+  color: var(--lesson-accent);
   font-size: 2.4rem;
   line-height: 1;
   text-decoration: none;
@@ -7732,7 +7966,7 @@ body:has(.lesson-page) {
 
 .lesson-next a:hover {
   transform: translateX(4px);
-  background: rgba(34, 214, 205, 0.08);
+  background: color-mix(in srgb, var(--lesson-accent) 8%, transparent);
 }
 
 @media (max-width: 1000px) {
@@ -7868,7 +8102,7 @@ body:has(.lesson-page) {
 /*  Variables lesson sidebar  */
 .lesson-sidebar {
   scrollbar-width: thin;
-  scrollbar-color: rgba(34, 214, 205, 0.42) transparent;
+  scrollbar-color: color-mix(in srgb, var(--lesson-accent) 42%, transparent) transparent;
 }
 
 .lesson-sidebar::-webkit-scrollbar {
@@ -7877,7 +8111,7 @@ body:has(.lesson-page) {
 
 .lesson-sidebar::-webkit-scrollbar-thumb {
   border-radius: 999px;
-  background: rgba(34, 214, 205, 0.42);
+  background: color-mix(in srgb, var(--lesson-accent) 42%, transparent);
 }
 
 @media (min-width: 821px) and (max-width: 1000px) {

@@ -98,6 +98,80 @@ if (lessonSections.length && lessonSidebarLinks.length) {
   });
 })();
 
+// Hover glossary terms (.lesson-term): build the popup from the data-term-*
+// attributes and nudge it sideways so it never leaves the viewport.
+(() => {
+  const terms = [...document.querySelectorAll(".lesson-term")];
+  if (!terms.length) return;
+
+  const edgeMargin = 12;
+
+  terms.forEach((term, index) => {
+    const pop = document.createElement("span");
+    pop.className = "lesson-term__pop";
+    pop.id = `lesson-term-pop-${index + 1}`;
+    pop.setAttribute("role", "tooltip");
+
+    // Every part is optional: a term can show just its values, or a full
+    // title + values + note block.
+    if (term.dataset.termTitle) {
+      const title = document.createElement("span");
+      title.className = "lesson-term__pop-title";
+      title.textContent = term.dataset.termTitle;
+      pop.append(title);
+    }
+
+    if (term.dataset.termValues) {
+      const values = document.createElement("span");
+      values.className = "lesson-term__pop-values";
+      if (term.dataset.termTone === "value") values.classList.add("code-value");
+      values.textContent = term.dataset.termValues;
+      pop.append(values);
+    }
+
+    if (term.dataset.termNote || term.dataset.termCode) {
+      const note = document.createElement("span");
+      note.className = "lesson-term__pop-note";
+
+      if (term.dataset.termNote) {
+        note.append(`${term.dataset.termNote} `);
+      }
+
+      if (term.dataset.termCode) {
+        const code = document.createElement("code");
+        code.textContent = term.dataset.termCode;
+        note.append(code);
+      }
+
+      pop.append(note);
+    }
+
+    term.append(pop);
+    term.setAttribute("aria-describedby", pop.id);
+
+    // The popup is centered under the word, so work out where its edges would
+    // land and shift it back inside the viewport if it would stick out.
+    const position = () => {
+      const word = term.getBoundingClientRect();
+      const popWidth = pop.offsetWidth;
+      const left = word.left + word.width / 2 - popWidth / 2;
+      const right = left + popWidth;
+      let shift = 0;
+
+      if (left < edgeMargin) {
+        shift = edgeMargin - left;
+      } else if (right > window.innerWidth - edgeMargin) {
+        shift = window.innerWidth - edgeMargin - right;
+      }
+
+      pop.style.setProperty("--pop-shift", `${Math.round(shift)}px`);
+    };
+
+    term.addEventListener("pointerenter", position);
+    term.addEventListener("focus", position);
+  });
+})();
+
 // Interactive exercises: "pick all that apply" (data-exercise="multi").
 // Options with data-correct="true" are the ones the user should select.
 // With data-generate="varnames", the "Nochmal" button builds a fresh, random

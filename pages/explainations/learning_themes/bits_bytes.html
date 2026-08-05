@@ -27,7 +27,7 @@
       <nav class="nav">
         <a href="/index.html" class="nav__logo">
           <img
-            src="/assets/favicon_turquise.ico"
+            src="/assets/favicon-yellow.png"
             alt="CS Guru"
             class="nav__favicon"
           />
@@ -254,9 +254,52 @@
                 </div>
 
                 <p style="margin-top: 18px">
-                  Im Binärsystem funktioniert es genauso – nur sind die
-                  Stellenwerte Zweierpotenzen. Von rechts nach links verdoppelt
-                  sich der Wert jeder Stelle: 1, 2, 4, 8, 16, 32, 64, 128.
+                  Allgemein beschreibt das die
+                  <strong>Positionswertformel</strong>: Jede Ziffer wird mit der
+                  Basis hoch ihrer Position multipliziert und alles aufsummiert.
+                </p>
+
+                <div class="lesson-formula" aria-label="Positionswertformel">
+                  <div class="lesson-formula__row">
+                    <div class="lesson-formula__eq">
+                      <var>N</var>
+                      <span class="lesson-formula__op">=</span>
+                      <span class="lesson-formula__sum">
+                        <span class="lesson-formula__lim"><var>n</var></span>
+                        <span class="lesson-formula__sigma">Σ</span>
+                        <span class="lesson-formula__lim"><var>i</var>=0</span>
+                      </span>
+                      <span
+                        ><var>d</var><sub><var>i</var></sub> · <var>b</var
+                        ><sup><var>i</var></sup></span
+                      >
+                    </div>
+                  </div>
+                  <dl class="lesson-formula__legend">
+                    <div>
+                      <dt><var>N</var></dt>
+                      <dd>die zu berechnende Zahl</dd>
+                    </div>
+                    <div>
+                      <dt>
+                        <var>d</var><sub><var>i</var></sub>
+                      </dt>
+                      <dd>Ziffer an Position <var>i</var></dd>
+                    </div>
+                    <div>
+                      <dt><var>b</var></dt>
+                      <dd>Basis des Zahlensystems</dd>
+                    </div>
+                    <div>
+                      <dt><var>i</var></dt>
+                      <dd>Index der Stelle (rechts beginnend bei 0)</dd>
+                    </div>
+                  </dl>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Im Binärsystem funktioniert es genauso, nur sind die
+                  Stellenwerte Zweierpotenzen.
                 </p>
                 <p>
                   Um den Wert eines Bytes zu bestimmen, addierst du einfach die
@@ -303,13 +346,21 @@
                   ihre Stellenwerte zusammen (64 + 8 + 2 + 1), ergibt das den
                   Wert 75.
                 </p>
+                <p>
+                  Mit der Positionswertformel (Basis 2) ist das dieselbe
+                  Rechnung, nur ausgeschrieben (und so wirst du auch in
+                  Klausuren aufschreiben):
+                </p>
 
-                <div class="lesson-callout">
-                  <span class="lesson-callout__label">Kernidee</span>
-                  <p>
-                    Dieselben Ziffern an anderer Position ergeben einen anderen
-                    Wert.
-                  </p>
+                <div
+                  class="lesson-code"
+                  aria-label="Positionswertformel für das Byte"
+                >
+                  <div class="lesson-code__head">
+                    <span>Binär</span>
+                    <span>Formel angewandt</span>
+                  </div>
+                  <pre><code>75 <span class="code-operator">=</span> <span class="code-value">0</span>·2⁷ <span class="code-operator">+</span> <span class="code-value">1</span>·2⁶ <span class="code-operator">+</span> <span class="code-value">0</span>·2⁵ <span class="code-operator">+</span> <span class="code-value">0</span>·2⁴ <span class="code-operator">+</span> <span class="code-value">1</span>·2³ <span class="code-operator">+</span> <span class="code-value">0</span>·2² <span class="code-operator">+</span> <span class="code-value">1</span>·2¹ <span class="code-operator">+</span> <span class="code-value">1</span>·2⁰</code></pre>
                 </div>
               </div>
             </section>
@@ -319,7 +370,7 @@
                 <span>Nächstes Thema</span>
                 <strong>2. Zahlensysteme im Überblick</strong>
               </div>
-              <a href="/pages/learn.html" aria-label="Zurück zur Übersicht"
+              <a href="countsystems.html" aria-label="Zum Thema Zahlensysteme"
                 >›</a
               >
             </div>

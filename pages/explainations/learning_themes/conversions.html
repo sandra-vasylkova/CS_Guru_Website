@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Umwandlungen zwischen Zahlensystemen: ins Dezimalsystem, Horner-Schema, Divisions- und Subtraktionsmethode."
+    />
+    <title>CS Guru | Umwandlungen</title>
+
+    <link rel="stylesheet" href="/style.css" />
+    <script src="/app.js" defer></script>
+
+    <link
+      rel="icon"
+      type="image/png"
+      href="/assets/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+    <link rel="shortcut icon" href="/assets/favicon.ico" />
+  </head>
+
+  <body>
+    <div class="page learn-page lesson-page lesson-page--numbers">
+      <nav class="nav">
+        <a href="/index.html" class="nav__logo">
+          <img
+            src="/assets/favicon-yellow.png"
+            alt="CS Guru"
+            class="nav__favicon"
+          />
+          <span class="nav__brand">CS <span>Guru</span></span>
+        </a>
+
+        <ul class="nav__links">
+          <li><a href="/index.html" class="nav__link">Home</a></li>
+          <li>
+            <a href="/pages/discover.html" class="nav__link">Entdecken</a>
+          </li>
+          <li>
+            <a href="/pages/learn.html" class="nav__link nav__link--active"
+              >Lernen</a
+            >
+          </li>
+          <li><a href="/pages/play.html" class="nav__link">Spielen</a></li>
+          <li><a href="/pages/tools.html" class="nav__link">Werkzeuge</a></li>
+        </ul>
+
+        <div class="nav__actions">
+          <button class="nav__action nav__contact-button" type="button">
+            <span class="nav__action-icon">✉</span>
+            Kontakt
+          </button>
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSfCC80uccvA9SUJwrB5Bua7r2RKt3ISvhj3x3Ljcr7EUbyqyQ/viewform?usp=header"
+            class="nav__action"
+          >
+            <span class="nav__action-icon">✎</span>
+            Feedback
+          </a>
+        </div>
+
+        <button
+          class="nav__menu-btn"
+          type="button"
+          aria-label="Menü öffnen"
+          aria-expanded="false"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </nav>
+
+      <div class="mobile-menu" aria-hidden="true">
+        <div class="mobile-menu__panel">
+          <div class="mobile-menu__head">
+            <a href="/index.html" class="mobile-menu__brand"
+              >CS <span>Guru</span></a
+            >
+            <button
+              class="mobile-menu__close"
+              type="button"
+              aria-label="Menü schließen"
+            >
+              ×
+            </button>
+          </div>
+
+          <a href="/index.html" class="mobile-menu__link">Home</a>
+          <a
+            href="/pages/learn.html"
+            class="mobile-menu__link mobile-menu__link--active"
+            >Lernen</a
+          >
+          <a href="/pages/play.html" class="mobile-menu__link">Spielen</a>
+          <a href="/pages/tools.html" class="mobile-menu__link">Werkzeuge</a>
+          <a href="/pages/discover.html" class="mobile-menu__link">Entdecken</a>
+
+          <div class="mobile-menu__actions">
+            <button
+              class="mobile-menu__link mobile-menu__contact contact-modal-trigger"
+              type="button"
+            >
+              Kontakt
+            </button>
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSfCC80uccvA9SUJwrB5Bua7r2RKt3ISvhj3x3Ljcr7EUbyqyQ/viewform?usp=header"
+              class="mobile-menu__link"
+              >Feedback</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <main class="lesson">
+        <div class="lesson__glow" aria-hidden="true"></div>
+
+        <div class="lesson__shell">
+          <aside class="lesson-sidebar">
+            <a class="lesson-sidebar__back" href="/pages/learn.html">
+              <span>‹</span> Alle Themen
+            </a>
+            <div class="lesson-sidebar__topic">
+              <span class="lesson-sidebar__eyebrow"
+                >Zahlensysteme &amp; Datenrepräsentation</span
+              >
+              <strong>Umwandlungen</strong>
+            </div>
+            <nav class="lesson-sidebar__nav" aria-label="Themenübersicht">
+              <a class="lesson-sidebar__link" href="#dezimal"
+                >Ins Dezimalsystem</a
+              >
+              <a class="lesson-sidebar__link" href="#horner">Horner-Schema</a>
+              <a class="lesson-sidebar__link" href="#division"
+                >Divisionsmethode</a
+              >
+              <a class="lesson-sidebar__link" href="#subtraktion"
+                >Subtraktionsmethode</a
+              >
+            </nav>
+          </aside>
+
+          <article class="lesson-content">
+            <header class="lesson-hero">
+              <div class="lesson-hero__index">03</div>
+              <div>
+                <p class="lesson-hero__eyebrow">
+                  Zahlensysteme &amp; Datenrepräsentation
+                </p>
+                <h1>Umwandlungen<span>.</span></h1>
+                <p class="lesson-hero__intro">
+                  So rechnest du Zahlen von einem System ins andere um.
+                </p>
+              </div>
+            </header>
+
+            <section class="lesson-section" id="dezimal">
+              <div class="lesson-section__number">01</div>
+              <div class="lesson-section__body">
+                <h2>Aus jedem System ins Dezimalsystem</h2>
+                <p>
+                  Diese Methode hast du schon im Thema „Bits, Bytes und
+                  Stellenwerte“ am Beispiel des Binärsystems gesehen: Jede
+                  Stelle wird mit ihrem Stellenwert multipliziert. Schauen wir
+                  uns die anderen Systeme an.
+                </p>
+
+                <h3>Oktal</h3>
+                <p>
+                  Die Basis ist hier eine 8. Entsprechend multiplizierst du die
+                  Stellen mit Potenzen von 8, ansonsten läuft alles genau wie
+                  beim Binärsystem.
+                </p>
+
+                <div class="lesson-code" aria-label="Rechenbeispiel">
+                  <div class="lesson-code__head">
+                    <span>Oktal</span>
+                    <span>372₈ ins Dezimalsystem</span>
+                  </div>
+                  <pre><code>372₈ = 3 · 8² + 7 · 8¹ + 2 · 8⁰
+     = 3 · 64 + 7 · 8 + 2 · 1
+     = 192 + 56 + 2
+     = 250</code></pre>
+                </div>
+
+                <p style="margin-top: 18px"><strong>372₈ = 250₁₀</strong>.</p>
+
+                <h3>Hexadezimal</h3>
+                <p>
+                  Denk an die Werte der Buchstaben: A = 10, F = 15. Sonst ist
+                  das Vorgehen identisch, nur mit Potenzen von 16.
+                </p>
+
+                <div class="lesson-code" aria-label="Rechenbeispiel">
+                  <div class="lesson-code__head">
+                    <span>Hexadezimal</span>
+                    <span>2AF₁₆ ins Dezimalsystem</span>
+                  </div>
+                  <pre><code>2AF₁₆ = 2 · 16² + A · 16¹ + F · 16⁰
+      = 2 · 256 + 10 · 16 + 15 · 1
+      = 512 + 160 + 15
+      = 687</code></pre>
+                </div>
+
+                <p style="margin-top: 18px"><strong>2AF₁₆ = 687₁₀</strong>.</p>
+
+                <div class="lesson-callout">
+                  <span class="lesson-callout__label">Merk dir</span>
+                  <p>
+                    Nichts Schwieriges. Hauptsache, du vergisst die Werte der
+                    Buchstaben nicht.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="horner">
+              <div class="lesson-section__number">02</div>
+              <div class="lesson-section__body">
+                <h2>Bonus: das Horner-Schema</h2>
+                <p>
+                  Eine Bonus-Methode, die dir in der Schule keiner beibringt.
+                  Die Formel lautet <strong>N = N · b + Z</strong>. Du fängst
+                  mit N = 0 an, <code>b</code> ist die Basis und
+                  <code>Z</code> ist die jeweils nächste Ziffer.
+                </p>
+
+                <div class="lesson-code" aria-label="Rechenbeispiel">
+                  <div class="lesson-code__head">
+                    <span>Horner</span>
+                    <span>372₈</span>
+                  </div>
+                  <pre><code>Start:      N = 0
+Ziffer 3:   N = 0 · 8 + 3 = 3
+Ziffer 7:   N = 3 · 8 + 7 = 31
+Ziffer 2:   N = 31 · 8 + 2 = 250</code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Die erste Methode ist schön anschaulich, dieses Schema ist
+                  praktisch für große Zahlen.
+                </p>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="division">
+              <div class="lesson-section__number">03</div>
+              <div class="lesson-section__body">
+                <h2>Divisionsmethode</h2>
+                <p>
+                  Vom Dezimalsystem in ein anderes System gibt es zwei Wege. Der
+                  erste ist die Divisionsmethode.
+                </p>
+                <p>
+                  Du teilst die Dezimalzahl durch die Basis des gewünschten
+                  Systems und schreibst den Rest auf. Dann teilst du das
+                  Ergebnis wieder durch die Basis, notierst wieder den Rest, und
+                  so weiter, bis nichts mehr übrig ist. Zum Schluss liest du die
+                  Reste
+                  <strong>von unten nach oben</strong>.
+                </p>
+
+                <div class="lesson-code" aria-label="Rechenbeispiel">
+                  <div class="lesson-code__head">
+                    <span>Hexadezimal</span>
+                    <span>687 → Hex</span>
+                  </div>
+                  <pre><code>687 ÷ 16 = 42   Rest 15   (F)
+ 42 ÷ 16 =  2   Rest 10   (A)
+  2 ÷ 16 =  0   Rest  2   (2)</code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Von unten nach oben gelesen: <strong>2AF</strong>.
+                </p>
+
+                <p>Und für die anderen Systeme läuft es genauso:</p>
+
+                <div class="method-list">
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call">250 → 372₈</span>
+                      <span class="method__desc">Oktal</span>
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>250 ÷ 8 = 31   Rest 2
+ 31 ÷ 8 =  3   Rest 7
+  3 ÷ 8 =  0   Rest 3
+
+Von unten nach oben: 372</code></pre>
+                    </div>
+                  </details>
+
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call">13 → 1101₂</span>
+                      <span class="method__desc">Binär</span>
+                    </summary>
+                    <div class="method__body">
+                      <p>
+                        Bei einer Binärzahl ist alles noch einfacher: Rest
+                        vorhanden heißt 1, kein Rest heißt 0.
+                      </p>
+                      <pre><code>13 ÷ 2 = 6   Rest 1
+ 6 ÷ 2 = 3   Rest 0
+ 3 ÷ 2 = 1   Rest 1
+ 1 ÷ 2 = 0   Rest 1
+
+Von unten nach oben: 1101</code></pre>
+                    </div>
+                  </details>
+                </div>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="subtraktion">
+              <div class="lesson-section__number">04</div>
+              <div class="lesson-section__body">
+                <h2>Subtraktionsmethode</h2>
+                <p>
+                  Der zweite Weg. Dafür brauchst du eine Tabelle mit den
+                  Potenzen der Basis. Du schaust in die Tabelle und zählst, wie
+                  oft eine bestimmte Potenz in die Zahl passt. Diese Anzahl ist
+                  deine Ziffer. Mit dem Rest machst du dasselbe, nur mit der
+                  nächstkleineren Potenz.
+                </p>
+
+                <div class="lesson-code" aria-label="Rechenbeispiel">
+                  <div class="lesson-code__head">
+                    <span>Hexadezimal</span>
+                    <span>687 → Hex</span>
+                  </div>
+                  <pre><code>Potenzen von 16: 256, 16, 1
+
+256 passt 2×  in 687   Rest 175   →  2
+ 16 passt 10× in 175   Rest 15    →  A
+  1 passt 15× in 15    Rest 0     →  F</code></pre>
+                </div>
+
+                <p style="margin-top: 18px">Ergebnis: <strong>2AF</strong>.</p>
+
+                <div class="method-list">
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call">250 → 372₈</span>
+                      <span class="method__desc">Oktal</span>
+                    </summary>
+                    <div class="method__body">
+                      <pre><code>Potenzen von 8: 64, 8, 1
+
+64 passt 3× in 250   Rest 58   →  3
+ 8 passt 7× in 58    Rest 2    →  7
+ 1 passt 2× in 2     Rest 0    →  2
+
+Ergebnis: 372</code></pre>
+                    </div>
+                  </details>
+
+                  <details class="method">
+                    <summary class="method__head">
+                      <span class="method__call">13 → 1101₂</span>
+                      <span class="method__desc">Binär</span>
+                    </summary>
+                    <div class="method__body">
+                      <p>
+                        Bei Binär wird diese Methode am schönsten, weil jede
+                        Potenz nur einmal oder gar nicht passt. Genau deshalb
+                        ist das Ergebnis immer eine Folge aus 0 und 1.
+                      </p>
+                      <pre><code>Potenzen von 2: 8, 4, 2, 1
+
+8 passt in 13?  Ja    Rest 5   →  1
+4 passt in 5?   Ja    Rest 1   →  1
+2 passt in 1?   Nein  Rest 1   →  0
+1 passt in 1?   Ja    Rest 0   →  1
+
+Ergebnis: 1101</code></pre>
+                    </div>
+                  </details>
+                </div>
+
+                <div class="lesson-callout">
+                  <span class="lesson-callout__label">Bester Rat</span>
+                  <p>
+                    Wenn du dir nicht sicher bist, ob du richtig umgerechnet
+                    hast, rechne die Zahl einfach wieder ins Dezimalsystem
+                    zurück.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <div class="lesson-next">
+              <div>
+                <span>Nächstes Thema</span>
+                <strong>4. Schnellmethode</strong>
+              </div>
+              <a
+                href="/pages/explainations/learning_themes/fast_method.html"
+                aria-label="Zum Thema Schnellmethode"
+                >›</a
+              >
+            </div>
+          </article>
+        </div>
+      </main>
+    </div>
+
+    <div class="contact-modal" aria-hidden="true">
+      <div
+        class="contact-modal__box"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="contact-title"
+      >
+        <button
+          class="contact-modal__close"
+          type="button"
+          aria-label="Kontaktfenster schließen"
+        >
+          ×
+        </button>
+
+        <h2 id="contact-title">Kontakt</h2>
+        <div class="contact-modal__line"></div>
+        <p class="contact-modal__intro">
+          Bei Fragen, Anregungen oder Problemen kannst du mich gerne
+          kontaktieren.
+        </p>
+
+        <a
+          href="https://mail.google.com/mail/?view=cm&fs=1&to=sandravasylkova@gmail.com"
+          target="_blank"
+          rel="noopener"
+          class="contact-modal__row"
+        >
+          <span class="contact-modal__icon">✉</span>
+          <span>
+            <strong>Email</strong>
+            <small>sandravasylkova@gmail.com</small>
+          </span>
+        </a>
+
+        <a
+          href="https://www.microsoft.com/en-us/microsoft-teams/log-in"
+          class="contact-modal__row"
+        >
+          <svg
+            class="teams__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 17 20"
+            aria-hidden="true"
+          >
+            <path
+              d="M9.186 4.797a2.42 2.42 0 1 0-2.86-2.448h1.178c.929 0 1.682.753 1.682 1.682zm-4.295 7.738h2.613c.929 0 1.682-.753 1.682-1.682V5.58h2.783a.7.7 0 0 1 .682.716v4.294a4.197 4.197 0 0 1-4.093 4.293c-1.618-.04-3-.99-3.667-2.35Zm10.737-9.372a1.674 1.674 0 1 1-3.349 0 1.674 1.674 0 0 1 3.349 0m-2.238 9.488-.12-.002a5.2 5.2 0 0 0 .381-2.07V6.306a1.7 1.7 0 0 0-.15-.725h1.792c.39 0 .707.317.707.707v3.765a2.6 2.6 0 0 1-2.598 2.598z"
+            />
+            <path
+              d="M.682 3.349h6.822c.377 0 .682.305.682.682v6.822a.68.68 0 0 1-.682.682H.682A.68.68 0 0 1 0 10.853V4.03c0-.377.305-.682.682-.682Zm5.206 2.596v-.72h-3.59v.72h1.357V9.66h.87V5.945z"
+            />
+          </svg>
+          <span>
+            <strong>Teams</strong>
+            <small>Oleksandra Vasylkova</small>
+          </span>
+        </a>
+      </div>
+    </div>
+  </body>
+</html>

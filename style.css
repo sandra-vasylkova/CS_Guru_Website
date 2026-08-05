@@ -6801,6 +6801,43 @@ body:has(.lesson-page) {
   background: var(--turquoise);
 }
 
+/* Zahlensysteme & Datenrepräsentation lessons carry a yellow lesson accent,
+   so the navbar drops the default turquoise brand colour to match it. */
+.lesson-page--numbers .nav__favicon {
+  background: var(--lesson-accent);
+}
+
+.lesson-page--numbers .nav__brand span,
+.lesson-page--numbers .mobile-menu__brand span {
+  color: var(--lesson-accent);
+}
+
+.lesson-page--numbers .nav__link--active,
+.lesson-page--numbers .nav__link:hover,
+.lesson-page--numbers .mobile-menu__link--active {
+  color: var(--lesson-accent);
+}
+
+.lesson-page--numbers .nav__link::after {
+  background-color: var(--lesson-accent);
+}
+
+.lesson-page--numbers .nav__action {
+  border-color: color-mix(in srgb, var(--lesson-accent) 55%, transparent);
+  box-shadow:
+    inset 0 0 14px color-mix(in srgb, var(--lesson-accent) 10%, transparent),
+    0 0 14px color-mix(in srgb, var(--lesson-accent) 10%, transparent);
+}
+
+.lesson-page--numbers .nav__action:hover {
+  border-color: var(--lesson-accent);
+  background: color-mix(in srgb, var(--lesson-accent) 10%, transparent);
+}
+
+.lesson-page--numbers .nav__action-icon {
+  color: var(--lesson-accent);
+}
+
 .lesson {
   position: relative;
   flex: 1;
@@ -7386,6 +7423,131 @@ body:has(.lesson-page) {
   font: inherit;
   font-weight: 800;
   cursor: pointer;
+}
+
+/* Comparison table (e.g. the number-systems overview). */
+.lesson-table {
+  margin-top: 18px;
+  overflow-x: auto;
+  border: 1px solid color-mix(in srgb, var(--lesson-accent) 30%, transparent);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.22);
+}
+
+.lesson-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: Consolas, Monaco, monospace;
+  font-size: 0.98rem;
+}
+
+.lesson-table th,
+.lesson-table td {
+  padding: 9px 16px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  white-space: nowrap;
+}
+
+.lesson-table th {
+  color: var(--lesson-accent);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: color-mix(in srgb, var(--lesson-accent) 6%, transparent);
+}
+
+.lesson-table td {
+  color: var(--white);
+}
+
+.lesson-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Typeset formula box: a numbered formula with a symbol legend. */
+.lesson-formula {
+  margin-top: 18px;
+  padding: 20px 24px;
+  border: 1px solid color-mix(in srgb, var(--lesson-accent) 32%, transparent);
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.lesson-formula__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+}
+
+.lesson-formula__eq {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.55rem;
+  color: var(--white);
+}
+
+.lesson-formula var {
+  font-style: italic;
+}
+
+.lesson-formula__op {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.lesson-formula__sum {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+}
+
+.lesson-formula__sigma {
+  font-size: 1.7em;
+  line-height: 0.82;
+  color: var(--lesson-accent);
+}
+
+.lesson-formula__lim {
+  font-size: 0.48em;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.lesson-formula__num {
+  margin-left: auto;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.lesson-formula__legend {
+  margin: 16px 0 0;
+  display: grid;
+  gap: 7px 16px;
+}
+
+.lesson-formula__legend > div {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+}
+
+.lesson-formula__legend dt {
+  flex: 0 0 42px;
+  color: var(--lesson-accent);
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700;
+}
+
+.lesson-formula__legend dd {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.98rem;
+  line-height: 1.5;
 }
 
 .lesson-hero,

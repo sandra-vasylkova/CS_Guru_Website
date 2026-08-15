@@ -461,7 +461,6 @@ function renderLevelTwo() {
           <strong>Y</strong>
         </div>
       </div>
-      <button id="circuit-clear-wires" class="circuit-btn circuit-btn--ghost circuit-clear-wires" type="button">Verbindungen löschen</button>
     </div>
   `;
 
@@ -482,14 +481,6 @@ function renderLevelTwo() {
     const rect = board.getBoundingClientRect();
     addBuilderGate(type, event.clientX - rect.left, event.clientY - rect.top);
   });
-
-  document
-    .getElementById("circuit-clear-wires")
-    .addEventListener("click", () => {
-      builderConnections = [];
-      renderBuilderWires();
-      updateTerminalState();
-    });
 
   registerTerminalEvents();
 }
@@ -833,6 +824,7 @@ function showAnswer() {
   if (!currentTask) return;
   answerEl.classList.remove("circuit-answer--hidden");
   answerContentEl.innerHTML = `
+    <h2>Antwort</h2>
     ${currentLevel === 1 ? "" : `<div class="circuit-answer-expression">Y = ${currentTask.expression}</div>`}
     <div class="circuit-mini-answer-board">
       ${drawLevelOneSvg()}
@@ -905,6 +897,5 @@ newTaskBtn.addEventListener("click", () => {
   if (!currentLevel) return;
   showTask();
 });
-clearBtn.addEventListener("click", resetCurrent);
 
 resetGame();

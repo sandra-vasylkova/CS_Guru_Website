@@ -7,6 +7,91 @@ document.querySelectorAll(".topic__head").forEach((head) => {
   });
 });
 
+// Deep-link into learn.html topics: /pages/learn.html#topic-python opens
+// that topic (instead of leaving every topic collapsed) and scrolls to it.
+// Runs on load for direct links, and again on hashchange for same-page
+// clicks (e.g. from the nav dropdown below) which don't trigger a reload.
+(() => {
+  const openTopicFromHash = () => {
+    const id = location.hash.slice(1);
+    if (!id) return;
+    const topic = document.getElementById(id);
+    if (!topic || !topic.classList.contains("topic")) return;
+    topic.classList.add("topic--open");
+    topic.classList.remove("topic--closed");
+    topic.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  if (document.querySelector(".topic")) {
+    openTopicFromHash();
+    window.addEventListener("hashchange", openTopicFromHash);
+  }
+})();
+
+// Nav hover dropdowns: hovering "Lernen", "Spielen", or "Werkzeuge" lists
+// every major topic/game/tool so a click jumps straight to it. Injected
+// here (rather than duplicated in every page's nav markup) since app.js is
+// the one script every page already includes.
+(() => {
+  const NAV_DROPDOWNS = [
+    {
+      href: "/pages/learn.html",
+      items: [
+        ["Python Grundlagen", "/pages/learn.html#topic-python"],
+        ["Zahlensysteme", "/pages/learn.html#topic-numbers"],
+        ["Schaltalgebra", "/pages/learn.html#topic-logic"],
+      ],
+    },
+    {
+      href: "/pages/play.html",
+      items: [
+        ["Nibbleman", "/games/conversion.html"],
+        ["Simplify", "/games/simplify.html"],
+        ["The Floor is Lava", "/games/two_pow.html"],
+        ["Circuit", "/games/circuit.html"],
+      ],
+    },
+    {
+      href: "/pages/tools.html",
+      items: [
+        ["Basis-Umwandler", "/pages/explainations/tools/base_converter.html"],
+        [
+          "Dezimalumwandler",
+          "/pages/explainations/tools/decimal_converter.html",
+        ],
+        ["Vereinfacher", "/pages/explainations/tools/simplifier.html"],
+        ["Tabellenersteller", "/pages/explainations/tools/truth_table.html"],
+      ],
+    },
+  ];
+
+  NAV_DROPDOWNS.forEach(({ href, items }) => {
+    const link = document.querySelector(
+      `.nav__links a.nav__link[href="${href}"]`,
+    );
+    const li = link?.closest("li");
+    if (!li) return;
+
+    const dropdown = document.createElement("div");
+    dropdown.className = "nav__dropdown";
+    const list = document.createElement("ul");
+    list.className = "nav__dropdown-list";
+
+    items.forEach(([label, itemHref]) => {
+      const itemLi = document.createElement("li");
+      const a = document.createElement("a");
+      a.className = "nav__dropdown-link";
+      a.href = itemHref;
+      a.textContent = label;
+      itemLi.appendChild(a);
+      list.appendChild(itemLi);
+    });
+
+    dropdown.appendChild(list);
+    li.appendChild(dropdown);
+  });
+})();
+
 const menuBtn = document.querySelector(".nav__menu-btn");
 const mobileMenu = document.querySelector(".mobile-menu");
 const closeBtn = document.querySelector(".mobile-menu__close");
@@ -84,6 +169,79 @@ if (lessonSections.length && lessonSidebarLinks.length) {
 
   lessonSections.forEach((section) => lessonObserver.observe(section));
 }
+
+// Lesson progress (localStorage only, no accounts/server): remember which
+// lessons a learner has scrolled through to the end, so /pages/learn.html
+// can show a "done" badge on return visits.
+(() => {
+  const PROGRESS_KEY = "csguru:lesson-progress";
+
+  function readProgress() {
+    try {
+      return JSON.parse(localStorage.getItem(PROGRESS_KEY)) || {};
+    } catch {
+      return {};
+    }
+  }
+
+  function normalizePath(path) {
+    try {
+      return decodeURIComponent(path);
+    } catch {
+      return path;
+    }
+  }
+
+  // Mark the current lesson done once its last section scrolls into view.
+  const finalSection = lessonSections[lessonSections.length - 1];
+
+  if (finalSection) {
+    const currentPath = normalizePath(location.pathname);
+
+    const completionObserver = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+
+        const progress = readProgress();
+        if (!progress[currentPath]) {
+          progress[currentPath] = true;
+          try {
+            localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
+          } catch {
+            // Private browsing / quota exceeded - progress just won't persist.
+          }
+        }
+        completionObserver.disconnect();
+      },
+      { threshold: 0.4 },
+    );
+
+    completionObserver.observe(finalSection);
+  }
+
+  // Render "done" badges on the lessons overview page.
+  const subtopicLinks = [...document.querySelectorAll(".subtopic[href]")];
+  if (!subtopicLinks.length) return;
+
+  const progress = readProgress();
+
+  subtopicLinks.forEach((link) => {
+    const linkPath = normalizePath(
+      new URL(link.getAttribute("href"), location.origin).pathname,
+    );
+    if (!progress[linkPath]) return;
+
+    link.classList.add("subtopic--done");
+    const content = link.querySelector("div:not(.subtopic__icon)");
+    if (!content) return;
+
+    const badge = document.createElement("span");
+    badge.className = "subtopic__done-badge";
+    badge.textContent = "✓ Erledigt";
+    content.appendChild(badge);
+  });
+})();
+
 (() => {
   const answerButton = document.getElementById("show-conditions-answer");
   const answer = document.getElementById("conditions-answer");
@@ -588,6 +746,81 @@ if (lessonSections.length && lessonSidebarLinks.length) {
     });
 })();
 
+// Interactive exercises: "truth" — fill in 0/1 for each cell of a truth
+// table. Each <input class="lesson-truth-table__input"> carries its own
+// data-answer ("0" or "1"); one "Prüfen" button grades every input at once.
+(() => {
+  document
+    .querySelectorAll('.lesson-exercise[data-exercise="truth"]')
+    .forEach((exercise) => {
+      const rowsWrap = exercise.querySelector(".lesson-truth-table tbody");
+      const checkBtn = exercise.querySelector(".lesson-exercise__check");
+      const feedback = exercise.querySelector(".lesson-exercise__feedback");
+      if (!rowsWrap || !checkBtn || !feedback) return;
+
+      let checked = false;
+      const inputs = () => [...rowsWrap.querySelectorAll("input")];
+
+      const freshBoard = () => {
+        checked = false;
+        feedback.hidden = true;
+        feedback.innerHTML = "";
+        checkBtn.textContent = "Prüfen";
+        inputs().forEach((input) => {
+          const cell = input.closest("td");
+          cell.classList.remove("is-correct", "is-wrong");
+          cell.querySelector(".lesson-truth-table__solution")?.remove();
+          input.value = "";
+          input.disabled = false;
+        });
+        inputs()[0]?.focus();
+      };
+
+      const grade = () => {
+        checked = true;
+        let correct = 0;
+        const all = inputs();
+        all.forEach((input) => {
+          input.disabled = true;
+          const cell = input.closest("td");
+          const isRight = input.value.trim() === input.dataset.answer;
+          cell.classList.add(isRight ? "is-correct" : "is-wrong");
+          if (isRight) {
+            correct += 1;
+          } else {
+            const solution = document.createElement("span");
+            solution.className = "lesson-truth-table__solution";
+            solution.textContent = `→ ${input.dataset.answer}`;
+            cell.appendChild(solution);
+          }
+        });
+        feedback.innerHTML =
+          correct === all.length
+            ? '<p class="lesson-exercise__result lesson-exercise__result--ok">Gut gemacht!</p>'
+            : `<p class="lesson-exercise__result">${correct} von ${all.length} richtig. Nochmal?</p>`;
+        feedback.hidden = false;
+        checkBtn.textContent = "Nochmal";
+      };
+
+      checkBtn.addEventListener("click", () => {
+        if (checked) freshBoard();
+        else grade();
+      });
+
+      inputs().forEach((input) => {
+        input.addEventListener("input", () => {
+          input.value = input.value.replace(/[^01]/g, "").slice(-1);
+        });
+        input.addEventListener("keydown", (event) => {
+          if (event.key === "Enter") {
+            event.preventDefault();
+            checkBtn.click();
+          }
+        });
+      });
+    });
+})();
+
 // Interactive exercises: "slice" — type an index/slice that yields the target.
 // The user's expression is evaluated with real Python slice semantics, so any
 // correct form is accepted (name[4:], name[-2:], name[4:6] all pass).
@@ -800,5 +1033,1342 @@ if (lessonSections.length && lessonSidebarLinks.length) {
         );
         finish();
       });
+    });
+})();
+
+// Interactive exercises: "logic-build" — rebuild XOR/XNOR/implication out of
+// the basic operators ∧, ∨, ¬. Each row carries data-truth, a 4-char string
+// of expected outputs for (A,B) = (0,0),(0,1),(1,0),(1,1). The typed
+// expression is tokenized, parsed into a small AST, and evaluated for all
+// four combinations — so any logically equivalent answer is accepted, not
+// just one exact string.
+(() => {
+  const AND_WORDS = ["and", "und"];
+  const OR_WORDS = ["or", "oder"];
+  const NOT_WORDS = ["not", "nicht"];
+  const COMBOS = [
+    [0, 0],
+    [0, 1],
+    [1, 0],
+    [1, 1],
+  ];
+
+  const ERROR_MSG = {
+    empty: "Bitte einen Ausdruck eingeben.",
+    char: "Unbekanntes Zeichen. Erlaubt sind A, B, Klammern sowie ∧, ∨, ¬.",
+    var: "Nur A und B sind als Operanden erlaubt.",
+    parse:
+      "Der Ausdruck ist nicht gültig aufgebaut. Prüf Klammern und Operatoren.",
+  };
+
+  const tokenize = (input) => {
+    const tokens = [];
+    let i = 0;
+    while (i < input.length) {
+      const c = input[i];
+      if (/\s/.test(c)) {
+        i++;
+        continue;
+      }
+      if (c === "(") {
+        tokens.push({ type: "LP" });
+        i++;
+        continue;
+      }
+      if (c === ")") {
+        tokens.push({ type: "RP" });
+        i++;
+        continue;
+      }
+      if (c === "∧" || c === "&" || c === "*") {
+        tokens.push({ type: "AND" });
+        i++;
+        continue;
+      }
+      if (c === "∨" || c === "|" || c === "+") {
+        tokens.push({ type: "OR" });
+        i++;
+        continue;
+      }
+      if (c === "¬" || c === "!") {
+        tokens.push({ type: "NOT" });
+        i++;
+        continue;
+      }
+      if (/[a-zA-Z]/.test(c)) {
+        let j = i;
+        while (j < input.length && /[a-zA-Z]/.test(input[j])) j++;
+        const word = input.slice(i, j).toLowerCase();
+        if (AND_WORDS.includes(word)) tokens.push({ type: "AND" });
+        else if (OR_WORDS.includes(word)) tokens.push({ type: "OR" });
+        else if (NOT_WORDS.includes(word)) tokens.push({ type: "NOT" });
+        else if (word === "a" || word === "b")
+          tokens.push({ type: "VAR", name: word.toUpperCase() });
+        else return { error: "var" };
+        i = j;
+        continue;
+      }
+      return { error: "char" };
+    }
+    return { tokens };
+  };
+
+  const parse = (tokens) => {
+    let pos = 0;
+    const peek = () => tokens[pos];
+
+    const parseAtom = () => {
+      const t = peek();
+      if (!t) return null;
+      if (t.type === "VAR") {
+        pos++;
+        return { type: "VAR", name: t.name };
+      }
+      if (t.type === "LP") {
+        pos++;
+        const inner = parseOr();
+        if (!inner || peek()?.type !== "RP") return null;
+        pos++;
+        return inner;
+      }
+      return null;
+    };
+    const parseNot = () => {
+      if (peek()?.type === "NOT") {
+        pos++;
+        const operand = parseNot();
+        return operand ? { type: "NOT", operand } : null;
+      }
+      return parseAtom();
+    };
+    const parseAnd = () => {
+      let node = parseNot();
+      if (!node) return null;
+      while (peek()?.type === "AND") {
+        pos++;
+        const rhs = parseNot();
+        if (!rhs) return null;
+        node = { type: "AND", left: node, right: rhs };
+      }
+      return node;
+    };
+    const parseOr = () => {
+      let node = parseAnd();
+      if (!node) return null;
+      while (peek()?.type === "OR") {
+        pos++;
+        const rhs = parseAnd();
+        if (!rhs) return null;
+        node = { type: "OR", left: node, right: rhs };
+      }
+      return node;
+    };
+
+    const ast = parseOr();
+    if (!ast || pos !== tokens.length) return { error: "parse" };
+    return { ast };
+  };
+
+  const evalNode = (node, vals) => {
+    switch (node.type) {
+      case "VAR":
+        return vals[node.name];
+      case "NOT":
+        return evalNode(node.operand, vals) ? 0 : 1;
+      case "AND":
+        return evalNode(node.left, vals) && evalNode(node.right, vals) ? 1 : 0;
+      case "OR":
+        return evalNode(node.left, vals) || evalNode(node.right, vals) ? 1 : 0;
+      default:
+        return 0;
+    }
+  };
+
+  const truthString = (ast) =>
+    COMBOS.map(([a, b]) => evalNode(ast, { A: a, B: b })).join("");
+
+  document
+    .querySelectorAll('.lesson-exercise[data-exercise="logic-build"]')
+    .forEach((exercise) => {
+      const rows = [
+        ...exercise.querySelectorAll(".lesson-exercise__row[data-truth]"),
+      ];
+      const checkBtn = exercise.querySelector(".lesson-exercise__check");
+      const feedback = exercise.querySelector(".lesson-exercise__feedback");
+      if (!rows.length || !checkBtn || !feedback) return;
+
+      const inputs = rows.map((row) => row.querySelector("input"));
+      let activeInput = inputs[0];
+      let checked = false;
+
+      inputs.forEach((input) => {
+        input.addEventListener("focus", () => {
+          activeInput = input;
+        });
+        input.addEventListener("keydown", (event) => {
+          if (event.key === "Enter") {
+            event.preventDefault();
+            checkBtn.click();
+          }
+        });
+      });
+
+      exercise.querySelectorAll(".lesson-exercise__symbol").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const input = activeInput || inputs[0];
+          if (!input || input.disabled) return;
+          const symbol = btn.dataset.symbol;
+          const start = input.selectionStart ?? input.value.length;
+          const end = input.selectionEnd ?? input.value.length;
+          input.value =
+            input.value.slice(0, start) + symbol + input.value.slice(end);
+          const cursor = start + symbol.length;
+          input.focus();
+          input.setSelectionRange(cursor, cursor);
+        });
+      });
+
+      const freshBoard = () => {
+        checked = false;
+        feedback.hidden = true;
+        feedback.innerHTML = "";
+        checkBtn.textContent = "Prüfen";
+        rows.forEach((row, idx) => {
+          row.classList.remove("is-correct", "is-wrong");
+          inputs[idx].value = "";
+          inputs[idx].disabled = false;
+        });
+        activeInput = inputs[0];
+        inputs[0]?.focus();
+      };
+
+      const grade = () => {
+        checked = true;
+        let correct = 0;
+        let firstProblem = "";
+        rows.forEach((row, idx) => {
+          const input = inputs[idx];
+          input.disabled = true;
+          const raw = input.value.trim();
+          if (!raw) {
+            row.classList.add("is-wrong");
+            firstProblem ||= ERROR_MSG.empty;
+            return;
+          }
+          const tokenRes = tokenize(raw);
+          if (tokenRes.error) {
+            row.classList.add("is-wrong");
+            firstProblem ||= ERROR_MSG[tokenRes.error];
+            return;
+          }
+          const parseRes = parse(tokenRes.tokens);
+          if (parseRes.error) {
+            row.classList.add("is-wrong");
+            firstProblem ||= ERROR_MSG[parseRes.error];
+            return;
+          }
+          if (truthString(parseRes.ast) === row.dataset.truth) {
+            row.classList.add("is-correct");
+            correct += 1;
+          } else {
+            row.classList.add("is-wrong");
+          }
+        });
+
+        feedback.innerHTML =
+          correct === rows.length
+            ? '<p class="lesson-exercise__result lesson-exercise__result--ok">Gut gemacht! Alle drei Ausdrücke passen.</p>'
+            : `<p class="lesson-exercise__result">${correct} von ${rows.length} richtig.${
+                firstProblem ? ` ${firstProblem}` : " Nochmal versuchen."
+              }</p>`;
+        feedback.hidden = false;
+        checkBtn.textContent = "Nochmal";
+      };
+
+      checkBtn.addEventListener("click", () => {
+        if (checked) freshBoard();
+        else grade();
+      });
+    });
+})();
+
+// Interactive exercises: "law-quiz" — practice the eight Boolesche Gesetze in
+// either direction. Each law's left/right side lives in a hidden
+// .lesson-law-quiz__data list (data-law-*) so the JS below stays generic.
+// "Ausdruck → Gesetz": a full equation is shown, pick the matching law name.
+// "Gesetz → Ausdruck": only the law name + one side is shown, type the other
+// side; it's tokenized/parsed into an AST and checked for logical
+// equivalence (over all 8 combinations of A, B, C) against the canonical
+// side, so any equivalent expression is accepted, not just one exact string.
+(() => {
+  const AND_WORDS = ["and", "und"];
+  const OR_WORDS = ["or", "oder"];
+  const NOT_WORDS = ["not", "nicht"];
+  const VAR_NAMES = ["a", "b", "c"];
+  const LAW_COMBOS = [];
+  for (let a = 0; a <= 1; a++)
+    for (let b = 0; b <= 1; b++)
+      for (let c = 0; c <= 1; c++) LAW_COMBOS.push({ A: a, B: b, C: c });
+
+  const tokenizeLaw = (input) => {
+    const tokens = [];
+    let i = 0;
+    while (i < input.length) {
+      const c = input[i];
+      if (/\s/.test(c)) {
+        i++;
+        continue;
+      }
+      if (c === "(") {
+        tokens.push({ type: "LP", raw: "(" });
+        i++;
+        continue;
+      }
+      if (c === ")") {
+        tokens.push({ type: "RP", raw: ")" });
+        i++;
+        continue;
+      }
+      if (c === "∧" || c === "&" || c === "*") {
+        tokens.push({ type: "AND", raw: "∧" });
+        i++;
+        continue;
+      }
+      if (c === "∨" || c === "|" || c === "+") {
+        tokens.push({ type: "OR", raw: "∨" });
+        i++;
+        continue;
+      }
+      if (c === "¬" || c === "!") {
+        tokens.push({ type: "NOT", raw: "¬" });
+        i++;
+        continue;
+      }
+      if (c === "0" || c === "1") {
+        tokens.push({ type: "CONST", raw: c, value: c === "1" ? 1 : 0 });
+        i++;
+        continue;
+      }
+      if (/[a-zA-Z]/.test(c)) {
+        let j = i;
+        while (j < input.length && /[a-zA-Z]/.test(input[j])) j++;
+        const word = input.slice(i, j).toLowerCase();
+        if (AND_WORDS.includes(word)) tokens.push({ type: "AND", raw: "∧" });
+        else if (OR_WORDS.includes(word)) tokens.push({ type: "OR", raw: "∨" });
+        else if (NOT_WORDS.includes(word))
+          tokens.push({ type: "NOT", raw: "¬" });
+        else if (VAR_NAMES.includes(word))
+          tokens.push({
+            type: "VAR",
+            name: word.toUpperCase(),
+            raw: word.toUpperCase(),
+          });
+        else return { error: "var" };
+        i = j;
+        continue;
+      }
+      return { error: "char" };
+    }
+    return { tokens };
+  };
+
+  const parseLaw = (tokens) => {
+    let pos = 0;
+    const peek = () => tokens[pos];
+
+    const parseAtom = () => {
+      const t = peek();
+      if (!t) return null;
+      if (t.type === "VAR") {
+        pos++;
+        return { type: "VAR", name: t.name };
+      }
+      if (t.type === "CONST") {
+        pos++;
+        return { type: "CONST", value: t.value };
+      }
+      if (t.type === "LP") {
+        pos++;
+        const inner = parseOr();
+        if (!inner || peek()?.type !== "RP") return null;
+        pos++;
+        return inner;
+      }
+      return null;
+    };
+    const parseNot = () => {
+      if (peek()?.type === "NOT") {
+        pos++;
+        const operand = parseNot();
+        return operand ? { type: "NOT", operand } : null;
+      }
+      return parseAtom();
+    };
+    const parseAnd = () => {
+      let node = parseNot();
+      if (!node) return null;
+      while (peek()?.type === "AND") {
+        pos++;
+        const rhs = parseNot();
+        if (!rhs) return null;
+        node = { type: "AND", left: node, right: rhs };
+      }
+      return node;
+    };
+    const parseOr = () => {
+      let node = parseAnd();
+      if (!node) return null;
+      while (peek()?.type === "OR") {
+        pos++;
+        const rhs = parseAnd();
+        if (!rhs) return null;
+        node = { type: "OR", left: node, right: rhs };
+      }
+      return node;
+    };
+
+    const ast = parseOr();
+    if (!ast || pos !== tokens.length) return { error: "parse" };
+    return { ast };
+  };
+
+  const evalLawNode = (node, vals) => {
+    switch (node.type) {
+      case "VAR":
+        return vals[node.name];
+      case "CONST":
+        return node.value;
+      case "NOT":
+        return evalLawNode(node.operand, vals) ? 0 : 1;
+      case "AND":
+        return evalLawNode(node.left, vals) && evalLawNode(node.right, vals)
+          ? 1
+          : 0;
+      case "OR":
+        return evalLawNode(node.left, vals) || evalLawNode(node.right, vals)
+          ? 1
+          : 0;
+      default:
+        return 0;
+    }
+  };
+
+  const truthOfLaw = (ast) =>
+    LAW_COMBOS.map((vals) => evalLawNode(ast, vals)).join("");
+
+  const EXPR_CLASS = {
+    VAR: "code-name",
+    CONST: "code-value",
+    AND: "code-operator",
+    OR: "code-operator",
+    NOT: "code-operator",
+  };
+  const renderExprHtml = (tokens) =>
+    tokens
+      .map((t, idx) => {
+        const prev = tokens[idx - 1];
+        const space =
+          idx > 0 &&
+          t.type !== "RP" &&
+          prev.type !== "LP" &&
+          prev.type !== "NOT"
+            ? " "
+            : "";
+        if (t.type === "LP" || t.type === "RP") return `${space}${t.raw}`;
+        return `${space}<span class="${EXPR_CLASS[t.type]}">${t.raw}</span>`;
+      })
+      .join("");
+
+  const shuffle = (arr) =>
+    arr
+      .map((value) => ({ value, sort: Math.random() }))
+      .sort((a, b) => a.sort - b.sort)
+      .map(({ value }) => value);
+
+  const LAW_ERRORS = {
+    empty: "Bitte einen Ausdruck eingeben.",
+    char: "Unbekanntes Zeichen. Erlaubt sind A, B, C, 0, 1, Klammern sowie ∧, ∨, ¬.",
+    var: "Nur A, B und C sind als Operanden erlaubt.",
+    parse:
+      "Der Ausdruck ist nicht gültig aufgebaut. Prüf Klammern und Operatoren.",
+  };
+
+  document
+    .querySelectorAll('.lesson-exercise[data-exercise="law-quiz"]')
+    .forEach((exercise) => {
+      const board = exercise.querySelector("[data-law-quiz-board]");
+      const modeButtons = [
+        ...exercise.querySelectorAll(".lesson-law-quiz__mode"),
+      ];
+      const dataItems = [
+        ...exercise.querySelectorAll(".lesson-law-quiz__data li"),
+      ];
+      if (!board || !modeButtons.length || !dataItems.length) return;
+
+      const laws = dataItems.map((li) => {
+        const leftTokens = tokenizeLaw(li.dataset.lawLeft).tokens || [];
+        const rightTokens = tokenizeLaw(li.dataset.lawRight).tokens || [];
+        return {
+          id: li.dataset.lawId,
+          name: li.dataset.lawName,
+          leftHtml: renderExprHtml(leftTokens),
+          rightHtml: renderExprHtml(rightTokens),
+          rightAst: parseLaw(rightTokens).ast,
+        };
+      });
+
+      let mode = "expr-to-law";
+      let lastLawId = null;
+
+      const pickLaw = () => {
+        let law;
+        do {
+          law = laws[Math.floor(Math.random() * laws.length)];
+        } while (laws.length > 1 && law.id === lastLawId);
+        lastLawId = law.id;
+        return law;
+      };
+
+      const renderExprToLaw = () => {
+        const current = pickLaw();
+        const options = shuffle(laws.map((l) => l.name));
+        board.innerHTML = `
+          <div class="lesson-code" aria-label="Zu bestimmender Ausdruck">
+            <div class="lesson-code__head"><span>Welches Gesetz?</span><span>Ausdruck</span></div>
+            <pre><code>${current.leftHtml} <span class="code-operator">=</span> ${current.rightHtml}</code></pre>
+          </div>
+          <div class="lesson-exercise__options" role="group" aria-label="Gesetz auswählen">
+            ${options.map((name) => `<button type="button" class="lesson-exercise__option" data-name="${name}">${name}</button>`).join("")}
+          </div>
+          <div class="lesson-exercise__feedback" aria-live="polite" hidden></div>
+        `;
+
+        const feedback = board.querySelector(".lesson-exercise__feedback");
+        const optionButtons = [
+          ...board.querySelectorAll(".lesson-exercise__option"),
+        ];
+        let answered = false;
+
+        optionButtons.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            if (answered) return;
+            answered = true;
+            const ok = btn.dataset.name === current.name;
+            optionButtons.forEach((b) => {
+              b.disabled = true;
+              if (b.dataset.name === current.name)
+                b.classList.add("is-correct");
+              else if (b === btn) b.classList.add("is-wrong");
+            });
+            feedback.innerHTML = `<p class="lesson-exercise__result${
+              ok ? " lesson-exercise__result--ok" : ""
+            }">${ok ? "Richtig ✓" : `Leider falsch. Das ist das <strong>${current.name}</strong>.`}</p>
+            <button type="button" class="lesson-exercise__check">Nächste Frage</button>`;
+            feedback.hidden = false;
+            feedback
+              .querySelector(".lesson-exercise__check")
+              .addEventListener("click", renderExprToLaw);
+          });
+        });
+      };
+
+      const renderLawToExpr = () => {
+        const current = pickLaw();
+        board.innerHTML = `
+          <div class="lesson-code" aria-label="Zu vervollständigender Ausdruck">
+            <div class="lesson-code__head"><span>${current.name}</span><span>Ausdruck</span></div>
+            <pre><code>${current.leftHtml} <span class="code-operator">=</span> ?</code></pre>
+          </div>
+          <input
+            class="lesson-exercise__input"
+            type="text"
+            spellcheck="false"
+            autocomplete="off"
+            autocapitalize="off"
+            placeholder="Nutze auch Worte wie 'und', 'oder', 'nicht'"
+            aria-label="Deine Antwort"
+          />
+          <div class="lesson-exercise__symbols" role="group" aria-label="Operator einfügen">
+            <button type="button" class="lesson-exercise__symbol" data-symbol="∧">∧ <small>und</small></button>
+            <button type="button" class="lesson-exercise__symbol" data-symbol="∨">∨ <small>oder</small></button>
+            <button type="button" class="lesson-exercise__symbol" data-symbol="¬">¬ <small>nicht</small></button>
+          </div>
+          <div class="lesson-exercise__actions">
+            <button type="button" class="lesson-exercise__check">Prüfen</button>
+          </div>
+          <div class="lesson-exercise__feedback" aria-live="polite" hidden></div>
+        `;
+
+        const input = board.querySelector(".lesson-exercise__input");
+        const checkBtn = board.querySelector(".lesson-exercise__check");
+        const feedback = board.querySelector(".lesson-exercise__feedback");
+        let solved = false;
+
+        board.querySelectorAll(".lesson-exercise__symbol").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const start = input.selectionStart ?? input.value.length;
+            const end = input.selectionEnd ?? input.value.length;
+            input.value =
+              input.value.slice(0, start) +
+              btn.dataset.symbol +
+              input.value.slice(end);
+            const cursor = start + btn.dataset.symbol.length;
+            input.focus();
+            input.setSelectionRange(cursor, cursor);
+          });
+        });
+
+        const say = (html, ok) => {
+          feedback.innerHTML = `<p class="lesson-exercise__result${ok ? " lesson-exercise__result--ok" : ""}">${html}</p>`;
+          feedback.hidden = false;
+        };
+
+        const grade = () => {
+          const raw = input.value.trim();
+          if (!raw) {
+            say(LAW_ERRORS.empty, false);
+            return;
+          }
+          const tokenRes = tokenizeLaw(raw);
+          if (tokenRes.error) {
+            say(LAW_ERRORS[tokenRes.error], false);
+            return;
+          }
+          const parseRes = parseLaw(tokenRes.tokens);
+          if (parseRes.error) {
+            say(LAW_ERRORS[parseRes.error], false);
+            return;
+          }
+          if (truthOfLaw(parseRes.ast) === truthOfLaw(current.rightAst)) {
+            solved = true;
+            input.disabled = true;
+            input.classList.add("is-correct");
+            say("Richtig ✓", true);
+            checkBtn.textContent = "Nächste Frage";
+          } else {
+            say("Das ist nicht äquivalent. Versuch es nochmal.", false);
+          }
+        };
+
+        checkBtn.addEventListener("click", () => {
+          if (solved) renderLawToExpr();
+          else grade();
+        });
+        input.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            checkBtn.click();
+          }
+        });
+        input.focus();
+      };
+
+      const render = () =>
+        mode === "expr-to-law" ? renderExprToLaw() : renderLawToExpr();
+
+      modeButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          if (btn.dataset.mode === mode) return;
+          mode = btn.dataset.mode;
+          modeButtons.forEach((b) => {
+            const active = b === btn;
+            b.classList.toggle("is-active", active);
+            b.setAttribute("aria-pressed", String(active));
+          });
+          render();
+        });
+      });
+
+      render();
+    });
+})();
+
+// Interactive exercises: "combo-count" — type the number of combinations
+// (N = 2^n) an expression needs. On a correct answer, the exercise named by
+// data-reveal (usually a hidden data-exercise="truth" board) is unhidden.
+(() => {
+  document
+    .querySelectorAll('.lesson-exercise[data-exercise="combo-count"]')
+    .forEach((exercise) => {
+      const input = exercise.querySelector(".lesson-exercise__input");
+      const checkBtn = exercise.querySelector(".lesson-exercise__check");
+      const feedback = exercise.querySelector(".lesson-exercise__feedback");
+      const revealTarget = document.getElementById(
+        exercise.dataset.reveal || "",
+      );
+      if (!input || !checkBtn || !feedback) return;
+
+      let solved = false;
+
+      const say = (html, ok) => {
+        feedback.innerHTML = `<p class="lesson-exercise__result${
+          ok ? " lesson-exercise__result--ok" : ""
+        }">${html}</p>`;
+        feedback.hidden = false;
+      };
+
+      const grade = () => {
+        const val = input.value.trim();
+        if (val === input.dataset.answer) {
+          solved = true;
+          input.disabled = true;
+          input.classList.add("is-correct");
+          checkBtn.textContent = "Richtig ✓";
+          say("Richtig! Die Tabelle ist jetzt bereit.", true);
+          if (revealTarget) {
+            revealTarget.hidden = false;
+            revealTarget.querySelector("input")?.focus();
+          }
+        } else {
+          say(
+            `${val ? "Nicht ganz. " : ""}Tipp: N = 2ⁿ, und der Ausdruck hat drei Operanden.`,
+            false,
+          );
+        }
+      };
+
+      checkBtn.addEventListener("click", () => {
+        if (!solved) grade();
+      });
+
+      input.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" && !solved) {
+          event.preventDefault();
+          grade();
+        }
+      });
+    });
+})();
+
+// Interactive exercises: "binary-arith" — type the binary result of adding
+// or subtracting the two numbers shown in each row (data-a, data-b, data-op).
+// With data-generate="binary", "Nochmal" also draws a fresh pair (a > b) and
+// updates both rows to match.
+(() => {
+  const randInt = (n) => Math.floor(Math.random() * n);
+
+  const buildPair = () => {
+    const a = 9 + randInt(54); // 9..62
+    const b = 2 + randInt(a - 2); // 2..a-1, keeps a > b > 0
+    return { a, b };
+  };
+
+  document
+    .querySelectorAll('.lesson-exercise[data-exercise="binary-arith"]')
+    .forEach((exercise) => {
+      const rowsWrap = exercise.querySelector(".lesson-exercise__rows");
+      const checkBtn = exercise.querySelector(".lesson-exercise__check");
+      const feedback = exercise.querySelector(".lesson-exercise__feedback");
+      if (!rowsWrap || !checkBtn || !feedback) return;
+
+      const regenerates = exercise.dataset.generate === "binary";
+      let checked = false;
+      const rows = () => [
+        ...rowsWrap.querySelectorAll(".lesson-exercise__row"),
+      ];
+
+      const applyPair = (a, b) => {
+        rows().forEach((row) => {
+          row.dataset.a = a.toString(2);
+          row.dataset.b = b.toString(2);
+          const literal = row.querySelector(".lesson-exercise__literal");
+          literal.textContent = `${a.toString(2)} ${row.dataset.op} ${b.toString(2)} =`;
+        });
+      };
+
+      const freshBoard = () => {
+        checked = false;
+        feedback.hidden = true;
+        feedback.innerHTML = "";
+        checkBtn.textContent = "Prüfen";
+        if (regenerates) {
+          const { a, b } = buildPair();
+          applyPair(a, b);
+        }
+        rows().forEach((row) => {
+          row.classList.remove("is-correct", "is-wrong");
+          row.querySelector(".lesson-exercise__solution")?.remove();
+          const input = row.querySelector(".lesson-exercise__input");
+          input.value = "";
+          input.disabled = false;
+        });
+      };
+
+      const grade = () => {
+        checked = true;
+        let correct = 0;
+        const all = rows();
+        all.forEach((row) => {
+          const input = row.querySelector(".lesson-exercise__input");
+          input.disabled = true;
+          const a = parseInt(row.dataset.a, 2);
+          const b = parseInt(row.dataset.b, 2);
+          const expected = row.dataset.op === "+" ? a + b : a - b;
+          const raw = input.value.trim();
+          const given = /^[01]+$/.test(raw) ? parseInt(raw, 2) : NaN;
+          const isRight = given === expected;
+          row.classList.add(isRight ? "is-correct" : "is-wrong");
+          if (isRight) {
+            correct += 1;
+          } else {
+            const solution = document.createElement("span");
+            solution.className = "lesson-exercise__solution";
+            solution.textContent = `→ ${expected.toString(2)}`;
+            row.appendChild(solution);
+          }
+        });
+        feedback.innerHTML =
+          correct === all.length
+            ? '<p class="lesson-exercise__result lesson-exercise__result--ok">Gut gemacht!</p>'
+            : `<p class="lesson-exercise__result">${correct} von ${all.length} richtig. Nochmal?</p>`;
+        feedback.hidden = false;
+        checkBtn.textContent = "Nochmal";
+      };
+
+      checkBtn.addEventListener("click", () => {
+        if (checked) freshBoard();
+        else grade();
+      });
+
+      rowsWrap.querySelectorAll(".lesson-exercise__input").forEach((input) => {
+        input.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" && !checked) {
+            event.preventDefault();
+            grade();
+          }
+        });
+      });
+    });
+})();
+
+(() => {
+  document.querySelectorAll("[data-step-table]").forEach((wrap) => {
+    const btn = wrap.querySelector(".lesson-step-table__btn");
+    const steps = [
+      ...new Set(
+        [...wrap.querySelectorAll("[data-step]")].map((el) =>
+          Number(el.dataset.step),
+        ),
+      ),
+    ].sort((a, b) => a - b);
+    if (!btn || !steps.length) return;
+
+    let idx = 0;
+
+    const reset = () => {
+      wrap.querySelectorAll("[data-step]").forEach((el) => {
+        el.classList.add("is-hidden");
+      });
+      idx = 0;
+      btn.textContent = "Nächste Spalte zeigen";
+    };
+
+    btn.addEventListener("click", () => {
+      if (idx >= steps.length) {
+        reset();
+        return;
+      }
+      wrap
+        .querySelectorAll(`[data-step="${steps[idx]}"]`)
+        .forEach((el) => el.classList.remove("is-hidden"));
+      idx += 1;
+      btn.textContent =
+        idx >= steps.length ? "Von vorne" : "Nächste Spalte zeigen";
+    });
+  });
+})();
+
+// Interactive exercises: "normalform" — random easy boolean expression, built
+// from a fixed pool and parsed once so the truth table and the canonical
+// answer can never drift apart. Four chained stages, each unlocked by the
+// previous one: fill the truth table, pick DNF or KNF, click the rows that
+// belong to that canonical form, then build it by toggling negations on each
+// variable and choosing the ∧/∨ that connects them.
+(() => {
+  const EXPR_POOL = [
+    "(A∧B)∨¬C",
+    "A∨(B∧¬C)",
+    "¬A∧(B∨C)",
+    "(¬A∨B)∧C",
+    "A∧(¬B∨C)",
+    "(A∨B)∧¬C",
+    "¬A∨(B∧C)",
+    "(A∧¬B)∨C",
+  ];
+  const COMBOS = [];
+  for (let a = 0; a <= 1; a++)
+    for (let b = 0; b <= 1; b++)
+      for (let c = 0; c <= 1; c++) COMBOS.push({ A: a, B: b, C: c });
+
+  const tokenizeNf = (input) => {
+    const tokens = [];
+    for (const c of input) {
+      if (c === "(") tokens.push({ type: "LP" });
+      else if (c === ")") tokens.push({ type: "RP" });
+      else if (c === "∧") tokens.push({ type: "AND" });
+      else if (c === "∨") tokens.push({ type: "OR" });
+      else if (c === "¬") tokens.push({ type: "NOT" });
+      else if (/[A-Za-z]/.test(c))
+        tokens.push({ type: "VAR", name: c.toUpperCase() });
+    }
+    return tokens;
+  };
+
+  const parseNf = (tokens) => {
+    let pos = 0;
+    const peek = () => tokens[pos];
+    const parseAtom = () => {
+      const t = peek();
+      if (!t) return null;
+      if (t.type === "VAR") {
+        pos++;
+        return { type: "VAR", name: t.name };
+      }
+      if (t.type === "LP") {
+        pos++;
+        const inner = parseOr();
+        if (!inner || peek()?.type !== "RP") return null;
+        pos++;
+        return inner;
+      }
+      return null;
+    };
+    const parseNot = () => {
+      if (peek()?.type === "NOT") {
+        pos++;
+        const operand = parseNot();
+        return operand ? { type: "NOT", operand } : null;
+      }
+      return parseAtom();
+    };
+    const parseAnd = () => {
+      let node = parseNot();
+      if (!node) return null;
+      while (peek()?.type === "AND") {
+        pos++;
+        const rhs = parseNot();
+        if (!rhs) return null;
+        node = { type: "AND", left: node, right: rhs };
+      }
+      return node;
+    };
+    const parseOr = () => {
+      let node = parseAnd();
+      if (!node) return null;
+      while (peek()?.type === "OR") {
+        pos++;
+        const rhs = parseAnd();
+        if (!rhs) return null;
+        node = { type: "OR", left: node, right: rhs };
+      }
+      return node;
+    };
+    return parseOr();
+  };
+
+  const evalNf = (node, vals) => {
+    switch (node.type) {
+      case "VAR":
+        return vals[node.name];
+      case "NOT":
+        return evalNf(node.operand, vals) ? 0 : 1;
+      case "AND":
+        return evalNf(node.left, vals) && evalNf(node.right, vals) ? 1 : 0;
+      case "OR":
+        return evalNf(node.left, vals) || evalNf(node.right, vals) ? 1 : 0;
+      default:
+        return 0;
+    }
+  };
+
+  const NF_SYMBOL = { AND: "∧", OR: "∨", NOT: "¬" };
+  const NF_CLASS = {
+    VAR: "code-name",
+    AND: "code-operator",
+    OR: "code-operator",
+    NOT: "code-operator",
+  };
+  const renderNfHtml = (tokens) =>
+    tokens
+      .map((t, idx) => {
+        const prev = tokens[idx - 1];
+        const space =
+          idx > 0 &&
+          t.type !== "RP" &&
+          prev.type !== "LP" &&
+          prev.type !== "NOT"
+            ? " "
+            : "";
+        if (t.type === "LP") return `${space}(`;
+        if (t.type === "RP") return `)`;
+        const raw = t.type === "VAR" ? t.name : NF_SYMBOL[t.type];
+        return `${space}<span class="${NF_CLASS[t.type]}">${raw}</span>`;
+      })
+      .join("");
+
+  document
+    .querySelectorAll('.lesson-exercise[data-exercise="normalform"]')
+    .forEach((exercise) => {
+      const exprEl = exercise.querySelector("[data-nf-expr]");
+      const tbody = exercise.querySelector(".lesson-truth-table tbody");
+      const tableCheckBtn = exercise.querySelector("[data-nf-table-check]");
+      const tableFeedback = exercise.querySelector("[data-nf-table-feedback]");
+      const modeSection = exercise.querySelector("[data-nf-mode]");
+      const modeButtons = [...exercise.querySelectorAll("[data-nf-pick]")];
+      const rowSection = exercise.querySelector("[data-nf-rows]");
+      const rowHint = exercise.querySelector("[data-nf-row-hint]");
+      const rowCheckBtn = exercise.querySelector("[data-nf-row-check]");
+      const rowFeedback = exercise.querySelector("[data-nf-row-feedback]");
+      const builderSection = exercise.querySelector("[data-nf-builder]");
+      const builderBoard = exercise.querySelector("[data-nf-builder-board]");
+      const builderCheckBtn = exercise.querySelector("[data-nf-builder-check]");
+      const builderFeedback = exercise.querySelector(
+        "[data-nf-builder-feedback]",
+      );
+      if (
+        !exprEl ||
+        !tbody ||
+        !tableCheckBtn ||
+        !modeSection ||
+        !rowSection ||
+        !builderSection ||
+        !builderBoard ||
+        !builderCheckBtn
+      )
+        return;
+
+      let current = null;
+      let lastExprIdx = -1;
+      let builderChecked = false;
+
+      const pickExpr = () => {
+        let idx;
+        do {
+          idx = Math.floor(Math.random() * EXPR_POOL.length);
+        } while (EXPR_POOL.length > 1 && idx === lastExprIdx);
+        lastExprIdx = idx;
+        return EXPR_POOL[idx];
+      };
+
+      const renderTable = (rows) => {
+        tbody.innerHTML = rows
+          .map(
+            (row, idx) => `
+          <tr data-row-idx="${idx}">
+            <td>${row.A}</td>
+            <td>${row.B}</td>
+            <td>${row.C}</td>
+            <td>
+              <input
+                class="lesson-truth-table__input"
+                type="text"
+                inputmode="numeric"
+                maxlength="1"
+                data-answer="${row.F}"
+                aria-label="Ergebnis von F bei A=${row.A}, B=${row.B}, C=${row.C}"
+              />
+            </td>
+          </tr>`,
+          )
+          .join("");
+      };
+
+      const newExercise = () => {
+        const raw = pickExpr();
+        const tokens = tokenizeNf(raw);
+        const ast = parseNf(tokens);
+        const rows = COMBOS.map((vals) => ({ ...vals, F: evalNf(ast, vals) }));
+        current = { rows, mode: null, selected: null };
+
+        exprEl.innerHTML = renderNfHtml(tokens);
+        renderTable(rows);
+
+        tableFeedback.hidden = true;
+        tableFeedback.innerHTML = "";
+        tableCheckBtn.disabled = false;
+        tableCheckBtn.textContent = "Wahrheitstabelle prüfen";
+
+        modeSection.hidden = true;
+        modeButtons.forEach((btn) => {
+          btn.disabled = false;
+          btn.classList.remove("is-active");
+        });
+
+        rowSection.hidden = true;
+        rowCheckBtn.disabled = false;
+        rowCheckBtn.textContent = "Zeilen prüfen";
+        rowFeedback.hidden = true;
+        rowFeedback.innerHTML = "";
+
+        builderSection.hidden = true;
+        builderBoard.innerHTML = "";
+        builderChecked = false;
+        builderCheckBtn.textContent = "Prüfen";
+        builderFeedback.hidden = true;
+        builderFeedback.innerHTML = "";
+
+        tbody.querySelectorAll("input").forEach((input) => {
+          input.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
+              event.preventDefault();
+              tableCheckBtn.click();
+            }
+          });
+        });
+      };
+
+      // --- Stage 1: fill the truth table ---
+      const gradeTable = () => {
+        let correct = 0;
+        const inputs = [...tbody.querySelectorAll("input")];
+        inputs.forEach((input) => {
+          input.disabled = true;
+          const cell = input.closest("td");
+          const isRight = input.value.trim() === input.dataset.answer;
+          cell.classList.add(isRight ? "is-correct" : "is-wrong");
+          if (isRight) {
+            correct += 1;
+          } else {
+            const sol = document.createElement("span");
+            sol.className = "lesson-truth-table__solution";
+            sol.textContent = `→ ${input.dataset.answer}`;
+            cell.appendChild(sol);
+          }
+        });
+        tableFeedback.innerHTML =
+          correct === inputs.length
+            ? '<p class="lesson-exercise__result lesson-exercise__result--ok">Gut gemacht!</p>'
+            : `<p class="lesson-exercise__result">${correct} von ${inputs.length} richtig.</p>`;
+        tableFeedback.hidden = false;
+        tableCheckBtn.disabled = true;
+        modeSection.hidden = false;
+      };
+
+      tableCheckBtn.addEventListener("click", () => {
+        if (tableCheckBtn.disabled) return;
+        gradeTable();
+      });
+
+      // --- Stage 2: pick DNF or KNF ---
+      const openRowStage = () => {
+        const wantValue = current.mode === "DNF" ? 1 : 0;
+        rowHint.textContent = `Klick auf alle passenden Zeilen.`;
+
+        [...tbody.querySelectorAll("tr")].forEach((tr) => {
+          tr.classList.add("is-selectable");
+          tr.setAttribute("role", "button");
+          tr.setAttribute("tabindex", "0");
+          tr.setAttribute("aria-pressed", "false");
+
+          const toggle = () => {
+            if (tr.dataset.locked === "true") return;
+            const pressed = tr.getAttribute("aria-pressed") === "true";
+            tr.setAttribute("aria-pressed", String(!pressed));
+            tr.classList.toggle("is-selected", !pressed);
+          };
+          tr.addEventListener("click", toggle);
+          tr.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              toggle();
+            }
+          });
+        });
+
+        rowSection.hidden = false;
+      };
+
+      modeButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          if (!current || current.mode) return;
+          current.mode = btn.dataset.nfPick;
+          modeButtons.forEach((b) => {
+            b.disabled = true;
+            b.classList.toggle("is-active", b === btn);
+          });
+          openRowStage();
+        });
+      });
+
+      // --- Stage 3: select the matching rows ---
+      const buildBuilder = () => {
+        builderBoard.innerHTML = "";
+        const mode = current.mode;
+        const innerOp = mode === "DNF" ? "∧" : "∨";
+        const outerOp = mode === "DNF" ? "∨" : "∧";
+        const frag = document.createDocumentFragment();
+
+        const makeOpGroup = (expectSymbol, extraClass) => {
+          const wrap = document.createElement("span");
+          wrap.className = extraClass
+            ? `lesson-nf-op ${extraClass}`
+            : "lesson-nf-op";
+          wrap.dataset.expect = expectSymbol;
+          ["∧", "∨"].forEach((sym) => {
+            const b = document.createElement("button");
+            b.type = "button";
+            b.className = "lesson-nf-op-btn";
+            b.dataset.op = sym;
+            b.setAttribute("aria-pressed", "false");
+            b.textContent = sym;
+            b.addEventListener("click", () => {
+              if (b.disabled) return;
+              const already = b.getAttribute("aria-pressed") === "true";
+              wrap
+                .querySelectorAll("button")
+                .forEach((x) => x.setAttribute("aria-pressed", "false"));
+              b.setAttribute("aria-pressed", String(!already));
+            });
+            wrap.appendChild(b);
+          });
+          return wrap;
+        };
+
+        const makeLiteral = (varName, expectNegate) => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "lesson-nf-literal";
+          btn.dataset.var = varName;
+          btn.dataset.expectNegate = String(expectNegate);
+          btn.setAttribute("aria-pressed", "false");
+          btn.textContent = varName;
+          btn.addEventListener("click", () => {
+            if (btn.disabled) return;
+            const negated = btn.getAttribute("aria-pressed") !== "true";
+            btn.setAttribute("aria-pressed", String(negated));
+            btn.textContent = negated ? `¬${varName}` : varName;
+          });
+          return btn;
+        };
+
+        current.selected.forEach((row, i) => {
+          if (i > 0)
+            frag.appendChild(makeOpGroup(outerOp, "lesson-nf-op--outer"));
+          const clause = document.createElement("span");
+          clause.className = "lesson-nf-clause";
+          clause.append("(");
+          ["A", "B", "C"].forEach((v, vi) => {
+            const expectNegate = mode === "DNF" ? row[v] === 0 : row[v] === 1;
+            clause.appendChild(makeLiteral(v, expectNegate));
+            if (vi < 2) clause.appendChild(makeOpGroup(innerOp));
+          });
+          clause.append(")");
+          frag.appendChild(clause);
+        });
+
+        builderBoard.appendChild(frag);
+      };
+
+      const openBuilderStage = () => {
+        buildBuilder();
+        builderSection.hidden = false;
+        builderChecked = false;
+        builderCheckBtn.textContent = "Prüfen";
+        builderCheckBtn.disabled = false;
+        builderFeedback.hidden = true;
+      };
+
+      const gradeRows = () => {
+        const wantValue = current.mode === "DNF" ? 1 : 0;
+        const trs = [...tbody.querySelectorAll("tr")];
+        let allRight = true;
+        const selectedRows = [];
+
+        trs.forEach((tr) => {
+          const row = current.rows[Number(tr.dataset.rowIdx)];
+          const shouldSelect = row.F === wantValue;
+          const isSelected = tr.getAttribute("aria-pressed") === "true";
+          tr.dataset.locked = "true";
+          tr.classList.remove("is-selectable");
+
+          if (shouldSelect) {
+            selectedRows.push(row);
+            tr.classList.add(isSelected ? "is-correct" : "is-missed");
+            if (!isSelected) allRight = false;
+          } else if (isSelected) {
+            tr.classList.add("is-wrong");
+            allRight = false;
+          }
+        });
+
+        current.selected = selectedRows;
+        rowFeedback.innerHTML = allRight
+          ? '<p class="lesson-exercise__result lesson-exercise__result--ok">Genau diese Zeilen brauchst du!</p>'
+          : '<p class="lesson-exercise__result">Nicht ganz.</p>';
+        rowFeedback.hidden = false;
+        rowCheckBtn.disabled = true;
+
+        openBuilderStage();
+      };
+
+      rowCheckBtn.addEventListener("click", () => {
+        if (rowCheckBtn.disabled) return;
+        gradeRows();
+      });
+
+      // --- Stage 4: build the canonical formula ---
+      const solutionString = () => {
+        const mode = current.mode;
+        const innerOp = mode === "DNF" ? "∧" : "∨";
+        const outerOp = mode === "DNF" ? " ∨ " : " ∧ ";
+        const clauses = current.selected.map(
+          (row) =>
+            "(" +
+            ["A", "B", "C"]
+              .map((v) => {
+                const negate = mode === "DNF" ? row[v] === 0 : row[v] === 1;
+                return negate ? `¬${v}` : v;
+              })
+              .join(` ${innerOp} `) +
+            ")",
+        );
+        return `F = ${clauses.join(outerOp)}`;
+      };
+
+      const gradeBuilder = () => {
+        let correct = 0;
+        let total = 0;
+
+        builderBoard.querySelectorAll(".lesson-nf-literal").forEach((btn) => {
+          total += 1;
+          btn.disabled = true;
+          const expect = btn.dataset.expectNegate === "true";
+          const got = btn.getAttribute("aria-pressed") === "true";
+          const right = expect === got;
+          btn.classList.add(right ? "is-correct" : "is-wrong");
+          if (right) correct += 1;
+        });
+
+        builderBoard.querySelectorAll(".lesson-nf-op").forEach((wrap) => {
+          total += 1;
+          const buttons = [...wrap.querySelectorAll("button")];
+          buttons.forEach((b) => (b.disabled = true));
+          const chosen = buttons.find(
+            (b) => b.getAttribute("aria-pressed") === "true",
+          );
+          const right = !!chosen && chosen.dataset.op === wrap.dataset.expect;
+          wrap.classList.add(right ? "is-correct" : "is-wrong");
+          if (right) correct += 1;
+        });
+
+        builderFeedback.innerHTML =
+          correct === total
+            ? '<p class="lesson-exercise__result lesson-exercise__result--ok">Perfekt!</p>'
+            : `<p class="lesson-exercise__result">${correct} von ${total} Feldern richtig.</p>` +
+              `<p class="lesson-nf-solution">Lösung: ${solutionString()}</p>`;
+        builderFeedback.hidden = false;
+        builderCheckBtn.textContent = "Neue Aufgabe";
+      };
+
+      builderCheckBtn.addEventListener("click", () => {
+        if (builderChecked) {
+          newExercise();
+          return;
+        }
+        gradeBuilder();
+        builderChecked = true;
+      });
+
+      newExercise();
     });
 })();

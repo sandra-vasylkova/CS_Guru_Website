@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Zweierkomplement: wie ein Computer negative Zahlen darstellt und Subtraktion durch Addition ausführt."
+    />
+    <title>CS Guru | Zweierkomplement</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow:wght@100;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CS Guru | Zweierkomplement" />
+    <meta
+      property="og:description"
+      content="Zweierkomplement: wie ein Computer negative Zahlen darstellt und Subtraktion durch Addition ausführt."
+    />
+    <meta property="og:image" content="/assets/web-app-manifest-512x512.png" />
+    <meta property="og:locale" content="de_DE" />
+    <meta name="twitter:card" content="summary" />
+
+    <link rel="stylesheet" href="/style.css" />
+    <script src="/app.js" defer></script>
+
+    <link
+      rel="icon"
+      type="image/png"
+      href="/assets/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+    <link rel="shortcut icon" href="/assets/favicon.ico" />
+  </head>
+
+  <body>
+    <div class="page learn-page lesson-page lesson-page--numbers">
+      <nav class="nav">
+        <a href="/index.html" class="nav__logo">
+          <img
+            src="/assets/favicon-yellow.png"
+            alt="CS Guru"
+            class="nav__favicon"
+          />
+          <span class="nav__brand">CS <span>Guru</span></span>
+        </a>
+
+        <ul class="nav__links">
+          <li><a href="/index.html" class="nav__link">Home</a></li>
+          <li>
+            <a href="/pages/discover.html" class="nav__link">Entdecken</a>
+          </li>
+          <li>
+            <a href="/pages/learn.html" class="nav__link nav__link--active"
+              >Lernen</a
+            >
+          </li>
+          <li><a href="/pages/play.html" class="nav__link">Spielen</a></li>
+          <li><a href="/pages/tools.html" class="nav__link">Werkzeuge</a></li>
+        </ul>
+
+        <div class="nav__actions">
+          <button class="nav__action nav__contact-button" type="button">
+            <span class="nav__action-icon">✉</span>
+            Kontakt
+          </button>
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSdTqXspWFUsLsN_17e1_QqPylcYwD8ifro1duAEqonBuqhtIg/viewform"
+            class="nav__action"
+          >
+            <span class="nav__action-icon">✎</span>
+            Feedback
+          </a>
+        </div>
+
+        <button
+          class="nav__menu-btn"
+          type="button"
+          aria-label="Menü öffnen"
+          aria-expanded="false"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </nav>
+
+      <div class="mobile-menu" aria-hidden="true">
+        <div class="mobile-menu__panel">
+          <div class="mobile-menu__head">
+            <a href="/index.html" class="mobile-menu__brand"
+              >CS <span>Guru</span></a
+            >
+            <button
+              class="mobile-menu__close"
+              type="button"
+              aria-label="Menü schließen"
+            >
+              ×
+            </button>
+          </div>
+
+          <a href="/index.html" class="mobile-menu__link">Home</a>
+          <a
+            href="/pages/learn.html"
+            class="mobile-menu__link mobile-menu__link--active"
+            >Lernen</a
+          >
+          <a href="/pages/play.html" class="mobile-menu__link">Spielen</a>
+          <a href="/pages/tools.html" class="mobile-menu__link">Werkzeuge</a>
+          <a href="/pages/discover.html" class="mobile-menu__link">Entdecken</a>
+
+          <div class="mobile-menu__actions">
+            <button
+              class="mobile-menu__link mobile-menu__contact contact-modal-trigger"
+              type="button"
+            >
+              Kontakt
+            </button>
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSdTqXspWFUsLsN_17e1_QqPylcYwD8ifro1duAEqonBuqhtIg/viewform"
+              class="mobile-menu__link"
+              >Feedback</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <main class="lesson">
+        <div class="lesson__glow" aria-hidden="true"></div>
+
+        <div class="lesson__shell">
+          <aside class="lesson-sidebar">
+            <a class="lesson-sidebar__back" href="/pages/learn.html">
+              <span>‹</span> Alle Themen
+            </a>
+            <div class="lesson-sidebar__topic">
+              <span class="lesson-sidebar__eyebrow"
+                >Zahlensysteme &amp; Datenrepräsentation</span
+              >
+              <strong>Zweierkomplement</strong>
+            </div>
+            <nav class="lesson-sidebar__nav" aria-label="Themenübersicht">
+              <a class="lesson-sidebar__link" href="#vorzeichenbit"
+                >Vorzeichenbit</a
+              >
+              <a class="lesson-sidebar__link" href="#negative-zahl-darstellen"
+                >Negative Zahl darstellen</a
+              >
+              <a class="lesson-sidebar__link" href="#subtraktion-als-addition"
+                >Subtraktion als Addition</a
+              >
+              <a class="lesson-sidebar__link" href="#negative-zahl-auslesen"
+                >Negative Zahl auslesen</a
+              >
+              <a class="lesson-sidebar__link" href="#unpaariges-bit"
+                >Das unpaarige Bit</a
+              >
+            </nav>
+          </aside>
+
+          <article class="lesson-content">
+            <header class="lesson-hero">
+              <div class="lesson-hero__index">07</div>
+              <div>
+                <p class="lesson-hero__eyebrow">
+                  Zahlensysteme &amp; Datenrepräsentation
+                </p>
+                <h1>Zweier<wbr />komplement<span>.</span></h1>
+                <p class="lesson-hero__intro">
+                  Wie der Prozessor negative Zahlen genau verarbeitet.
+                </p>
+                <p class="lesson-hero__intro" style="margin-top: 14px">
+                  Eigentlich kann ein Computer gar nicht subtrahieren. Er kann
+                  nur addieren. Auch wenn es im Thema
+                  <strong
+                    ><a
+                      href="/pages/explainations/learning_themes/Number%20Systems/binary_arithmetic.html"
+                      style="color: var(--lesson-accent); text-decoration: none"
+                      >Binärarithmetik</a
+                    ></strong
+                  >
+                  so aussah, als würdest du Binärzahlen subtrahieren, hast du
+                  sie in Wirklichkeit addiert.
+                </p>
+              </div>
+            </header>
+
+            <section class="lesson-section" id="vorzeichenbit">
+              <div class="lesson-section__number">01</div>
+              <div class="lesson-section__body">
+                <h2>Das Vorzeichenbit</h2>
+                <p>
+                  Im Binärsystem gibt es kein Minuszeichen. Stell dir eine Kette
+                  aus einer bestimmten Anzahl von Nullen und Einsen vor, zum
+                  Beispiel 8 Bit. Das Bit ganz links heißt Vorzeichenbit, denn
+                  genau es bestimmt, ob die Zahl positiv oder negativ ist.
+                </p>
+
+                <div class="lesson-table">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Vorzeichenbit</th>
+                        <th>Bedeutung</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>0</td>
+                        <td>positiv</td>
+                      </tr>
+                      <tr>
+                        <td>1</td>
+                        <td>negativ</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="negative-zahl-darstellen">
+              <div class="lesson-section__number">02</div>
+              <div class="lesson-section__body">
+                <h2>Wie stellt man eine negative Zahl dar?</h2>
+                <p>Zwei Schritte reichen:</p>
+
+                <div class="lesson-code" aria-label="Vorgehen">
+                  <div class="lesson-code__head">
+                    <span>Schritt</span>
+                    <span>Aktion</span>
+                  </div>
+                  <pre><code>1. Dreh die Bits um: aus 0 wird 1, aus 1 wird 0.
+2. Addiere 1.</code></pre>
+                </div>
+
+                <p style="margin-top: 18px">Beispiel: -5</p>
+
+                <div class="lesson-code" aria-label="Rechenbeispiel">
+                  <div class="lesson-code__head">
+                    <span>Schritt</span>
+                    <span>Ergebnis</span>
+                  </div>
+                  <pre><code>5    = 0000 0101
+flip = 1111 1010   (Einerkomplement)
++1   = 1111 1011 = -5</code></pre>
+                </div>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="subtraktion-als-addition">
+              <div class="lesson-section__number">03</div>
+              <div class="lesson-section__body">
+                <h2>Subtraktion als Addition</h2>
+                <p>So wird aus 10 - 5 einfach 10 + (-5):</p>
+
+                <div class="lesson-code" aria-label="Rechenbeispiel">
+                  <div class="lesson-code__head">
+                    <span>Rechnung</span>
+                    <span>Ergebnis</span>
+                  </div>
+                  <pre><code>  0000 1010   (10)
++ 1111 1011   (-5)
+------------
+1 0000 0101</code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Das Übertragsbit ganz links passt nicht mehr in die 8 Zellen,
+                  deshalb fällt es einfach weg. Übrig bleibt 0000 0101 = 5.
+                </p>
+
+                <div class="lesson-callout">
+                  <span class="lesson-callout__label">Merke</span>
+                  <p>
+                    Nirgends wird etwas geliehen. Der Chip braucht nur einen
+                    Addierer, egal ob er addiert oder subtrahiert.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="negative-zahl-auslesen">
+              <div class="lesson-section__number">04</div>
+              <div class="lesson-section__body">
+                <h2>Eine negative Zahl auslesen</h2>
+                <p>Dasselbe Verfahren, nur rückwärts.</p>
+
+                <div class="lesson-code" aria-label="Rechenbeispiel">
+                  <div class="lesson-code__head">
+                    <span>Schritt</span>
+                    <span>Ergebnis</span>
+                  </div>
+                  <pre><code>1111 1011
+flip = 0000 0100
++1   = 0000 0101 = 5</code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Weil das Vorzeichenbit der ursprünglichen Zahl 1 war, ist die
+                  Zahl negativ: -5.
+                </p>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="unpaariges-bit">
+              <div class="lesson-section__number">05</div>
+              <div class="lesson-section__body">
+                <h2>Das unpaarige Bit am Ende</h2>
+                <p>
+                  Bei 8 Bit reicht der Bereich von -128 bis +127. Er ist nicht
+                  symmetrisch. Es gibt eine negative Zahl mehr als positive,
+                  weil die Null einen Platz auf der positiven Seite belegt.
+                </p>
+
+                <div class="lesson-callout">
+                  <span class="lesson-callout__label">Merke</span>
+                  <p>
+                    Im Zweierkomplement gibt es nämlich nur eine einzige Null,
+                    ein separates „minus null" existiert nicht.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <div class="lesson-next">
+              <div>
+                <span>Nächstes Thema</span>
+                <strong>8. ASCII &amp; Unicode</strong>
+              </div>
+              <a href="ascii-unicode.html" aria-label="Zum Thema ASCII und Unicode"
+                >›</a
+              >
+            </div>
+          </article>
+        </div>
+      </main>
+    </div>
+
+    <div class="contact-modal" aria-hidden="true">
+      <div
+        class="contact-modal__box"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="contact-title"
+      >
+        <button
+          class="contact-modal__close"
+          type="button"
+          aria-label="Kontaktfenster schließen"
+        >
+          ×
+        </button>
+
+        <h2 id="contact-title">Kontakt</h2>
+        <div class="contact-modal__line"></div>
+        <p class="contact-modal__intro">
+          Bei Fragen, Anregungen oder Problemen kannst du mich gerne
+          kontaktieren.
+        </p>
+
+        <a
+          href="https://mail.google.com/mail/?view=cm&fs=1&to=sandravasylkova@gmail.com"
+          target="_blank"
+          rel="noopener"
+          class="contact-modal__row"
+        >
+          <span class="contact-modal__icon">✉</span>
+          <span>
+            <strong>Email</strong>
+            <small>sandravasylkova@gmail.com</small>
+          </span>
+        </a>
+
+        <a
+          href="https://www.microsoft.com/en-us/microsoft-teams/log-in"
+          class="contact-modal__row"
+        >
+          <span class="teams__icon" role="img" aria-label="Microsoft Teams"></span>
+          <span>
+            <strong>Teams</strong>
+            <small>Oleksandra Vasylkova</small>
+          </span>
+        </a>
+      </div>
+    </div>
+  </body>
+</html>

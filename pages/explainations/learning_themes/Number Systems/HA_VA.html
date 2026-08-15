@@ -1,0 +1,664 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Halb- und Volladdierer: Wahrheitstabellen, boolesche Ausdrücke und die Schaltnetze dahinter."
+    />
+    <title>CS Guru | Halb- und Volladdierer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow:wght@100;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CS Guru | Halb- und Volladdierer" />
+    <meta
+      property="og:description"
+      content="Halb- und Volladdierer: Wahrheitstabellen, boolesche Ausdrücke und die Schaltnetze dahinter."
+    />
+    <meta property="og:image" content="/assets/web-app-manifest-512x512.png" />
+    <meta property="og:locale" content="de_DE" />
+    <meta name="twitter:card" content="summary" />
+
+    <link rel="stylesheet" href="/style.css" />
+    <script src="/app.js" defer></script>
+
+    <link
+      rel="icon"
+      type="image/png"
+      href="/assets/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+    <link rel="shortcut icon" href="/assets/favicon.ico" />
+  </head>
+
+  <body>
+    <div class="page learn-page lesson-page lesson-page--numbers">
+      <nav class="nav">
+        <a href="/index.html" class="nav__logo">
+          <img
+            src="/assets/favicon-yellow.png"
+            alt="CS Guru"
+            class="nav__favicon"
+          />
+          <span class="nav__brand">CS <span>Guru</span></span>
+        </a>
+
+        <ul class="nav__links">
+          <li><a href="/index.html" class="nav__link">Home</a></li>
+          <li>
+            <a href="/pages/discover.html" class="nav__link">Entdecken</a>
+          </li>
+          <li>
+            <a href="/pages/learn.html" class="nav__link nav__link--active"
+              >Lernen</a
+            >
+          </li>
+          <li><a href="/pages/play.html" class="nav__link">Spielen</a></li>
+          <li><a href="/pages/tools.html" class="nav__link">Werkzeuge</a></li>
+        </ul>
+
+        <div class="nav__actions">
+          <button class="nav__action nav__contact-button" type="button">
+            <span class="nav__action-icon">✉</span>
+            Kontakt
+          </button>
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSdTqXspWFUsLsN_17e1_QqPylcYwD8ifro1duAEqonBuqhtIg/viewform"
+            class="nav__action"
+          >
+            <span class="nav__action-icon">✎</span>
+            Feedback
+          </a>
+        </div>
+
+        <button
+          class="nav__menu-btn"
+          type="button"
+          aria-label="Menü öffnen"
+          aria-expanded="false"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </nav>
+
+      <div class="mobile-menu" aria-hidden="true">
+        <div class="mobile-menu__panel">
+          <div class="mobile-menu__head">
+            <a href="/index.html" class="mobile-menu__brand"
+              >CS <span>Guru</span></a
+            >
+            <button
+              class="mobile-menu__close"
+              type="button"
+              aria-label="Menü schließen"
+            >
+              ×
+            </button>
+          </div>
+
+          <a href="/index.html" class="mobile-menu__link">Home</a>
+          <a
+            href="/pages/learn.html"
+            class="mobile-menu__link mobile-menu__link--active"
+            >Lernen</a
+          >
+          <a href="/pages/play.html" class="mobile-menu__link">Spielen</a>
+          <a href="/pages/tools.html" class="mobile-menu__link">Werkzeuge</a>
+          <a href="/pages/discover.html" class="mobile-menu__link">Entdecken</a>
+
+          <div class="mobile-menu__actions">
+            <button
+              class="mobile-menu__link mobile-menu__contact contact-modal-trigger"
+              type="button"
+            >
+              Kontakt
+            </button>
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSdTqXspWFUsLsN_17e1_QqPylcYwD8ifro1duAEqonBuqhtIg/viewform"
+              class="mobile-menu__link"
+              >Feedback</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <main class="lesson">
+        <div class="lesson__glow" aria-hidden="true"></div>
+
+        <div class="lesson__shell">
+          <aside class="lesson-sidebar">
+            <a class="lesson-sidebar__back" href="/pages/learn.html">
+              <span>‹</span> Alle Themen
+            </a>
+            <div class="lesson-sidebar__topic">
+              <span class="lesson-sidebar__eyebrow"
+                >Zahlensysteme &amp; Datenrepräsentation</span
+              >
+              <strong>Halb- und Volladdierer</strong>
+            </div>
+            <nav class="lesson-sidebar__nav" aria-label="Themenübersicht">
+              <a class="lesson-sidebar__link" href="#halbaddierer"
+                >Halbaddierer</a
+              >
+              <a class="lesson-sidebar__link" href="#halbaddierer-schaltnetz"
+                >HA als Schaltnetz</a
+              >
+              <a class="lesson-sidebar__link" href="#volladdierer"
+                >Volladdierer</a
+              >
+              <a class="lesson-sidebar__link" href="#volladdierer-schaltnetz"
+                >VA als Schaltnetz</a
+              >
+            </nav>
+          </aside>
+
+          <article class="lesson-content">
+            <header class="lesson-hero">
+              <div class="lesson-hero__index">06</div>
+              <div>
+                <p class="lesson-hero__eyebrow">
+                  Zahlensysteme &amp; Datenrepräsentation
+                </p>
+                <h1>Halb- und Volladdierer<span>.</span></h1>
+                <p class="lesson-hero__intro">
+                  Wie ein Computer tatsächlich addiert.
+                </p>
+              </div>
+            </header>
+
+            <div class="lesson-callout">
+              <span class="lesson-callout__label">Bevor es losgeht</span>
+              <p>
+                Schau dir vorher die Themen
+                <strong
+                  ><a
+                    href="/pages/explainations/learning_themes/switch%20algebra/truth_tables.html"
+                    style="color: var(--lesson-accent); text-decoration: none"
+                    >Wahrheitstabellen</a
+                  ></strong
+                >
+                und
+                <strong
+                  ><a
+                    href="#"
+                    style="color: var(--lesson-accent); text-decoration: none"
+                    >Schaltnetze</a
+                  ></strong
+                >
+                an, damit du verstehst, was hier passiert.
+              </p>
+            </div>
+
+            <section class="lesson-section" id="halbaddierer">
+              <div class="lesson-section__number">01</div>
+              <div class="lesson-section__body">
+                <h2>Halbaddierer</h2>
+                <p>
+                  Der Halbaddierer (HA) kann zwei einstellige Binärzahlen
+                  addieren. Dieses Bauteil hat zwei Eingänge und zwei Ausgänge:
+                  einen für die Summe und einen für den Übertrag. „S" steht für
+                  die Summe, „Ü" für den Übertrag.
+                </p>
+
+                <div class="lesson-table">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>A</th>
+                        <th>B</th>
+                        <th>S</th>
+                        <th>Ü</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                      </tr>
+                      <tr>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>0</td>
+                      </tr>
+                      <tr>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>0</td>
+                      </tr>
+                      <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>1</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Das funktioniert nach dem Prinzip, das du aus der
+                  Binärarithmetik schon kennst: 1 + 1 ergibt 0, und die 1
+                  wandert als Übertrag weiter.
+                </p>
+
+                <p>
+                  Stellen wir die booleschen Ausdrücke für Summe und Übertrag
+                  auf:
+                </p>
+
+                <div class="lesson-code" aria-label="Boolesche Ausdrücke">
+                  <div class="lesson-code__head">
+                    <span>Ausgang</span>
+                    <span>Ausdruck</span>
+                  </div>
+                  <pre><code><span class="code-name">S</span> <span class="code-operator">=</span> <span class="code-name">A</span> <span class="code-operator">⊕</span> <span class="code-name">B</span>  <span class="code-operator">=</span> (<span class="code-name">A</span> <span class="code-operator">∧</span> <span class="code-operator">¬</span><span class="code-name">B</span>) <span class="code-operator">∨</span> (<span class="code-operator">¬</span><span class="code-name">A</span> <span class="code-operator">∧</span> <span class="code-name">B</span>)
+<span class="code-name">Ü</span> <span class="code-operator">=</span> <span class="code-name">A</span> <span class="code-operator">∧</span> <span class="code-name">B</span></code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Die Summe ist also genau die Antivalenz aus dem
+                  Operatoren-Kapitel: Sie ist 1, wenn sich die Eingänge
+                  unterscheiden. Der Übertrag ist nur dann 1, wenn beide
+                  Eingänge 1 sind.
+                </p>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="halbaddierer-schaltnetz">
+              <div class="lesson-section__number">02</div>
+              <div class="lesson-section__body">
+                <h2>Der Halbaddierer als Schaltnetz</h2>
+                <p>
+                  Einen HA kannst du auf mehrere Arten als Schaltnetz aufbauen.
+                  Die einfachste: Die Summe S kommt aus einem XOR-Gatter mit den
+                  Eingängen A und B, der Übertrag Ü aus einem AND-Gatter mit
+                  denselben Eingängen.
+                </p>
+
+                <div class="lesson-diagram">
+                  <svg
+                    viewBox="0 0 330 210"
+                    role="img"
+                    aria-label="Schaltnetz des Halbaddierers: A und B laufen in ein XOR-Gatter, das die Summe S liefert, und in ein AND-Gatter, das den Übertrag Ü liefert."
+                  >
+                    <text class="gate-io-label" x="8" y="56">A</text>
+                    <text class="gate-io-label" x="8" y="172">B</text>
+
+                    <path
+                      class="gate-wire"
+                      d="M30,52 H182 M100,52 V142 H180 M30,168 H180 M115,168 V78 H182"
+                    />
+                    <circle class="gate-dot" cx="100" cy="52" r="3" />
+                    <circle class="gate-dot" cx="115" cy="168" r="3" />
+
+                    <g transform="translate(180,40)">
+                      <path class="gate-deco" d="M-9,0 C1,15 1,35 -9,50" />
+                      <path
+                        class="gate-shape"
+                        d="M0,0 C18,0 30,4 55,25 C30,46 18,50 0,50 C10,35 10,15 0,0 Z"
+                      />
+                    </g>
+                    <text class="gate-caption" x="207" y="108">XOR</text>
+
+                    <g transform="translate(180,130)">
+                      <path
+                        class="gate-shape"
+                        d="M0,0 H27 A25,25 0 0 1 27,50 H0 Z"
+                      />
+                    </g>
+                    <text class="gate-caption" x="206" y="198">AND</text>
+
+                    <path class="gate-wire" d="M235,65 H300 M232,155 H300" />
+                    <text class="gate-io-label" x="306" y="69">S</text>
+                    <text class="gate-io-label" x="306" y="159">Ü</text>
+                  </svg>
+                </div>
+
+                <details class="method" style="margin-top: 18px">
+                  <summary class="method__head">
+                    <span class="method__call">Kein XOR-Gatter zur Hand?</span>
+                    <span class="method__desc"
+                      >S aus den Grundgattern nachbauen</span
+                    >
+                  </summary>
+                  <div class="method__body">
+                    <p style="margin-bottom: 14px">
+                      Bau die Summe aus den Grundgattern nach: (A ∧ ¬B) ∨ (¬A ∧
+                      B), also aus zwei AND-Gattern, zwei NOT-Gattern und einem
+                      OR-Gatter. Der Übertrag Ü bleibt unverändert.
+                    </p>
+
+                    <div class="lesson-diagram">
+                      <svg
+                        viewBox="0 0 460 250"
+                        role="img"
+                        aria-label="Schaltnetz für die Summe aus Grundgattern: A und ¬B laufen in ein AND-Gatter, ¬A und B in ein zweites AND-Gatter, beide Ergebnisse laufen in ein OR-Gatter, das die Summe S liefert."
+                      >
+                        <text class="gate-io-label" x="8" y="54">A</text>
+                        <text class="gate-io-label" x="8" y="190">B</text>
+
+                        <path
+                          class="gate-wire"
+                          d="M30,50 H230 M90,50 V160 H90 M30,186 H230 M90,186 V76"
+                        />
+                        <circle class="gate-dot" cx="90" cy="50" r="3" />
+                        <circle class="gate-dot" cx="90" cy="186" r="3" />
+
+                        <g transform="translate(90,61)">
+                          <path class="gate-shape" d="M0,0 L0,30 L26,15 Z" />
+                          <circle class="gate-bubble" cx="31" cy="15" r="5" />
+                        </g>
+                        <text class="gate-caption" x="108" y="111">¬B</text>
+                        <path class="gate-wire" d="M126,76 H230" />
+
+                        <g transform="translate(90,145)">
+                          <path class="gate-shape" d="M0,0 L0,30 L26,15 Z" />
+                          <circle class="gate-bubble" cx="31" cy="15" r="5" />
+                        </g>
+                        <text class="gate-caption" x="108" y="195">¬A</text>
+                        <path class="gate-wire" d="M126,160 H230" />
+
+                        <g transform="translate(230,38)">
+                          <path
+                            class="gate-shape"
+                            d="M0,0 H27 A25,25 0 0 1 27,50 H0 Z"
+                          />
+                        </g>
+                        <text class="gate-caption" x="256" y="103">AND</text>
+
+                        <g transform="translate(230,148)">
+                          <path
+                            class="gate-shape"
+                            d="M0,0 H27 A25,25 0 0 1 27,50 H0 Z"
+                          />
+                        </g>
+                        <text class="gate-caption" x="256" y="213">AND</text>
+
+                        <path
+                          class="gate-wire"
+                          d="M282,63 H310 V105 H342 M282,173 H310 V131 H342"
+                        />
+
+                        <g transform="translate(340,93)">
+                          <path
+                            class="gate-shape"
+                            d="M0,0 C18,0 30,4 55,25 C30,46 18,50 0,50 C10,35 10,15 0,0 Z"
+                          />
+                        </g>
+                        <text class="gate-caption" x="368" y="158">OR</text>
+
+                        <path class="gate-wire" d="M395,118 H430" />
+                        <text class="gate-io-label" x="436" y="122">S</text>
+                      </svg>
+                    </div>
+                  </div>
+                </details>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="volladdierer">
+              <div class="lesson-section__number">03</div>
+              <div class="lesson-section__body">
+                <h2>Volladdierer</h2>
+                <p>
+                  Der Volladdierer (VA) hat 3 Eingänge und 2 Ausgänge und kann
+                  drei einstellige Binärzahlen addieren. Der zusätzliche Eingang
+                  ist für genau den Übertrag da, der aus einer vorherigen Stelle
+                  kommt.
+                </p>
+
+                <div class="lesson-table">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>A</th>
+                        <th>B</th>
+                        <th>Ü_ein</th>
+                        <th>S</th>
+                        <th>Ü_aus</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                      </tr>
+                      <tr>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>0</td>
+                      </tr>
+                      <tr>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>0</td>
+                      </tr>
+                      <tr>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>1</td>
+                      </tr>
+                      <tr>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>0</td>
+                      </tr>
+                      <tr>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>1</td>
+                      </tr>
+                      <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>1</td>
+                      </tr>
+                      <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Die booleschen Ausdrücke sind schon etwas komplizierter:
+                </p>
+
+                <div class="lesson-code" aria-label="Boolesche Ausdrücke">
+                  <div class="lesson-code__head">
+                    <span>Ausgang</span>
+                    <span>Ausdruck</span>
+                  </div>
+                  <pre><code><span class="code-name">S</span>     <span class="code-operator">=</span> <span class="code-name">A</span> <span class="code-operator">⊕</span> <span class="code-name">B</span> <span class="code-operator">⊕</span> <span class="code-name">Ü_ein</span>
+<span class="code-name">Ü_aus</span> <span class="code-operator">=</span> (<span class="code-name">A</span> <span class="code-operator">∧</span> <span class="code-name">B</span>) <span class="code-operator">∨</span> (<span class="code-name">Ü_ein</span> <span class="code-operator">∧</span> (<span class="code-name">A</span> <span class="code-operator">⊕</span> <span class="code-name">B</span>))</code></pre>
+                </div>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="volladdierer-schaltnetz">
+              <div class="lesson-section__number">04</div>
+              <div class="lesson-section__body">
+                <h2>Der Volladdierer als Schaltnetz</h2>
+                <p>
+                  Ein Volladdierer besteht aus zwei Halbaddierern und einem
+                  zusätzlichen OR-Gatter:
+                </p>
+
+                <ol style="margin: 12px 0 0 20px; display: grid; gap: 8px">
+                  <li>
+                    Der erste HA addiert A und B. Er liefert eine Zwischensumme
+                    (A ⊕ B) und einen ersten Übertrag (A ∧ B).
+                  </li>
+                  <li>
+                    Der zweite HA addiert diese Zwischensumme und den
+                    Übertrag-Eingang Ü_ein. Daraus entstehen die endgültige
+                    Summe S und ein zweiter Übertrag.
+                  </li>
+                  <li>
+                    Die beiden Überträge werden mit einem OR-Gatter verbunden.
+                    Das Ergebnis ist Ü_aus.
+                  </li>
+                </ol>
+
+                <div class="lesson-diagram" style="margin-top: 18px">
+                  <svg
+                    viewBox="0 0 440 300"
+                    role="img"
+                    aria-label="Schaltnetz des Volladdierers: A und B laufen in den ersten Halbaddierer, dessen Zwischensumme senkrecht nach unten in den zweiten Halbaddierer läuft. Ü_ein läuft direkt von links in den zweiten Halbaddierer. Beide Überträge laufen von rechts in ein OR-Gatter, das Ü_aus liefert. Der zweite Halbaddierer liefert außerdem die Summe S."
+                  >
+                    <rect
+                      class="gate-box"
+                      x="100"
+                      y="20"
+                      width="120"
+                      height="80"
+                      rx="8"
+                    />
+                    <text class="gate-box-label" x="160" y="64">HA 1</text>
+
+                    <rect
+                      class="gate-box"
+                      x="100"
+                      y="170"
+                      width="120"
+                      height="80"
+                      rx="8"
+                    />
+                    <text class="gate-box-label" x="160" y="214">HA 2</text>
+
+                    <text class="gate-io-label" x="8" y="44">A</text>
+                    <text class="gate-io-label" x="8" y="84">B</text>
+                    <text class="gate-io-label" x="8" y="214">Ü_ein</text>
+
+                    <!-- A, B into HA1 -->
+                    <path class="gate-wire" d="M25,40 H100 M25,80 H100" />
+
+                    <!-- HA1's sum runs straight down into HA2 -->
+                    <path class="gate-wire" d="M160,100 V170" />
+
+                    <!-- Ü_ein straight into HA2, clear of everything else -->
+                    <path class="gate-wire" d="M52,210 H100" />
+
+                    <!-- both carries run right, then funnel into the OR gate -->
+                    <path
+                      class="gate-wire"
+                      d="M220,40 H260 V132 H282
+                         M220,190 H260 V158 H282"
+                    />
+
+                    <g transform="translate(280,120)">
+                      <path
+                        class="gate-shape"
+                        d="M0,0 C18,0 30,4 55,25 C30,46 18,50 0,50 C10,35 10,15 0,0 Z"
+                      />
+                    </g>
+                    <text class="gate-caption" x="307" y="110">OR</text>
+
+                    <path class="gate-wire" d="M220,230 H340 M335,145 H380" />
+                    <text class="gate-io-label" x="346" y="234">S</text>
+                    <text class="gate-io-label" x="386" y="149">Ü_aus</text>
+                  </svg>
+                </div>
+
+                <p style="margin-top: 18px">
+                  So wird aus zwei einfachen Halbaddierern ein Volladdierer.
+                </p>
+              </div>
+            </section>
+
+            <div class="lesson-next">
+              <div>
+                <span>Nächstes Thema</span>
+                <strong>7. Zweierkomplement</strong>
+              </div>
+              <a
+                href="two's_complement.html"
+                aria-label="Zum Thema Zweierkomplement"
+                >›</a
+              >
+            </div>
+          </article>
+        </div>
+      </main>
+    </div>
+
+    <div class="contact-modal" aria-hidden="true">
+      <div
+        class="contact-modal__box"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="contact-title"
+      >
+        <button
+          class="contact-modal__close"
+          type="button"
+          aria-label="Kontaktfenster schließen"
+        >
+          ×
+        </button>
+
+        <h2 id="contact-title">Kontakt</h2>
+        <div class="contact-modal__line"></div>
+        <p class="contact-modal__intro">
+          Bei Fragen, Anregungen oder Problemen kannst du mich gerne
+          kontaktieren.
+        </p>
+
+        <a
+          href="https://mail.google.com/mail/?view=cm&fs=1&to=sandravasylkova@gmail.com"
+          target="_blank"
+          rel="noopener"
+          class="contact-modal__row"
+        >
+          <span class="contact-modal__icon">✉</span>
+          <span>
+            <strong>Email</strong>
+            <small>sandravasylkova@gmail.com</small>
+          </span>
+        </a>
+
+        <a
+          href="https://www.microsoft.com/en-us/microsoft-teams/log-in"
+          class="contact-modal__row"
+        >
+          <span class="teams__icon" role="img" aria-label="Microsoft Teams"></span>
+          <span>
+            <strong>Teams</strong>
+            <small>Oleksandra Vasylkova</small>
+          </span>
+        </a>
+      </div>
+    </div>
+  </body>
+</html>

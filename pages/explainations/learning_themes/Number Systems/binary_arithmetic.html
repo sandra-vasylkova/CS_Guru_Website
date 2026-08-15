@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Binärarithmetik: Binärzahlen addieren und subtrahieren, inklusive Übertrag und Borgen."
+    />
+    <title>CS Guru | Binärarithmetik</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow:wght@100;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CS Guru | Binärarithmetik" />
+    <meta
+      property="og:description"
+      content="Binärarithmetik: Binärzahlen addieren und subtrahieren, inklusive Übertrag und Borgen."
+    />
+    <meta property="og:image" content="/assets/web-app-manifest-512x512.png" />
+    <meta property="og:locale" content="de_DE" />
+    <meta name="twitter:card" content="summary" />
+
+    <link rel="stylesheet" href="/style.css" />
+    <script src="/app.js" defer></script>
+
+    <link
+      rel="icon"
+      type="image/png"
+      href="/assets/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+    <link rel="shortcut icon" href="/assets/favicon.ico" />
+  </head>
+
+  <body>
+    <div class="page learn-page lesson-page lesson-page--numbers">
+      <nav class="nav">
+        <a href="/index.html" class="nav__logo">
+          <img
+            src="/assets/favicon-yellow.png"
+            alt="CS Guru"
+            class="nav__favicon"
+          />
+          <span class="nav__brand">CS <span>Guru</span></span>
+        </a>
+
+        <ul class="nav__links">
+          <li><a href="/index.html" class="nav__link">Home</a></li>
+          <li>
+            <a href="/pages/discover.html" class="nav__link">Entdecken</a>
+          </li>
+          <li>
+            <a href="/pages/learn.html" class="nav__link nav__link--active"
+              >Lernen</a
+            >
+          </li>
+          <li><a href="/pages/play.html" class="nav__link">Spielen</a></li>
+          <li><a href="/pages/tools.html" class="nav__link">Werkzeuge</a></li>
+        </ul>
+
+        <div class="nav__actions">
+          <button class="nav__action nav__contact-button" type="button">
+            <span class="nav__action-icon">✉</span>
+            Kontakt
+          </button>
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSdTqXspWFUsLsN_17e1_QqPylcYwD8ifro1duAEqonBuqhtIg/viewform"
+            class="nav__action"
+          >
+            <span class="nav__action-icon">✎</span>
+            Feedback
+          </a>
+        </div>
+
+        <button
+          class="nav__menu-btn"
+          type="button"
+          aria-label="Menü öffnen"
+          aria-expanded="false"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </nav>
+
+      <div class="mobile-menu" aria-hidden="true">
+        <div class="mobile-menu__panel">
+          <div class="mobile-menu__head">
+            <a href="/index.html" class="mobile-menu__brand"
+              >CS <span>Guru</span></a
+            >
+            <button
+              class="mobile-menu__close"
+              type="button"
+              aria-label="Menü schließen"
+            >
+              ×
+            </button>
+          </div>
+
+          <a href="/index.html" class="mobile-menu__link">Home</a>
+          <a
+            href="/pages/learn.html"
+            class="mobile-menu__link mobile-menu__link--active"
+            >Lernen</a
+          >
+          <a href="/pages/play.html" class="mobile-menu__link">Spielen</a>
+          <a href="/pages/tools.html" class="mobile-menu__link">Werkzeuge</a>
+          <a href="/pages/discover.html" class="mobile-menu__link">Entdecken</a>
+
+          <div class="mobile-menu__actions">
+            <button
+              class="mobile-menu__link mobile-menu__contact contact-modal-trigger"
+              type="button"
+            >
+              Kontakt
+            </button>
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSdTqXspWFUsLsN_17e1_QqPylcYwD8ifro1duAEqonBuqhtIg/viewform"
+              class="mobile-menu__link"
+              >Feedback</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <main class="lesson">
+        <div class="lesson__glow" aria-hidden="true"></div>
+
+        <div class="lesson__shell">
+          <aside class="lesson-sidebar">
+            <a class="lesson-sidebar__back" href="/pages/learn.html">
+              <span>‹</span> Alle Themen
+            </a>
+            <div class="lesson-sidebar__topic">
+              <span class="lesson-sidebar__eyebrow"
+                >Zahlensysteme &amp; Datenrepräsentation</span
+              >
+              <strong>Binärarithmetik</strong>
+            </div>
+            <nav class="lesson-sidebar__nav" aria-label="Themenübersicht">
+              <a class="lesson-sidebar__link" href="#addition">Addition</a>
+              <a class="lesson-sidebar__link" href="#mehrere-zahlen"
+                >Mehrere Zahlen</a
+              >
+              <a class="lesson-sidebar__link" href="#subtraktion"
+                >Subtraktion</a
+              >
+              <a class="lesson-sidebar__link" href="#beispiel-subtraktion"
+                >Beispiel: Subtraktion</a
+              >
+              <a class="lesson-sidebar__link" href="#wissenscheck"
+                >Wissenscheck</a
+              >
+            </nav>
+          </aside>
+
+          <article class="lesson-content">
+            <header class="lesson-hero">
+              <div class="lesson-hero__index">05</div>
+              <div>
+                <p class="lesson-hero__eyebrow">
+                  Zahlensysteme &amp; Datenrepräsentation
+                </p>
+                <h1>Binärarithmetik<span>.</span></h1>
+                <p class="lesson-hero__intro">
+                  Addiere und subtrahiere Binärzahlen.
+                </p>
+              </div>
+            </header>
+
+            <section class="lesson-section" id="addition">
+              <div class="lesson-section__number">01</div>
+              <div class="lesson-section__body">
+                <h2>Addition</h2>
+                <p>Fangen wir mit der Addition an. Die Regeln dafür:</p>
+
+                <div class="lesson-code" aria-label="Rechenregeln">
+                  <div class="lesson-code__head">
+                    <span>Regel</span>
+                    <span>Ergebnis</span>
+                  </div>
+                  <pre><code>1 + 0 = 1
+1 + 1 = 10   (Übertrag 1)
+0 + 0 = 0</code></pre>
+                </div>
+
+                <p style="margin-top: 18px">Beispiel: 1011 + 1010</p>
+
+                <div class="lesson-code" aria-label="Rechenbeispiel">
+                  <div class="lesson-code__head">
+                    <span>Rechnung</span>
+                    <span>Ergebnis</span>
+                  </div>
+                  <pre><code>  1 0 1 1
++ 1 0 1 0
+---------
+1 0 1 0 1</code></pre>
+                </div>
+
+                <p style="margin-top: 18px">Von rechts nach links:</p>
+
+                <div class="lesson-code" aria-label="Schritt für Schritt">
+                  <div class="lesson-code__head">
+                    <span>Schritt</span>
+                    <span>Übertrag</span>
+                  </div>
+                  <pre><code>1 + 0             = 1
+1 + 1             = 0   (Übertrag 1)
+0 + 0 + Übertrag  = 1
+1 + 1             = 0   (Übertrag 1)
+Übertrag          = 1</code></pre>
+                </div>
+
+                <p style="margin-top: 18px"><strong>Ergebnis: 10101</strong></p>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="mehrere-zahlen">
+              <div class="lesson-section__number">02</div>
+              <div class="lesson-section__body">
+                <h2>Addition mehrerer Zahlen</h2>
+                <p>
+                  Ich weiß, das sieht zu einfach aus, deshalb habe ich extra für
+                  dich ein interessanteres Beispiel herausgesucht: die Addition
+                  von drei Zahlen auf einmal.
+                </p>
+
+                <p>Beispiel: 111,1₂ + 111,0₂ + 101,1₂</p>
+
+                <div class="lesson-code" aria-label="Rechenbeispiel">
+                  <div class="lesson-code__head">
+                    <span>Rechnung</span>
+                    <span>Ergebnis</span>
+                  </div>
+                  <pre><code>      1 1 1 , 1
+      1 1 1 , 0
+  +   1 0 1 , 1
+  -------------
+  1 0 1 0 0 , 0</code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Hier gibt es etwas Neues. Erstens: Ja, Binärzahlen können auch
+                  ein Komma haben, aber das ändert am Prinzip nichts.
+                </p>
+                <p>
+                  Zweitens: Eine Spalte kann mehr als 3 ergeben, also kann auch
+                  der Übertrag größer als 1 werden.
+                </p>
+
+                <div class="lesson-callout">
+                  <span class="lesson-callout__label">Merke</span>
+                  <p>
+                    Du rechnest die Spaltensumme einfach zusammen und wandelst
+                    sie ins Binärsystem um. Die letzte Ziffer bleibt stehen, der
+                    Rest wird zum Übertrag.
+                  </p>
+                </div>
+
+                <p style="margin-top: 18px">
+                  In Stelle 0 treffen drei Einsen plus ein Übertrag aufeinander,
+                  zusammen 4. Und 4 ist im Binärsystem 100. Du schreibst die 0
+                  hin und trägst 10 weiter, der Übertrag ist also 2.
+                </p>
+                <p>
+                  In Stelle 2 kommst du mit den drei Einsen und dem Übertrag auf
+                  5. Und wieder gilt: 5 = 101. Also bleibt die 1 stehen und die
+                  10 wandert weiter.
+                </p>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="subtraktion">
+              <div class="lesson-section__number">03</div>
+              <div class="lesson-section__body">
+                <h2>Subtraktion</h2>
+
+                <div class="lesson-code" aria-label="Rechenregeln">
+                  <div class="lesson-code__head">
+                    <span>Regel</span>
+                    <span>Ergebnis</span>
+                  </div>
+                  <pre><code>0 - 0 = 0
+1 - 0 = 1
+1 - 1 = 0
+0 - 1 = 1   (und du leihst dir etwas)</code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Die ersten drei Fälle sind offensichtlich. Der letzte braucht
+                  aber etwas Erklärung.
+                </p>
+                <p>
+                  Beim schriftlichen Subtrahieren leihst du dir, wenn ein
+                  unmöglicher Fall auftaucht (zum Beispiel 3 - 7), eine Eins vom
+                  Nachbarn. Im Dezimalsystem ist so ein geliehener Wert 10 wert.
+                  Hier ist es genauso, nur ist der geliehene Wert 2 statt 10.
+                </p>
+
+                <div class="lesson-callout">
+                  <span class="lesson-callout__label"
+                    >Falls der Nachbar leer ist</span
+                  >
+                  <p>
+                    Hat der direkte Nachbar keine Eins, klopfst du beim nächsten
+                    an, und so weiter, bis dir jemand etwas leiht. Dann werden
+                    alle Stellen bis zum großzügigen Nachbarn zu 1, und die
+                    Stelle, für die du geliehen hast, wird zu 2.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="beispiel-subtraktion">
+              <div class="lesson-section__number">04</div>
+              <div class="lesson-section__body">
+                <h2>Beispiel: Subtraktion</h2>
+                <p>Schauen wir uns das am Beispiel an: 10110 - 1001</p>
+
+                <div class="lesson-code" aria-label="Rechenbeispiel">
+                  <div class="lesson-code__head">
+                    <span>Rechnung</span>
+                    <span>Ergebnis</span>
+                  </div>
+                  <pre><code>  1 0 1 1 0
+-   1 0 0 1
+-----------
+    1 1 0 1</code></pre>
+                </div>
+
+                <p style="margin-top: 18px">Von rechts nach links:</p>
+
+                <div class="lesson-code" aria-label="Schritt für Schritt">
+                  <div class="lesson-code__head">
+                    <span>Stelle</span>
+                    <span>Rechnung</span>
+                  </div>
+                  <pre><code>Stelle 0: 0 - 1 geht nicht. Wir leihen uns 1 vom Nachbarn: 2 - 1 = 1.
+Stelle 1: Weil wir geliehen haben, ist sie jetzt 0. 0 - 0 = 0.
+Stelle 2: 1 - 0 = 1.
+Stelle 3: 0 - 1 geht nicht, also wieder leihen: 2 - 1 = 1.
+Stelle 4: Sie ist jetzt null.</code></pre>
+                </div>
+
+                <p style="margin-top: 18px"><strong>Ergebnis: 1101</strong></p>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="wissenscheck">
+              <div class="lesson-section__number">05</div>
+              <div class="lesson-section__body">
+                <h2>Jetzt bist du dran</h2>
+
+                <div
+                  class="lesson-exercise"
+                  data-exercise="binary-arith"
+                  data-generate="binary"
+                >
+                  <span class="lesson-exercise__label">Quick-Check</span>
+                  <div class="lesson-exercise__rows">
+                    <div
+                      class="lesson-exercise__row"
+                      data-op="+"
+                      data-a="1001"
+                      data-b="101"
+                    >
+                      <span class="lesson-exercise__literal">1001 + 101 =</span>
+                      <input
+                        class="lesson-exercise__input"
+                        type="text"
+                        inputmode="numeric"
+                        spellcheck="false"
+                        autocomplete="off"
+                        placeholder="Summe"
+                        aria-label="Summe von 1001 und 101"
+                      />
+                    </div>
+                    <div
+                      class="lesson-exercise__row"
+                      data-op="-"
+                      data-a="1001"
+                      data-b="101"
+                    >
+                      <span class="lesson-exercise__literal">1001 - 101 =</span>
+                      <input
+                        class="lesson-exercise__input"
+                        type="text"
+                        inputmode="numeric"
+                        spellcheck="false"
+                        autocomplete="off"
+                        placeholder="Differenz"
+                        aria-label="Differenz von 1001 und 101"
+                      />
+                    </div>
+                  </div>
+                  <div class="lesson-exercise__actions">
+                    <button class="lesson-exercise__check" type="button">
+                      Prüfen
+                    </button>
+                  </div>
+                  <div
+                    class="lesson-exercise__feedback"
+                    aria-live="polite"
+                    hidden
+                  ></div>
+                </div>
+              </div>
+            </section>
+
+            <div class="lesson-next">
+              <div>
+                <span>Nächstes Thema</span>
+                <strong>6. Halb- und Volladdierer</strong>
+              </div>
+              <a href="HA_VA.html" aria-label="Zum Thema Halb- und Volladdierer"
+                >›</a
+              >
+            </div>
+          </article>
+        </div>
+      </main>
+    </div>
+
+    <div class="contact-modal" aria-hidden="true">
+      <div
+        class="contact-modal__box"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="contact-title"
+      >
+        <button
+          class="contact-modal__close"
+          type="button"
+          aria-label="Kontaktfenster schließen"
+        >
+          ×
+        </button>
+
+        <h2 id="contact-title">Kontakt</h2>
+        <div class="contact-modal__line"></div>
+        <p class="contact-modal__intro">
+          Bei Fragen, Anregungen oder Problemen kannst du mich gerne
+          kontaktieren.
+        </p>
+
+        <a
+          href="https://mail.google.com/mail/?view=cm&fs=1&to=sandravasylkova@gmail.com"
+          target="_blank"
+          rel="noopener"
+          class="contact-modal__row"
+        >
+          <span class="contact-modal__icon">✉</span>
+          <span>
+            <strong>Email</strong>
+            <small>sandravasylkova@gmail.com</small>
+          </span>
+        </a>
+
+        <a
+          href="https://www.microsoft.com/en-us/microsoft-teams/log-in"
+          class="contact-modal__row"
+        >
+          <span class="teams__icon" role="img" aria-label="Microsoft Teams"></span>
+          <span>
+            <strong>Teams</strong>
+            <small>Oleksandra Vasylkova</small>
+          </span>
+        </a>
+      </div>
+    </div>
+  </body>
+</html>

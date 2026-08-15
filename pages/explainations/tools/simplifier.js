@@ -320,10 +320,10 @@ function precedence(ast) {
   if (ast.type === "equiv") return 0;
   if (ast.type === "implies") return 1;
   if (ast.type === "or") return 2;
-  if (ast.type === "xor") return 2;
-  if (ast.type === "and") return 3;
-  if (ast.type === "not") return 4;
-  return 5;
+  if (ast.type === "xor") return 3;
+  if (ast.type === "and") return 4;
+  if (ast.type === "not") return 5;
+  return 6;
 }
 
 function astToLabel(ast, parentPrecedence = 0) {
@@ -395,13 +395,6 @@ function astEqual(a, b) {
   return astKey(a) === astKey(b);
 }
 
-function astComplexity(ast) {
-  if (!ast) return 0;
-  if (ast.type === "var" || ast.type === "const") return 1;
-  if (ast.type === "not") return 1 + astComplexity(ast.value);
-  return 1 + astComplexity(ast.left) + astComplexity(ast.right);
-}
-
 function isConst(ast, value) {
   return ast.type === "const" && ast.value === value;
 }
@@ -439,6 +432,63 @@ function findCommonFactor(leftBinary, rightBinary) {
           leftRest: otherFactor(leftBinary, leftFactor),
           rightRest: otherFactor(rightBinary, rightFactor),
         };
+      }
+    }
+  }
+
+  return null;
+}
+
+function flattenChain(ast, type) {
+  if (ast.type !== type) return [ast];
+  return [...flattenChain(ast.left, type), ...flattenChain(ast.right, type)];
+}
+
+function rebuildChain(type, operands) {
+  return operands
+    .slice(1)
+    .reduce((acc, operand) => makeBinary(type, acc, operand), cloneAst(operands[0]));
+}
+
+function tryAssociativeSimplify(ast) {
+  if (ast.type !== "and" && ast.type !== "or") return null;
+  if (ast.left.type !== ast.type && ast.right.type !== ast.type) return null;
+
+  const operands = flattenChain(ast, ast.type);
+  if (operands.length <= 2) return null;
+
+  const dominant = ast.type === "and" ? 0 : 1;
+  const identity = ast.type === "and" ? 1 : 0;
+
+  if (operands.some((operand) => isConst(operand, dominant))) {
+    return { ast: { type: "const", value: dominant }, law: "Dominanzgesetz" };
+  }
+
+  const identityIndex = operands.findIndex((operand) =>
+    isConst(operand, identity),
+  );
+
+  if (identityIndex !== -1) {
+    const rest = operands.filter((_, index) => index !== identityIndex);
+    return {
+      ast: rebuildChain(ast.type, rest),
+      law: "Gesetz der neutralen Elemente",
+    };
+  }
+
+  for (let i = 0; i < operands.length; i++) {
+    for (let j = i + 1; j < operands.length; j++) {
+      if (isNegationPair(operands[i], operands[j])) {
+        return { ast: { type: "const", value: dominant }, law: "Komplementgesetz" };
+      }
+    }
+  }
+
+  for (let i = 0; i < operands.length; i++) {
+    for (let j = i + 1; j < operands.length; j++) {
+      if (astEqual(operands[i], operands[j])) {
+        const rest = operands.filter((_, index) => index !== j);
+        return { ast: rebuildChain(ast.type, rest), law: "Idempotenzgesetz" };
       }
     }
   }
@@ -617,7 +667,7 @@ function applyLocalLaw(ast) {
     }
   }
 
-  return null;
+  return tryAssociativeSimplify(ast);
 }
 
 function simplifyOnce(ast) {
@@ -661,210 +711,7 @@ function simplifyOnce(ast) {
   return null;
 }
 
-function evaluateAst(ast, values) {
-  if (ast.type === "var") return Boolean(values[ast.name]);
-  if (ast.type === "const") return Boolean(ast.value);
-  if (ast.type === "not") return !evaluateAst(ast.value, values);
-  if (ast.type === "and")
-    return evaluateAst(ast.left, values) && evaluateAst(ast.right, values);
-  if (ast.type === "xor")
-    return evaluateAst(ast.left, values) !== evaluateAst(ast.right, values);
-  if (ast.type === "or")
-    return evaluateAst(ast.left, values) || evaluateAst(ast.right, values);
-  if (ast.type === "implies")
-    return !evaluateAst(ast.left, values) || evaluateAst(ast.right, values);
-  if (ast.type === "equiv")
-    return evaluateAst(ast.left, values) === evaluateAst(ast.right, values);
-
-  throw new Error("Unbekannter Ausdruck.");
-}
-
-function buildCombinations(variables) {
-  const rows = 2 ** variables.length;
-  const combinations = [];
-
-  for (let i = 0; i < rows; i++) {
-    const values = {};
-
-    variables.forEach((variable, index) => {
-      const bit = (i >> (variables.length - 1 - index)) & 1;
-      values[variable] = bit;
-    });
-
-    combinations.push(values);
-  }
-
-  return combinations;
-}
-
-function termsEqual(a, b) {
-  return a.length === b.length && a.every((value, index) => value === b[index]);
-}
-
-function termExists(list, term) {
-  return list.some((item) => termsEqual(item, term));
-}
-
-function tryMerge(termA, termB) {
-  if (termA.length !== termB.length) return null;
-
-  let diffIndex = -1;
-
-  for (let i = 0; i < termA.length; i++) {
-    if ((termA[i] === "*") !== (termB[i] === "*")) return null;
-
-    if (termA[i] !== termB[i]) {
-      if (diffIndex !== -1) return null;
-      diffIndex = i;
-    }
-  }
-
-  if (diffIndex === -1) return null;
-
-  const merged = [...termA];
-  merged[diffIndex] = "*";
-  return merged;
-}
-
-function covers(primeImplicant, minterm) {
-  return primeImplicant.every(
-    (value, index) => value === "*" || value === minterm[index],
-  );
-}
-
-function getPrimeImplicants(terms) {
-  let current = terms;
-
-  while (true) {
-    let mergedAny = false;
-    const next = [];
-    const used = new Set();
-
-    for (let i = 0; i < current.length; i++) {
-      for (let j = i + 1; j < current.length; j++) {
-        const merged = tryMerge(current[i], current[j]);
-
-        if (merged && !termExists(next, merged)) {
-          next.push(merged);
-          used.add(i);
-          used.add(j);
-          mergedAny = true;
-        }
-      }
-    }
-
-    current.forEach((term, index) => {
-      if (!used.has(index) && !termExists(next, term)) {
-        next.push(term);
-      }
-    });
-
-    if (!mergedAny) break;
-    current = next;
-  }
-
-  return current;
-}
-
-function selectCover(primeImplicants, minterms) {
-  const coverage = minterms.map((minterm) =>
-    primeImplicants.reduce(
-      (acc, primeImplicant, index) =>
-        covers(primeImplicant, minterm) ? [...acc, index] : acc,
-      [],
-    ),
-  );
-
-  const selected = new Set();
-
-  coverage.forEach((covering) => {
-    if (covering.length === 1) selected.add(covering[0]);
-  });
-
-  const covered = new Set(
-    minterms.flatMap((_, index) =>
-      coverage[index].some((primeIndex) => selected.has(primeIndex))
-        ? [index]
-        : [],
-    ),
-  );
-
-  while (covered.size < minterms.length) {
-    let best = -1;
-    let bestCount = 0;
-
-    primeImplicants.forEach((primeImplicant, index) => {
-      if (selected.has(index)) return;
-
-      const count = minterms.filter(
-        (minterm, mintermIndex) =>
-          !covered.has(mintermIndex) && covers(primeImplicant, minterm),
-      ).length;
-
-      if (count > bestCount) {
-        best = index;
-        bestCount = count;
-      }
-    });
-
-    if (best === -1) break;
-
-    selected.add(best);
-    minterms.forEach((minterm, index) => {
-      if (covers(primeImplicants[best], minterm)) covered.add(index);
-    });
-  }
-
-  return [...selected].map((index) => primeImplicants[index]);
-}
-
-function formatTerm(term, variables, wrap) {
-  const literals = term
-    .map((value, index) => {
-      if (value === "*") return null;
-      return value === 1 ? variables[index] : `¬${variables[index]}`;
-    })
-    .filter(Boolean);
-
-  if (literals.length === 0) return "1";
-  if (literals.length === 1) return literals[0];
-
-  const joined = literals.join(" ∧ ");
-  return wrap ? `(${joined})` : joined;
-}
-
-function simplifyByTruthTable(ast, variables) {
-  const combinations = buildCombinations(variables);
-  const minterms = combinations
-    .filter((values) => evaluateAst(ast, values))
-    .map((values) => variables.map((variable) => values[variable]));
-
-  if (minterms.length === 0) {
-    return { result: "0", minterms, primeImplicants: [] };
-  }
-
-  if (minterms.length === 2 ** variables.length) {
-    return { result: "1", minterms, primeImplicants: [] };
-  }
-
-  const primeImplicants = getPrimeImplicants(minterms);
-  const cover = selectCover(primeImplicants, minterms);
-  const needsWrap = cover.length > 1;
-
-  const result = cover
-    .sort((a, b) => {
-      const aLength = a.filter((value) => value !== "*").length;
-      const bLength = b.filter((value) => value !== "*").length;
-      if (aLength !== bLength) return aLength - bLength;
-      return JSON.stringify(a).localeCompare(JSON.stringify(b));
-    })
-    .map((term) => formatTerm(term, variables, needsWrap))
-    .join(" ∨ ");
-
-  return { result, minterms, primeImplicants: cover };
-}
-
-function simplifyWithLaws(ast, variables) {
+function simplifyWithLaws(ast) {
   let current = cloneAst(ast);
   const steps = [{ expr: astToLabel(current), law: "" }];
 
@@ -878,26 +725,6 @@ function simplifyWithLaws(ast, variables) {
       expr: astToLabel(current),
       law: next.law,
     });
-  }
-
-  let finalByLaws = astToLabel(current);
-  const minimized = simplifyByTruthTable(current, variables).result;
-
-  try {
-    const minimizedAst = parseExpression(tokenize(minimized));
-
-    if (
-      minimized !== finalByLaws &&
-      astComplexity(minimizedAst) < astComplexity(current)
-    ) {
-      steps.push({
-        expr: minimized,
-        law: "Minimierung über Wahrheitstabelle",
-      });
-      finalByLaws = minimized;
-    }
-  } catch {
-    // Keep the law-based result if the fallback string cannot be parsed.
   }
 
   return {
@@ -983,7 +810,7 @@ function runSimplification() {
       );
     }
 
-    const { result, steps } = simplifyWithLaws(ast, variables);
+    const { result, steps } = simplifyWithLaws(ast);
 
     clearError();
     renderResult(result);

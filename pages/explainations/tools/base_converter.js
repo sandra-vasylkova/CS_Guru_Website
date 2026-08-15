@@ -103,7 +103,6 @@ function clearError() {
 
 function hideResult() {
   resultMain.textContent = "";
-  resultBase.textContent = "";
   resultBlock.classList.add("tool-result-block--hidden");
 }
 

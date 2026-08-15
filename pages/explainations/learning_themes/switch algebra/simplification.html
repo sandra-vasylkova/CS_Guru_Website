@@ -1,0 +1,655 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Boolesche Ausdrücke mit den Booleschen Gesetzen vereinfachen und die kanonische DNF und KNF aus einer Wahrheitstabelle aufstellen."
+    />
+    <title>CS Guru | Vereinfachung</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow:wght@100;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CS Guru | Vereinfachung" />
+    <meta
+      property="og:description"
+      content="Boolesche Ausdrücke mit den Booleschen Gesetzen vereinfachen und die kanonische DNF und KNF aus einer Wahrheitstabelle aufstellen."
+    />
+    <meta property="og:image" content="/assets/web-app-manifest-512x512.png" />
+    <meta property="og:locale" content="de_DE" />
+    <meta name="twitter:card" content="summary" />
+
+    <link rel="stylesheet" href="/style.css" />
+    <script src="/app.js" defer></script>
+
+    <link
+      rel="icon"
+      type="image/png"
+      href="/assets/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+    <link rel="shortcut icon" href="/assets/favicon.ico" />
+  </head>
+
+  <body>
+    <div class="page learn-page lesson-page lesson-page--logic">
+      <nav class="nav">
+        <a href="/index.html" class="nav__logo">
+          <img
+            src="/assets/favicon-purple.ico"
+            alt="CS Guru"
+            class="nav__favicon"
+          />
+          <span class="nav__brand">CS <span>Guru</span></span>
+        </a>
+
+        <ul class="nav__links">
+          <li><a href="/index.html" class="nav__link">Home</a></li>
+          <li>
+            <a href="/pages/discover.html" class="nav__link">Entdecken</a>
+          </li>
+          <li>
+            <a href="/pages/learn.html" class="nav__link nav__link--active"
+              >Lernen</a
+            >
+          </li>
+          <li><a href="/pages/play.html" class="nav__link">Spielen</a></li>
+          <li><a href="/pages/tools.html" class="nav__link">Werkzeuge</a></li>
+        </ul>
+
+        <div class="nav__actions">
+          <button class="nav__action nav__contact-button" type="button">
+            <span class="nav__action-icon">✉</span>
+            Kontakt
+          </button>
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSdTqXspWFUsLsN_17e1_QqPylcYwD8ifro1duAEqonBuqhtIg/viewform"
+            class="nav__action"
+          >
+            <span class="nav__action-icon">✎</span>
+            Feedback
+          </a>
+        </div>
+
+        <button
+          class="nav__menu-btn"
+          type="button"
+          aria-label="Menü öffnen"
+          aria-expanded="false"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </nav>
+
+      <div class="mobile-menu" aria-hidden="true">
+        <div class="mobile-menu__panel">
+          <div class="mobile-menu__head">
+            <a href="/index.html" class="mobile-menu__brand"
+              >CS <span>Guru</span></a
+            >
+            <button
+              class="mobile-menu__close"
+              type="button"
+              aria-label="Menü schließen"
+            >
+              ×
+            </button>
+          </div>
+
+          <a href="/index.html" class="mobile-menu__link">Home</a>
+          <a
+            href="/pages/learn.html"
+            class="mobile-menu__link mobile-menu__link--active"
+            >Lernen</a
+          >
+          <a href="/pages/play.html" class="mobile-menu__link">Spielen</a>
+          <a href="/pages/tools.html" class="mobile-menu__link">Werkzeuge</a>
+          <a href="/pages/discover.html" class="mobile-menu__link">Entdecken</a>
+
+          <div class="mobile-menu__actions">
+            <button
+              class="mobile-menu__link mobile-menu__contact contact-modal-trigger"
+              type="button"
+            >
+              Kontakt
+            </button>
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSdTqXspWFUsLsN_17e1_QqPylcYwD8ifro1duAEqonBuqhtIg/viewform"
+              class="mobile-menu__link"
+              >Feedback</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <main class="lesson">
+        <div class="lesson__glow" aria-hidden="true"></div>
+
+        <div class="lesson__shell">
+          <aside class="lesson-sidebar">
+            <a class="lesson-sidebar__back" href="/pages/learn.html">
+              <span>‹</span> Alle Themen
+            </a>
+            <div class="lesson-sidebar__topic">
+              <span class="lesson-sidebar__eyebrow">Schaltalgebra</span>
+              <strong>Vereinfachung</strong>
+            </div>
+            <nav class="lesson-sidebar__nav" aria-label="Themenübersicht">
+              <a class="lesson-sidebar__link" href="#grundlagen"
+                >Ausdrücke vereinfachen</a
+              >
+              <a class="lesson-sidebar__link" href="#dnf-knf">DNF und KNF</a>
+              <a class="lesson-sidebar__link" href="#wissenscheck"
+                >Kurzer Wissenscheck</a
+              >
+            </nav>
+          </aside>
+
+          <article class="lesson-content">
+            <header class="lesson-hero">
+              <div class="lesson-hero__index">05</div>
+              <div>
+                <p class="lesson-hero__eyebrow">Schaltalgebra</p>
+                <h1>Vereinfachung<span>.</span></h1>
+                <p class="lesson-hero__intro">
+                  Jetzt bist du endlich da angekommen, wo du hinwolltest: beim
+                  Vereinfachen boolescher Ausdrücke.
+                </p>
+              </div>
+            </header>
+
+            <section class="lesson-section" id="grundlagen">
+              <div class="lesson-section__number">01</div>
+              <div class="lesson-section__body">
+                <h2>Ausdrücke vereinfachen</h2>
+                <p>
+                  Um einen Ausdruck zu vereinfachen, nimmst du die booleschen
+                  Gesetze, die du vorhin gelernt hast. Du suchst so lange nach
+                  passenden Gesetzen, bis sich der Ausdruck nicht mehr weiter
+                  vereinfachen lässt.
+                </p>
+                <p>Beispiel:</p>
+
+                <div class="lesson-code" aria-label="Beispielausdruck">
+                  <div class="lesson-code__head">
+                    <span>Ausdruck</span>
+                    <span></span>
+                  </div>
+                  <pre><code>(<span class="code-name">A</span> <span class="code-operator">∧</span> (<span class="code-name">B</span> <span class="code-operator">∨</span> <span class="code-name">C</span>)) <span class="code-operator">∨</span> (<span class="code-operator">¬</span><span class="code-name">A</span> <span class="code-operator">∧</span> (<span class="code-name">B</span> <span class="code-operator">∨</span> <span class="code-name">C</span>))</code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Zerlege den Ausdruck zuerst in seine Teile.
+                </p>
+
+                <div class="lesson-code" aria-label="Ausdruck zerlegt">
+                  <div class="lesson-code__head">
+                    <span>Zerlegt</span>
+                    <span>2 Teile</span>
+                  </div>
+                  <pre><code>Erster Teil:  (<span class="code-name">A</span> <span class="code-operator">∧</span> (<span class="code-name">B</span> <span class="code-operator">∨</span> <span class="code-name">C</span>))
+Zweiter Teil: (<span class="code-operator">¬</span><span class="code-name">A</span> <span class="code-operator">∧</span> (<span class="code-name">B</span> <span class="code-operator">∨</span> <span class="code-name">C</span>))</code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Schau dir die Gemeinsamkeiten genau an: In beiden Teilen
+                  steckt (B ∨ C). Also kannst du mit dem
+                  <strong>Distributivgesetz</strong> ausklammern:
+                </p>
+
+                <div class="lesson-code" aria-label="Ausgeklammert">
+                  <div class="lesson-code__head">
+                    <span>Ausgeklammert</span>
+                    <span>Distributivgesetz</span>
+                  </div>
+                  <pre><code>(<span class="code-name">A</span> <span class="code-operator">∨</span> <span class="code-operator">¬</span><span class="code-name">A</span>) <span class="code-operator">∧</span> (<span class="code-name">B</span> <span class="code-operator">∨</span> <span class="code-name">C</span>)</code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Jetzt siehst du, dass sich nur der erste Teil vereinfachen
+                  lässt: A ∨ ¬A. Mit dem <strong>Komplementgesetz</strong> gilt:
+                  A ∨ ¬A = 1. Der zweite Teil bleibt unverändert, und nach dem
+                  <strong>Gesetz vom neutralen Element</strong> (1 ∧ A = A)
+                  bekommt der Ausdruck seine endgültige Form:
+                </p>
+
+                <div class="lesson-code" aria-label="Endergebnis">
+                  <div class="lesson-code__head">
+                    <span>Ergebnis</span>
+                    <span>Komplement, neutrales Element</span>
+                  </div>
+                  <pre><code><span class="code-value">1</span> <span class="code-operator">∧</span> (<span class="code-name">B</span> <span class="code-operator">∨</span> <span class="code-name">C</span>) <span class="code-operator">=</span> <span class="code-name">B</span> <span class="code-operator">∨</span> <span class="code-name">C</span></code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Hier ist eine kleine Anleitung, an die du dich halten
+                  solltest:
+                </p>
+                <ol style="margin: 10px 0 0 22px; line-height: 1.8">
+                  <li>
+                    Teile den Ausdruck in kleinere Teile (meist an den
+                    Klammergrenzen).
+                  </li>
+                  <li>Finde etwas Gemeinsames.</li>
+                  <li>
+                    Wende die booleschen Gesetze an, am Anfang lieber eins nach
+                    dem anderen.
+                  </li>
+                </ol>
+
+                <div class="lesson-callout">
+                  <span class="lesson-callout__label">Tipp</span>
+                  <p>
+                    Schreib auf, was du tust. Auch wenn es eine Kleinigkeit ist.
+                    So machst du deinem zukünftigen Ich das Leben leichter, wenn
+                    du für die Klausur lernst.
+                  </p>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Alles verstanden? Dann versuch dich selbst am Vereinfachen im
+                  Spiel
+                  <strong
+                    ><a
+                      href="/games/simplify.html"
+                      style="color: var(--lesson-accent); text-decoration: none"
+                      >Simplify</a
+                    ></strong
+                  >
+                </p>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="dnf-knf">
+              <div class="lesson-section__number">02</div>
+              <div class="lesson-section__body">
+                <h2>DNF und KNF</h2>
+                <p>
+                  Was ist das überhaupt? DNF steht für
+                  <strong>disjunktive Normalform</strong>, KNF für
+                  <strong>konjunktive Normalform</strong>. Mit diesen beiden
+                  Formen kannst du aus einem booleschen Ausdruck eine ganz
+                  bestimmte Formel bauen – direkt aus seiner Wahrheitstabelle.
+                </p>
+                <p>Schauen wir uns ein Beispiel an:</p>
+
+                <div class="lesson-code" aria-label="Ausgangsausdruck">
+                  <div class="lesson-code__head">
+                    <span>Ausdruck</span>
+                    <span>4 Operanden</span>
+                  </div>
+                  <pre><code>Ausdruck:    <span class="code-operator">¬</span>(<span class="code-name">A</span> <span class="code-operator">∧</span> <span class="code-name">B</span>) <span class="code-operator">→</span> (<span class="code-name">C</span> <span class="code-operator">∨</span> <span class="code-operator">¬</span>(<span class="code-name">A</span> <span class="code-operator">∨</span> <span class="code-operator">¬</span><span class="code-name">D</span>))
+Vereinfacht: (<span class="code-name">A</span> <span class="code-operator">∧</span> <span class="code-name">B</span>) <span class="code-operator">∨</span> <span class="code-name">C</span> <span class="code-operator">∨</span> (<span class="code-operator">¬</span><span class="code-name">A</span> <span class="code-operator">∧</span> <span class="code-name">D</span>)</code></pre>
+                </div>
+
+                <div class="lesson-table">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>A</th>
+                        <th>B</th>
+                        <th>C</th>
+                        <th>D</th>
+                        <th>F</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                      </tr>
+                      <tr>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>1</td>
+                      </tr>
+                      <tr>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>1</td>
+                      </tr>
+                      <tr>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                      </tr>
+                      <tr>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                      </tr>
+                      <tr>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>1</td>
+                      </tr>
+                      <tr>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>1</td>
+                      </tr>
+                      <tr>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                      </tr>
+                      <tr>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                      </tr>
+                      <tr>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>0</td>
+                      </tr>
+                      <tr>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>1</td>
+                      </tr>
+                      <tr>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                      </tr>
+                      <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>1</td>
+                      </tr>
+                      <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>1</td>
+                      </tr>
+                      <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>1</td>
+                      </tr>
+                      <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Um die Formel als <strong>KNF</strong> zu bauen, schreibst du
+                  alle Zeilen ab, in denen F falsch ist. Die Operanden einer
+                  Zeile stehen in Klammern und sind mit dem Operator ODER
+                  verbunden. Die Klammern werden untereinander mit dem Operator
+                  UND verbunden. Dabei gilt: Steht in der Zeile eine 1,
+                  schreibst du die Variable negiert, bei einer 0 unverändert
+                  (die Variable selbst, nicht negiert).
+                </p>
+
+                <div class="lesson-code" aria-label="Kanonische KNF">
+                  <div class="lesson-code__head">
+                    <span>Kanonische KNF</span>
+                    <span>4 Klammern</span>
+                  </div>
+                  <pre><code><span class="code-name">F</span> <span class="code-operator">=</span> (<span class="code-name">A</span><span class="code-operator">∨</span><span class="code-name">B</span><span class="code-operator">∨</span><span class="code-name">C</span><span class="code-operator">∨</span><span class="code-name">D</span>) <span class="code-operator">∧</span> (<span class="code-name">A</span><span class="code-operator">∨</span><span class="code-operator">¬</span><span class="code-name">B</span><span class="code-operator">∨</span><span class="code-name">C</span><span class="code-operator">∨</span><span class="code-name">D</span>) <span class="code-operator">∧</span> (<span class="code-operator">¬</span><span class="code-name">A</span><span class="code-operator">∨</span><span class="code-name">B</span><span class="code-operator">∨</span><span class="code-name">C</span><span class="code-operator">∨</span><span class="code-name">D</span>) <span class="code-operator">∧</span> (<span class="code-operator">¬</span><span class="code-name">A</span><span class="code-operator">∨</span><span class="code-name">B</span><span class="code-operator">∨</span><span class="code-name">C</span><span class="code-operator">∨</span><span class="code-operator">¬</span><span class="code-name">D</span>)</code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Um die <strong>DNF</strong> zu bauen, nimmst du nur die wahren
+                  Zeilen. Die Operatoren tauschen die Plätze. Und auch die
+                  Negation dreht sich um: Bei einer 0 negierst du, bei einer 1
+                  lässt du die Variable stehen.
+                </p>
+
+                <div class="lesson-code" aria-label="Kanonische DNF">
+                  <div class="lesson-code__head">
+                    <span>Kanonische DNF</span>
+                    <span>12 Klammern</span>
+                  </div>
+                  <pre><code><span class="code-name">F</span> <span class="code-operator">=</span> (<span class="code-operator">¬</span><span class="code-name">A</span><span class="code-operator">∧</span><span class="code-operator">¬</span><span class="code-name">B</span><span class="code-operator">∧</span><span class="code-operator">¬</span><span class="code-name">C</span><span class="code-operator">∧</span><span class="code-name">D</span>) <span class="code-operator">∨</span> (<span class="code-operator">¬</span><span class="code-name">A</span><span class="code-operator">∧</span><span class="code-operator">¬</span><span class="code-name">B</span><span class="code-operator">∧</span><span class="code-name">C</span><span class="code-operator">∧</span><span class="code-operator">¬</span><span class="code-name">D</span>) <span class="code-operator">∨</span> (<span class="code-operator">¬</span><span class="code-name">A</span><span class="code-operator">∧</span><span class="code-operator">¬</span><span class="code-name">B</span><span class="code-operator">∧</span><span class="code-name">C</span><span class="code-operator">∧</span><span class="code-name">D</span>) <span class="code-operator">∨</span>
+    (<span class="code-operator">¬</span><span class="code-name">A</span><span class="code-operator">∧</span><span class="code-name">B</span><span class="code-operator">∧</span><span class="code-operator">¬</span><span class="code-name">C</span><span class="code-operator">∧</span><span class="code-name">D</span>) <span class="code-operator">∨</span> (<span class="code-operator">¬</span><span class="code-name">A</span><span class="code-operator">∧</span><span class="code-name">B</span><span class="code-operator">∧</span><span class="code-name">C</span><span class="code-operator">∧</span><span class="code-operator">¬</span><span class="code-name">D</span>) <span class="code-operator">∨</span> (<span class="code-operator">¬</span><span class="code-name">A</span><span class="code-operator">∧</span><span class="code-name">B</span><span class="code-operator">∧</span><span class="code-name">C</span><span class="code-operator">∧</span><span class="code-name">D</span>) <span class="code-operator">∨</span>
+    (<span class="code-name">A</span><span class="code-operator">∧</span><span class="code-operator">¬</span><span class="code-name">B</span><span class="code-operator">∧</span><span class="code-name">C</span><span class="code-operator">∧</span><span class="code-operator">¬</span><span class="code-name">D</span>) <span class="code-operator">∨</span> (<span class="code-name">A</span><span class="code-operator">∧</span><span class="code-operator">¬</span><span class="code-name">B</span><span class="code-operator">∧</span><span class="code-name">C</span><span class="code-operator">∧</span><span class="code-name">D</span>) <span class="code-operator">∨</span> (<span class="code-name">A</span><span class="code-operator">∧</span><span class="code-name">B</span><span class="code-operator">∧</span><span class="code-operator">¬</span><span class="code-name">C</span><span class="code-operator">∧</span><span class="code-operator">¬</span><span class="code-name">D</span>) <span class="code-operator">∨</span>
+    (<span class="code-name">A</span><span class="code-operator">∧</span><span class="code-name">B</span><span class="code-operator">∧</span><span class="code-operator">¬</span><span class="code-name">C</span><span class="code-operator">∧</span><span class="code-name">D</span>) <span class="code-operator">∨</span> (<span class="code-name">A</span><span class="code-operator">∧</span><span class="code-name">B</span><span class="code-operator">∧</span><span class="code-name">C</span><span class="code-operator">∧</span><span class="code-operator">¬</span><span class="code-name">D</span>) <span class="code-operator">∨</span> (<span class="code-name">A</span><span class="code-operator">∧</span><span class="code-name">B</span><span class="code-operator">∧</span><span class="code-name">C</span><span class="code-operator">∧</span><span class="code-name">D</span>)</code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Fazit: Bevor du dich für eine der beiden Formeln entscheidest,
+                  schau, welche leichter umzusetzen ist. Oben stehen die
+                  kanonischen Formeln – trotzdem lassen sie sich mit den
+                  Gesetzen, die du schon kennst, weiter kürzen.
+                </p>
+
+                <div class="lesson-code" aria-label="Gekürzte Formeln">
+                  <div class="lesson-code__head">
+                    <span>Gekürzt</span>
+                    <span>KNF, DNF</span>
+                  </div>
+                  <pre><code>KNF: <span class="code-name">F</span> <span class="code-operator">=</span> (<span class="code-name">A</span><span class="code-operator">∨</span><span class="code-name">C</span><span class="code-operator">∨</span><span class="code-name">D</span>) <span class="code-operator">∧</span> (<span class="code-operator">¬</span><span class="code-name">A</span><span class="code-operator">∨</span><span class="code-name">B</span><span class="code-operator">∨</span><span class="code-name">C</span>)
+DNF: <span class="code-name">F</span> <span class="code-operator">=</span> <span class="code-name">C</span> <span class="code-operator">∨</span> (<span class="code-name">A</span><span class="code-operator">∧</span><span class="code-name">B</span>) <span class="code-operator">∨</span> (<span class="code-operator">¬</span><span class="code-name">A</span><span class="code-operator">∧</span><span class="code-name">D</span>)</code></pre>
+                </div>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="wissenscheck">
+              <div class="lesson-section__number">03</div>
+              <div class="lesson-section__body">
+                <h2>Jetzt du</h2>
+                <p>
+                  Nimm den zufällig erzeugten Ausdruck unten. Füll zuerst die
+                  Wahrheitstabelle aus. Entscheide dann, ob du die kanonische
+                  DNF oder KNF aufstellst: Klick auf DNF oder KNF und wähl in
+                  der Tabelle genau die Zeilen aus, die zu je einer Klammer
+                  zusammengefasst werden. Zum Schluss füllst du die Lücken mit
+                  den passenden Operatoren.
+                </p>
+
+                <div class="lesson-exercise" data-exercise="normalform">
+                  <span class="lesson-exercise__label">Quick-Check</span>
+                  <p>Ausdruck: <code data-nf-expr></code></p>
+
+                  <div class="lesson-table lesson-truth-table">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>A</th>
+                          <th>B</th>
+                          <th>C</th>
+                          <th>F</th>
+                        </tr>
+                      </thead>
+                      <tbody></tbody>
+                    </table>
+                  </div>
+
+                  <div class="lesson-exercise__actions">
+                    <button
+                      class="lesson-exercise__check"
+                      type="button"
+                      data-nf-table-check
+                    >
+                      Wahrheitstabelle prüfen
+                    </button>
+                  </div>
+                  <div
+                    class="lesson-exercise__feedback"
+                    data-nf-table-feedback
+                    aria-live="polite"
+                    hidden
+                  ></div>
+
+                  <div data-nf-mode hidden>
+                    <p style="margin-top: 18px">
+                      Wähl die kanonische Form, die du aufstellen willst:
+                    </p>
+                    <div
+                      class="lesson-law-quiz__modes"
+                      role="group"
+                      aria-label="DNF oder KNF wählen"
+                    >
+                      <button
+                        type="button"
+                        class="lesson-law-quiz__mode"
+                        data-nf-pick="DNF"
+                      >
+                        DNF
+                      </button>
+                      <button
+                        type="button"
+                        class="lesson-law-quiz__mode"
+                        data-nf-pick="KNF"
+                      >
+                        KNF
+                      </button>
+                    </div>
+                  </div>
+
+                  <div data-nf-rows hidden>
+                    <p style="margin-top: 18px" data-nf-row-hint></p>
+                    <div class="lesson-exercise__actions">
+                      <button
+                        class="lesson-exercise__check"
+                        type="button"
+                        data-nf-row-check
+                      >
+                        Zeilen prüfen
+                      </button>
+                    </div>
+                    <div
+                      class="lesson-exercise__feedback"
+                      data-nf-row-feedback
+                      aria-live="polite"
+                      hidden
+                    ></div>
+                  </div>
+
+                  <div data-nf-builder hidden>
+                    <p style="margin-top: 18px">
+                      Klick auf jede Variable, um sie zu negieren, und wähl bei
+                      jeder Lücke den passenden Operator:
+                    </p>
+                    <div class="lesson-nf-board" data-nf-builder-board></div>
+                    <div class="lesson-exercise__actions">
+                      <button
+                        class="lesson-exercise__check"
+                        type="button"
+                        data-nf-builder-check
+                      >
+                        Prüfen
+                      </button>
+                    </div>
+                    <div
+                      class="lesson-exercise__feedback"
+                      data-nf-builder-feedback
+                      aria-live="polite"
+                      hidden
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <div class="lesson-next">
+              <div>
+                <span>Nächstes Thema</span>
+                <strong>6. Logikgatter</strong>
+              </div>
+              <a href="logic_gate.html" aria-label="Zum Thema Logikgatter"
+                >›</a
+              >
+            </div>
+          </article>
+        </div>
+      </main>
+    </div>
+
+    <div class="contact-modal" aria-hidden="true">
+      <div
+        class="contact-modal__box"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="contact-title"
+      >
+        <button
+          class="contact-modal__close"
+          type="button"
+          aria-label="Kontaktfenster schließen"
+        >
+          ×
+        </button>
+
+        <h2 id="contact-title">Kontakt</h2>
+        <div class="contact-modal__line"></div>
+        <p class="contact-modal__intro">
+          Bei Fragen, Anregungen oder Problemen kannst du mich gerne
+          kontaktieren.
+        </p>
+
+        <a
+          href="https://mail.google.com/mail/?view=cm&fs=1&to=sandravasylkova@gmail.com"
+          target="_blank"
+          rel="noopener"
+          class="contact-modal__row"
+        >
+          <span class="contact-modal__icon">✉</span>
+          <span>
+            <strong>Email</strong>
+            <small>sandravasylkova@gmail.com</small>
+          </span>
+        </a>
+
+        <a
+          href="https://www.microsoft.com/en-us/microsoft-teams/log-in"
+          class="contact-modal__row"
+        >
+          <span class="teams__icon" role="img" aria-label="Microsoft Teams"></span>
+          <span>
+            <strong>Teams</strong>
+            <small>Oleksandra Vasylkova</small>
+          </span>
+        </a>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="XOR, XNOR und Implikation kennenlernen und mit den Grundoperatoren AND, OR und NOT nachbauen."
+    />
+    <title>CS Guru | Erweiterte Operatoren</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow:wght@100;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CS Guru | Erweiterte Operatoren" />
+    <meta
+      property="og:description"
+      content="XOR, XNOR und Implikation kennenlernen und mit den Grundoperatoren AND, OR und NOT nachbauen."
+    />
+    <meta property="og:image" content="/assets/web-app-manifest-512x512.png" />
+    <meta property="og:locale" content="de_DE" />
+    <meta name="twitter:card" content="summary" />
+
+    <link rel="stylesheet" href="/style.css" />
+    <script src="/app.js" defer></script>
+
+    <link
+      rel="icon"
+      type="image/png"
+      href="/assets/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+    <link rel="shortcut icon" href="/assets/favicon.ico" />
+  </head>
+
+  <body>
+    <div class="page learn-page lesson-page lesson-page--logic">
+      <nav class="nav">
+        <a href="/index.html" class="nav__logo">
+          <img
+            src="/assets/favicon-purple.ico"
+            alt="CS Guru"
+            class="nav__favicon"
+          />
+          <span class="nav__brand">CS <span>Guru</span></span>
+        </a>
+
+        <ul class="nav__links">
+          <li><a href="/index.html" class="nav__link">Home</a></li>
+          <li>
+            <a href="/pages/discover.html" class="nav__link">Entdecken</a>
+          </li>
+          <li>
+            <a href="/pages/learn.html" class="nav__link nav__link--active"
+              >Lernen</a
+            >
+          </li>
+          <li><a href="/pages/play.html" class="nav__link">Spielen</a></li>
+          <li><a href="/pages/tools.html" class="nav__link">Werkzeuge</a></li>
+        </ul>
+
+        <div class="nav__actions">
+          <button class="nav__action nav__contact-button" type="button">
+            <span class="nav__action-icon">✉</span>
+            Kontakt
+          </button>
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSdTqXspWFUsLsN_17e1_QqPylcYwD8ifro1duAEqonBuqhtIg/viewform"
+            class="nav__action"
+          >
+            <span class="nav__action-icon">✎</span>
+            Feedback
+          </a>
+        </div>
+
+        <button
+          class="nav__menu-btn"
+          type="button"
+          aria-label="Menü öffnen"
+          aria-expanded="false"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </nav>
+
+      <div class="mobile-menu" aria-hidden="true">
+        <div class="mobile-menu__panel">
+          <div class="mobile-menu__head">
+            <a href="/index.html" class="mobile-menu__brand"
+              >CS <span>Guru</span></a
+            >
+            <button
+              class="mobile-menu__close"
+              type="button"
+              aria-label="Menü schließen"
+            >
+              ×
+            </button>
+          </div>
+
+          <a href="/index.html" class="mobile-menu__link">Home</a>
+          <a
+            href="/pages/learn.html"
+            class="mobile-menu__link mobile-menu__link--active"
+            >Lernen</a
+          >
+          <a href="/pages/play.html" class="mobile-menu__link">Spielen</a>
+          <a href="/pages/tools.html" class="mobile-menu__link">Werkzeuge</a>
+          <a href="/pages/discover.html" class="mobile-menu__link">Entdecken</a>
+
+          <div class="mobile-menu__actions">
+            <button
+              class="mobile-menu__link mobile-menu__contact contact-modal-trigger"
+              type="button"
+            >
+              Kontakt
+            </button>
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSdTqXspWFUsLsN_17e1_QqPylcYwD8ifro1duAEqonBuqhtIg/viewform"
+              class="mobile-menu__link"
+              >Feedback</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <main class="lesson">
+        <div class="lesson__glow" aria-hidden="true"></div>
+
+        <div class="lesson__shell">
+          <aside class="lesson-sidebar">
+            <a class="lesson-sidebar__back" href="/pages/learn.html">
+              <span>‹</span> Alle Themen
+            </a>
+            <div class="lesson-sidebar__topic">
+              <span class="lesson-sidebar__eyebrow">Schaltalgebra</span>
+              <strong>Erweiterte Operatoren</strong>
+            </div>
+            <nav class="lesson-sidebar__nav" aria-label="Themenübersicht">
+              <a class="lesson-sidebar__link" href="#xor">XOR (Antivalenz)</a>
+              <a class="lesson-sidebar__link" href="#xnor">XNOR (Äquivalenz)</a>
+              <a class="lesson-sidebar__link" href="#implikation"
+                >Implikation</a
+              >
+              <a class="lesson-sidebar__link" href="#wissenscheck"
+                >Wissenscheck</a
+              >
+            </nav>
+          </aside>
+
+          <article class="lesson-content">
+            <header class="lesson-hero">
+              <div class="lesson-hero__index">02</div>
+              <div>
+                <p class="lesson-hero__eyebrow">Schaltalgebra</p>
+                <h1>Erweiterte Operatoren<span>.</span></h1>
+                <p class="lesson-hero__intro">
+                  Neben OR, AND und NOT gibt es noch drei weitere Operatoren,
+                  die du kennen solltest: XOR, XNOR und die Implikation.
+                </p>
+              </div>
+            </header>
+
+            <section class="lesson-section" id="xor">
+              <div class="lesson-section__number">01</div>
+              <div class="lesson-section__body">
+                <h2>XOR (Antivalenz)</h2>
+                <p>Als Erstes ist XOR dran, auch Antivalenz genannt.</p>
+                <p>
+                  XOR (Exclusive OR) ist nur dann wahr, wenn sich die Operanden
+                  in ihren Werten unterscheiden. Daher auch der andere Name
+                  „Antivalenz".
+                </p>
+
+                <div class="lesson-table">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>A</th>
+                        <th>B</th>
+                        <th>A ⊕ B</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                      </tr>
+                      <tr>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>1</td>
+                      </tr>
+                      <tr>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>1</td>
+                      </tr>
+                      <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>0</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="xnor">
+              <div class="lesson-section__number">02</div>
+              <div class="lesson-section__body">
+                <h2>XNOR (Äquivalenz)</h2>
+                <p>
+                  Wenn es eine Antivalenz gibt, muss es logischerweise auch eine
+                  Äquivalenz geben. Diese Rolle übernimmt XNOR, also Exclusive
+                  NOR. Einfach gesagt ist XNOR wahr, wenn die Werte beider
+                  Operanden identisch sind. Dabei ist egal, ob das wahr oder
+                  falsch ist.
+                </p>
+
+                <div class="lesson-table">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>A</th>
+                        <th>B</th>
+                        <th>A ↔ B</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>1</td>
+                      </tr>
+                      <tr>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>0</td>
+                      </tr>
+                      <tr>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                      </tr>
+                      <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="implikation">
+              <div class="lesson-section__number">03</div>
+              <div class="lesson-section__body">
+                <h2>Implikation</h2>
+                <p>
+                  Der wohl verwirrendste Operator für Anfänger ist die
+                  Implikation. Das Ergebnis ist immer wahr, mit einer einzigen
+                  Ausnahme: wenn der erste Operand wahr ist und der zweite
+                  falsch.
+                </p>
+
+                <div class="lesson-callout">
+                  <span class="lesson-callout__label">Analogie</span>
+                  <p>
+                    Stell dir vor, Operand A steht für „es regnet" und Operand B
+                    für „du hast einen Regenschirm dabei". Hast du einen Schirm,
+                    bist du sowieso auf der sicheren Seite. Fängt es an zu
+                    regnen, kein Problem, du stehst ja unter dem Schirm. Regnet
+                    es nicht und du hast den Schirm den ganzen Tag umsonst
+                    mitgeschleppt, ist das immer noch besser, als klatschnass zu
+                    werden.
+                  </p>
+                  <p style="margin-top: 10px">
+                    Der einzige Fall, in dem du am Ende verlierst, ist der: Es
+                    regnet, und du hast keinen Schirm dabei.
+                  </p>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Der erste Operand ist A (Regen), der zweite ist B (Schirm):
+                </p>
+
+                <div class="lesson-table">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>A</th>
+                        <th>B</th>
+                        <th>A → B</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>1</td>
+                      </tr>
+                      <tr>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>1</td>
+                      </tr>
+                      <tr>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                      </tr>
+                      <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="wissenscheck">
+              <div class="lesson-section__number">04</div>
+              <div class="lesson-section__body">
+                <h2>Kurzer Wissenscheck</h2>
+
+                <div class="lesson-exercise" data-exercise="logic-build">
+                  <span class="lesson-exercise__label">Quick-Check</span>
+                  <p>
+                    Versuch, alle eben vorgestellten erweiterten Operatoren
+                    mithilfe der Grundoperatoren nachzubauen. Erlaubt sind nur ∨
+                    (oder), ∧ (und) und ¬ (nicht).
+                  </p>
+                  <p>Tipp: Orientier dich an den Wahrheitstabellen.</p>
+
+                  <div class="lesson-code" aria-label="Wissenscheck-Aufgabe">
+                    <div class="lesson-code__head">
+                      <span>Aufgabe</span>
+                      <span>Grundoperatoren</span>
+                    </div>
+                    <pre><code><span class="code-name">A</span> <span class="code-operator">⊕</span> <span class="code-name">B</span>  <span class="code-operator">=</span> ?
+<span class="code-name">A</span> <span class="code-operator">↔</span> <span class="code-name">B</span>  <span class="code-operator">=</span> ?
+<span class="code-name">A</span> <span class="code-operator">→</span> <span class="code-name">B</span>  <span class="code-operator">=</span> ?</code></pre>
+                  </div>
+
+                  <div class="lesson-exercise__rows">
+                    <div class="lesson-exercise__row" data-truth="0110">
+                      <span class="lesson-exercise__literal">A ⊕ B =</span>
+                      <input
+                        class="lesson-exercise__input lesson-exercise__logic-input"
+                        type="text"
+                        spellcheck="false"
+                        autocomplete="off"
+                        autocapitalize="off"
+                        placeholder="Nutze auch Worte wie 'und' usw."
+                        aria-label="Dein Ausdruck für A XOR B"
+                      />
+                    </div>
+                    <div class="lesson-exercise__row" data-truth="1001">
+                      <span class="lesson-exercise__literal">A ↔ B =</span>
+                      <input
+                        class="lesson-exercise__input lesson-exercise__logic-input"
+                        type="text"
+                        spellcheck="false"
+                        autocomplete="off"
+                        autocapitalize="off"
+                        placeholder="Gib deine Antwort hier ein"
+                        aria-label="Dein Ausdruck für A XNOR B"
+                      />
+                    </div>
+                    <div class="lesson-exercise__row" data-truth="1101">
+                      <span class="lesson-exercise__literal">A → B =</span>
+                      <input
+                        class="lesson-exercise__input lesson-exercise__logic-input"
+                        type="text"
+                        spellcheck="false"
+                        autocomplete="off"
+                        autocapitalize="off"
+                        placeholder="Gib deine Antwort hier ein"
+                        aria-label="Dein Ausdruck für A Implikation B"
+                      />
+                    </div>
+                  </div>
+
+                  <div
+                    class="lesson-exercise__symbols"
+                    role="group"
+                    aria-label="Operator einfügen"
+                  >
+                    <button
+                      class="lesson-exercise__symbol"
+                      type="button"
+                      data-symbol="∧"
+                    >
+                      ∧ <small>und</small>
+                    </button>
+                    <button
+                      class="lesson-exercise__symbol"
+                      type="button"
+                      data-symbol="∨"
+                    >
+                      ∨ <small>oder</small>
+                    </button>
+                    <button
+                      class="lesson-exercise__symbol"
+                      type="button"
+                      data-symbol="¬"
+                    >
+                      ¬ <small>nicht</small>
+                    </button>
+                  </div>
+
+                  <div class="lesson-exercise__actions">
+                    <button class="lesson-exercise__check" type="button">
+                      Prüfen
+                    </button>
+                    <button
+                      aria-expanded="false"
+                      class="lesson-exercise__reveal conditions-answer-btn"
+                      id="show-conditions-answer"
+                      type="button"
+                    >
+                      Lösung anzeigen
+                    </button>
+                  </div>
+                  <div
+                    class="lesson-exercise__feedback"
+                    aria-live="polite"
+                    hidden
+                  ></div>
+
+                  <div class="conditions-answer" id="conditions-answer">
+                    <div class="lesson-code" aria-label="Wissenscheck-Lösung">
+                      <div class="lesson-code__head">
+                        <span>Lösung</span>
+                        <span>Grundoperatoren</span>
+                      </div>
+                      <pre><code><span class="code-name">A</span> <span class="code-operator">⊕</span> <span class="code-name">B</span>  <span class="code-operator">=</span> (<span class="code-name">A</span> <span class="code-operator">∧</span> <span class="code-operator">¬</span><span class="code-name">B</span>) <span class="code-operator">∨</span> (<span class="code-operator">¬</span><span class="code-name">A</span> <span class="code-operator">∧</span> <span class="code-name">B</span>)
+<span class="code-name">A</span> <span class="code-operator">↔</span> <span class="code-name">B</span>  <span class="code-operator">=</span> (<span class="code-name">A</span> <span class="code-operator">∧</span> <span class="code-name">B</span>) <span class="code-operator">∨</span> (<span class="code-operator">¬</span><span class="code-name">A</span> <span class="code-operator">∧</span> <span class="code-operator">¬</span><span class="code-name">B</span>)
+<span class="code-name">A</span> <span class="code-operator">→</span> <span class="code-name">B</span>  <span class="code-operator">=</span> <span class="code-operator">¬</span><span class="code-name">A</span> <span class="code-operator">∨</span> <span class="code-name">B</span></code></pre>
+                    </div>
+                    <p style="margin-top: 10px">
+                      Bei <strong>XOR</strong> ergeben zwei Zeilen eine 1: A
+                      wahr und B falsch, oder A falsch und B wahr.
+                    </p>
+                    <p>
+                      Bei <strong>XNOR</strong> ist es umgekehrt: beide wahr,
+                      oder beide falsch.
+                    </p>
+                    <p>
+                      Bei der <strong>Implikation</strong> geht es am kürzesten.
+                      Sie ist nur dann falsch, wenn A wahr und B falsch ist. In
+                      allen anderen Fällen wahr, und das ist genau dann der
+                      Fall, wenn A falsch ist oder B wahr ist.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <div class="lesson-next">
+              <div>
+                <span>Nächstes Thema</span>
+                <strong>3. Wahrheitstabellen</strong>
+              </div>
+              <a
+                href="truth_tables.html"
+                aria-label="Zum Thema Wahrheitstabellen"
+                >›</a
+              >
+            </div>
+          </article>
+        </div>
+      </main>
+    </div>
+
+    <div class="contact-modal" aria-hidden="true">
+      <div
+        class="contact-modal__box"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="contact-title"
+      >
+        <button
+          class="contact-modal__close"
+          type="button"
+          aria-label="Kontaktfenster schließen"
+        >
+          ×
+        </button>
+
+        <h2 id="contact-title">Kontakt</h2>
+        <div class="contact-modal__line"></div>
+        <p class="contact-modal__intro">
+          Bei Fragen, Anregungen oder Problemen kannst du mich gerne
+          kontaktieren.
+        </p>
+
+        <a
+          href="https://mail.google.com/mail/?view=cm&fs=1&to=sandravasylkova@gmail.com"
+          target="_blank"
+          rel="noopener"
+          class="contact-modal__row"
+        >
+          <span class="contact-modal__icon">✉</span>
+          <span>
+            <strong>Email</strong>
+            <small>sandravasylkova@gmail.com</small>
+          </span>
+        </a>
+
+        <a
+          href="https://www.microsoft.com/en-us/microsoft-teams/log-in"
+          class="contact-modal__row"
+        >
+          <span class="teams__icon" role="img" aria-label="Microsoft Teams"></span>
+          <span>
+            <strong>Teams</strong>
+            <small>Oleksandra Vasylkova</small>
+          </span>
+        </a>
+      </div>
+    </div>
+  </body>
+</html>

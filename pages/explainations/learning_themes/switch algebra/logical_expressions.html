@@ -1,0 +1,684 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Logische Aussagen erkennen und die Grundoperatoren OR, AND und NOT verstehen."
+    />
+    <title>CS Guru | Aussagen und Wahrheitswerte</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow:wght@100;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CS Guru | Aussagen und Wahrheitswerte" />
+    <meta
+      property="og:description"
+      content="Logische Aussagen erkennen und die Grundoperatoren OR, AND und NOT verstehen."
+    />
+    <meta property="og:image" content="/assets/web-app-manifest-512x512.png" />
+    <meta property="og:locale" content="de_DE" />
+    <meta name="twitter:card" content="summary" />
+
+    <link rel="stylesheet" href="/style.css" />
+    <script src="/app.js" defer></script>
+
+    <link
+      rel="icon"
+      type="image/png"
+      href="/assets/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+    <link rel="shortcut icon" href="/assets/favicon.ico" />
+  </head>
+
+  <body>
+    <div class="page learn-page lesson-page lesson-page--logic">
+      <nav class="nav">
+        <a href="/index.html" class="nav__logo">
+          <img
+            src="/assets/favicon-purple.ico"
+            alt="CS Guru"
+            class="nav__favicon"
+          />
+          <span class="nav__brand">CS <span>Guru</span></span>
+        </a>
+
+        <ul class="nav__links">
+          <li><a href="/index.html" class="nav__link">Home</a></li>
+          <li>
+            <a href="/pages/discover.html" class="nav__link">Entdecken</a>
+          </li>
+          <li>
+            <a href="/pages/learn.html" class="nav__link nav__link--active"
+              >Lernen</a
+            >
+          </li>
+          <li><a href="/pages/play.html" class="nav__link">Spielen</a></li>
+          <li><a href="/pages/tools.html" class="nav__link">Werkzeuge</a></li>
+        </ul>
+
+        <div class="nav__actions">
+          <button class="nav__action nav__contact-button" type="button">
+            <span class="nav__action-icon">✉</span>
+            Kontakt
+          </button>
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSdTqXspWFUsLsN_17e1_QqPylcYwD8ifro1duAEqonBuqhtIg/viewform"
+            class="nav__action"
+          >
+            <span class="nav__action-icon">✎</span>
+            Feedback
+          </a>
+        </div>
+
+        <button
+          class="nav__menu-btn"
+          type="button"
+          aria-label="Menü öffnen"
+          aria-expanded="false"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </nav>
+
+      <div class="mobile-menu" aria-hidden="true">
+        <div class="mobile-menu__panel">
+          <div class="mobile-menu__head">
+            <a href="/index.html" class="mobile-menu__brand"
+              >CS <span>Guru</span></a
+            >
+            <button
+              class="mobile-menu__close"
+              type="button"
+              aria-label="Menü schließen"
+            >
+              ×
+            </button>
+          </div>
+
+          <a href="/index.html" class="mobile-menu__link">Home</a>
+          <a
+            href="/pages/learn.html"
+            class="mobile-menu__link mobile-menu__link--active"
+            >Lernen</a
+          >
+          <a href="/pages/play.html" class="mobile-menu__link">Spielen</a>
+          <a href="/pages/tools.html" class="mobile-menu__link">Werkzeuge</a>
+          <a href="/pages/discover.html" class="mobile-menu__link">Entdecken</a>
+
+          <div class="mobile-menu__actions">
+            <button
+              class="mobile-menu__link mobile-menu__contact contact-modal-trigger"
+              type="button"
+            >
+              Kontakt
+            </button>
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSdTqXspWFUsLsN_17e1_QqPylcYwD8ifro1duAEqonBuqhtIg/viewform"
+              class="mobile-menu__link"
+              >Feedback</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <main class="lesson">
+        <div class="lesson__glow" aria-hidden="true"></div>
+
+        <div class="lesson__shell">
+          <aside class="lesson-sidebar">
+            <a class="lesson-sidebar__back" href="/pages/learn.html">
+              <span>‹</span> Alle Themen
+            </a>
+            <div class="lesson-sidebar__topic">
+              <span class="lesson-sidebar__eyebrow">Schaltalgebra</span>
+              <strong>Aussagen und Wahrheitswerte</strong>
+            </div>
+            <nav class="lesson-sidebar__nav" aria-label="Themenübersicht">
+              <a class="lesson-sidebar__link" href="#aussagen"
+                >Logische Aussagen</a
+              >
+              <a class="lesson-sidebar__link" href="#operatoren"
+                >Die Operatoren</a
+              >
+              <a class="lesson-sidebar__link" href="#anwendung">Anwendung</a>
+            </nav>
+          </aside>
+
+          <article class="lesson-content">
+            <header class="lesson-hero">
+              <div class="lesson-hero__index">01</div>
+              <div>
+                <p class="lesson-hero__eyebrow">Schaltalgebra</p>
+                <h1>Aussagen und Wahrheitswerte<span>.</span></h1>
+                <p class="lesson-hero__intro">
+                  Hier bekommst du ein Gefühl dafür, was überhaupt eine logische
+                  Aussage ist, und wie die drei Grundoperatoren OR, AND und NOT
+                  funktionieren.
+                </p>
+              </div>
+            </header>
+
+            <section class="lesson-section" id="aussagen">
+              <div class="lesson-section__number">01</div>
+              <div class="lesson-section__body">
+                <h2>Was ist eine logische Aussage?</h2>
+                <p>
+                  Logische Ausdrücke sind so gebaut, dass die Antwort nur zwei
+                  Formen haben kann: wahr oder falsch.
+                </p>
+                <p>
+                  Ein Ausdruck wie „Informatik ist das beste Schulfach" ist also
+                  keine logische Aussage, weil das eine Meinung ist und kein
+                  Fakt, so traurig das auch klingt. Aber „Informatik ist mein
+                  Lieblingsfach" ist schon eine, weil das nur entweder wahr oder
+                  falsch sein kann (und den Wahrheitswert dieser Aussage kennen
+                  wir sowieso alle).
+                </p>
+
+                <div class="lesson-callout">
+                  <span class="lesson-callout__label">Beispiel</span>
+                  <p>
+                    Das banalste und zugleich treffendste Beispiel für eine
+                    logische Aussage ist „die Lampe leuchtet" oder „die Lampe
+                    leuchtet nicht".
+                  </p>
+                </div>
+
+                <p>
+                  Um einen Ausdruck zu bewerten, kannst du Buchstaben benutzen
+                  (W/F für wahr/falsch, T/F für true/false) oder Ziffern (1, 0).
+                  Hauptsächlich werden dabei die Bool'schen Werte verwendet.
+                </p>
+                <p>
+                  Wichtig ist nur, dass die Aussage eindeutig ist. Meinungen,
+                  Befehle, Fragen und Wünsche zählen nicht dazu, weil sich keins
+                  davon mit wahr oder falsch beantworten lässt – egal wie du es
+                  drehst.
+                </p>
+
+                <div class="lesson-exercise" data-exercise="multi">
+                  <span class="lesson-exercise__label">Quick-Check</span>
+                  <p>Welche der folgenden Aussagen sind logisch?</p>
+                  <div class="lesson-exercise__options">
+                    <button
+                      class="lesson-exercise__option"
+                      type="button"
+                      aria-pressed="false"
+                      data-correct="true"
+                      data-reason="eindeutig wahr"
+                    >
+                      Wien ist die Hauptstadt von Österreich.
+                    </button>
+                    <button
+                      class="lesson-exercise__option"
+                      type="button"
+                      aria-pressed="false"
+                      data-correct="false"
+                    >
+                      Mathe ist das langweiligste Fach überhaupt.
+                    </button>
+                    <button
+                      class="lesson-exercise__option"
+                      type="button"
+                      aria-pressed="false"
+                      data-correct="true"
+                      data-reason="eindeutig falsch, aber trotzdem eine Aussage"
+                    >
+                      7 ist eine gerade Zahl.
+                    </button>
+                    <button
+                      class="lesson-exercise__option"
+                      type="button"
+                      aria-pressed="false"
+                      data-correct="false"
+                    >
+                      Mach bitte das Licht an.
+                    </button>
+                    <button
+                      class="lesson-exercise__option"
+                      type="button"
+                      aria-pressed="false"
+                      data-correct="true"
+                      data-reason="eindeutig wahr"
+                    >
+                      Ein Jahr hat 12 Monate.
+                    </button>
+                    <button
+                      class="lesson-exercise__option"
+                      type="button"
+                      aria-pressed="false"
+                      data-correct="false"
+                    >
+                      Magst du Python?
+                    </button>
+                    <button
+                      class="lesson-exercise__option"
+                      type="button"
+                      aria-pressed="false"
+                      data-correct="true"
+                      data-reason="mal wahr, mal falsch – aber immer eindeutig"
+                    >
+                      Die Katze schläft.
+                    </button>
+                    <button
+                      class="lesson-exercise__option"
+                      type="button"
+                      aria-pressed="false"
+                      data-correct="false"
+                    >
+                      Hoffentlich regnet es morgen nicht.
+                    </button>
+                  </div>
+                  <button class="lesson-exercise__check" type="button">
+                    Prüfen
+                  </button>
+                  <div
+                    class="lesson-exercise__feedback"
+                    aria-live="polite"
+                    hidden
+                  ></div>
+                </div>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="operatoren">
+              <div class="lesson-section__number">02</div>
+              <div class="lesson-section__body">
+                <h2>Die Operatoren</h2>
+                <p>
+                  Obwohl das Ziffern sind, haben die arithmetischen Operatoren
+                  hier eine völlig andere Bedeutung.
+                </p>
+
+                <div class="lesson-code" aria-label="Logik-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Logik</span>
+                    <span>OR</span>
+                  </div>
+                  <pre><code><span class="code-value">1</span> <span class="code-operator">+</span> <span class="code-value">1</span> <span class="code-operator">=</span> <span class="code-value">1</span></code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Das "+" ist in diesem Fall der logische Operator OR (oder).
+                  Damit das Ergebnis wahr ist, muss
+                  <strong>mindestens</strong> einer der
+                  <span
+                    class="lesson-term"
+                    tabindex="0"
+                    data-term-values="1, 1 (evtl. A, B, ...)"
+                    data-term-tone="value"
+                    >Operanden</span
+                  >
+                  1 sein.
+                </p>
+
+                <div class="lesson-code" aria-label="Logik-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Logik</span>
+                    <span>AND</span>
+                  </div>
+                  <pre><code><span class="code-value">1</span> <span class="code-operator">*</span> <span class="code-value">1</span> <span class="code-operator">=</span> <span class="code-value">1</span></code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Das "*" ist der Operator AND (und). Hier ist es genau wie in
+                  deiner heiß geliebten Mathe: Wäre einer der Operanden 0, wäre
+                  das Ergebnis ebenfalls falsch.
+                </p>
+                <p>
+                  Der letzte grundlegende Operator, NOT (nicht), dreht den Wert
+                  einfach um.
+                </p>
+
+                <div class="lesson-code" aria-label="Logik-Beispiel">
+                  <div class="lesson-code__head">
+                    <span>Logik</span>
+                    <span>NOT</span>
+                  </div>
+                  <pre><code><span class="code-operator">¬</span><span class="code-value">1</span> <span class="code-operator">=</span> <span class="code-value">0</span>
+<span class="code-operator">¬</span><span class="code-value">0</span> <span class="code-operator">=</span> <span class="code-value">1</span></code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  In der Schule bekommen diese Operatoren ihre eigenen Symbole,
+                  und die wirst du am häufigsten sehen:
+                </p>
+
+                <div class="lesson-table">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Operator</th>
+                        <th>Symbol</th>
+                        <th>Wort</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>OR</td>
+                        <td>∨</td>
+                        <td>oder</td>
+                      </tr>
+                      <tr>
+                        <td>AND</td>
+                        <td>∧</td>
+                        <td>und</td>
+                      </tr>
+                      <tr>
+                        <td>NOT</td>
+                        <td>¬</td>
+                        <td>nicht</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Das "+" von vorhin steht also für ∨ und das "*" für ∧.
+                </p>
+                <p>
+                  Hier gibt es kein Subtrahieren, Dividieren oder Zählen im
+                  gewohnten Sinn.
+                </p>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="anwendung">
+              <div class="lesson-section__number">03</div>
+              <div class="lesson-section__body">
+                <h2>Wie werden logische Operatoren angewendet?</h2>
+                <p>
+                  Die häufigste Methode, um logische Operatoren umzusetzen, ist
+                  die sogenannte Wahrheitstabelle. Hier behandeln wir nur die
+                  Grundlagen. Alles, was du für ihre Erstellung brauchst, lernst
+                  du in den folgenden Abschnitten.
+                </p>
+                <p>
+                  Das Prinzip ist einfach: Es gibt mehrere Operanden, die durch
+                  bestimmte Operatoren verbunden sind, und du musst das Ergebnis
+                  ermitteln.
+                </p>
+
+                <div class="lesson-callout">
+                  <span class="lesson-callout__label">Beispiel</span>
+                  <p>
+                    Eine Wahrheitstabelle mit 2 Operanden und dem Operator
+                    "oder":
+                  </p>
+                  <div class="lesson-table" style="margin-top: 14px">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>A</th>
+                          <th>B</th>
+                          <th>A ∨ B</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>0</td>
+                          <td>0</td>
+                          <td>0</td>
+                        </tr>
+                        <tr>
+                          <td>0</td>
+                          <td>1</td>
+                          <td>1</td>
+                        </tr>
+                        <tr>
+                          <td>1</td>
+                          <td>0</td>
+                          <td>1</td>
+                        </tr>
+                        <tr>
+                          <td>1</td>
+                          <td>1</td>
+                          <td>1</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <p style="margin-top: 18px">Ziemlich einfach, oder?</p>
+
+                <div class="lesson-exercise" data-exercise="truth">
+                  <span class="lesson-exercise__label">Quick-Check</span>
+                  <p>Fülle die Wahrheitstabelle aus: 1 oder 0?</p>
+                  <div class="lesson-table lesson-truth-table">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>A</th>
+                          <th>B</th>
+                          <th>A ∨ B</th>
+                          <th>A ∧ B</th>
+                          <th>¬A</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>0</td>
+                          <td>0</td>
+                          <td>
+                            <input
+                              class="lesson-truth-table__input"
+                              type="text"
+                              inputmode="numeric"
+                              maxlength="1"
+                              data-answer="0"
+                              aria-label="Ergebnis von 0 ∨ 0"
+                            />
+                          </td>
+                          <td>
+                            <input
+                              class="lesson-truth-table__input"
+                              type="text"
+                              inputmode="numeric"
+                              maxlength="1"
+                              data-answer="0"
+                              aria-label="Ergebnis von 0 ∧ 0"
+                            />
+                          </td>
+                          <td>
+                            <input
+                              class="lesson-truth-table__input"
+                              type="text"
+                              inputmode="numeric"
+                              maxlength="1"
+                              data-answer="1"
+                              aria-label="Ergebnis von ¬0"
+                            />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>0</td>
+                          <td>1</td>
+                          <td>
+                            <input
+                              class="lesson-truth-table__input"
+                              type="text"
+                              inputmode="numeric"
+                              maxlength="1"
+                              data-answer="1"
+                              aria-label="Ergebnis von 0 ∨ 1"
+                            />
+                          </td>
+                          <td>
+                            <input
+                              class="lesson-truth-table__input"
+                              type="text"
+                              inputmode="numeric"
+                              maxlength="1"
+                              data-answer="0"
+                              aria-label="Ergebnis von 0 ∧ 1"
+                            />
+                          </td>
+                          <td>
+                            <input
+                              class="lesson-truth-table__input"
+                              type="text"
+                              inputmode="numeric"
+                              maxlength="1"
+                              data-answer="1"
+                              aria-label="Ergebnis von ¬0"
+                            />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>1</td>
+                          <td>0</td>
+                          <td>
+                            <input
+                              class="lesson-truth-table__input"
+                              type="text"
+                              inputmode="numeric"
+                              maxlength="1"
+                              data-answer="1"
+                              aria-label="Ergebnis von 1 ∨ 0"
+                            />
+                          </td>
+                          <td>
+                            <input
+                              class="lesson-truth-table__input"
+                              type="text"
+                              inputmode="numeric"
+                              maxlength="1"
+                              data-answer="0"
+                              aria-label="Ergebnis von 1 ∧ 0"
+                            />
+                          </td>
+                          <td>
+                            <input
+                              class="lesson-truth-table__input"
+                              type="text"
+                              inputmode="numeric"
+                              maxlength="1"
+                              data-answer="0"
+                              aria-label="Ergebnis von ¬1"
+                            />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>1</td>
+                          <td>1</td>
+                          <td>
+                            <input
+                              class="lesson-truth-table__input"
+                              type="text"
+                              inputmode="numeric"
+                              maxlength="1"
+                              data-answer="1"
+                              aria-label="Ergebnis von 1 ∨ 1"
+                            />
+                          </td>
+                          <td>
+                            <input
+                              class="lesson-truth-table__input"
+                              type="text"
+                              inputmode="numeric"
+                              maxlength="1"
+                              data-answer="1"
+                              aria-label="Ergebnis von 1 ∧ 1"
+                            />
+                          </td>
+                          <td>
+                            <input
+                              class="lesson-truth-table__input"
+                              type="text"
+                              inputmode="numeric"
+                              maxlength="1"
+                              data-answer="0"
+                              aria-label="Ergebnis von ¬1"
+                            />
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <button class="lesson-exercise__check" type="button">
+                    Prüfen
+                  </button>
+                  <div
+                    class="lesson-exercise__feedback"
+                    aria-live="polite"
+                    hidden
+                  ></div>
+                </div>
+              </div>
+            </section>
+
+            <div class="lesson-next">
+              <div>
+                <span>Nächstes Thema</span>
+                <strong>2. Erweiterte Operatoren</strong>
+              </div>
+              <a
+                href="advanced_operators.html"
+                aria-label="Zum Thema Erweiterte Operatoren"
+                >›</a
+              >
+            </div>
+          </article>
+        </div>
+      </main>
+    </div>
+
+    <div class="contact-modal" aria-hidden="true">
+      <div
+        class="contact-modal__box"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="contact-title"
+      >
+        <button
+          class="contact-modal__close"
+          type="button"
+          aria-label="Kontaktfenster schließen"
+        >
+          ×
+        </button>
+
+        <h2 id="contact-title">Kontakt</h2>
+        <div class="contact-modal__line"></div>
+        <p class="contact-modal__intro">
+          Bei Fragen, Anregungen oder Problemen kannst du mich gerne
+          kontaktieren.
+        </p>
+
+        <a
+          href="https://mail.google.com/mail/?view=cm&fs=1&to=sandravasylkova@gmail.com"
+          target="_blank"
+          rel="noopener"
+          class="contact-modal__row"
+        >
+          <span class="contact-modal__icon">✉</span>
+          <span>
+            <strong>Email</strong>
+            <small>sandravasylkova@gmail.com</small>
+          </span>
+        </a>
+
+        <a
+          href="https://www.microsoft.com/en-us/microsoft-teams/log-in"
+          class="contact-modal__row"
+        >
+          <span class="teams__icon" role="img" aria-label="Microsoft Teams"></span>
+          <span>
+            <strong>Teams</strong>
+            <small>Oleksandra Vasylkova</small>
+          </span>
+        </a>
+      </div>
+    </div>
+  </body>
+</html>

@@ -37,22 +37,6 @@ const TASKS = [
     ],
   },
   {
-    expression: "0 ∨ A",
-    final: "A",
-    steps: [
-      { rule: "Kommutativgesetz", fragment: "A ∨ 0" },
-      { rule: "Neutralgesetz", fragment: "A" },
-    ],
-  },
-  {
-    expression: "1 ∧ B",
-    final: "B",
-    steps: [
-      { rule: "Kommutativgesetz", fragment: "B ∧ 1" },
-      { rule: "Neutralgesetz", fragment: "B" },
-    ],
-  },
-  {
     expression: "A ∨ (¬A ∨ 0)",
     final: "1",
     steps: [
@@ -94,9 +78,7 @@ const TASKS = [
     steps: [
       { rule: "Gesetze von De Morgan", fragment: "(¬A ∧ ¬¬A) ∨ B" },
       { rule: "doppelte Negation", fragment: "(¬A ∧ A) ∨ B" },
-      { rule: "Kommutativgesetz", fragment: "(A ∧ ¬A) ∨ B" },
       { rule: "Komplementgesetz", fragment: "0 ∨ B" },
-      { rule: "Kommutativgesetz", fragment: "B ∨ 0" },
       { rule: "Neutralgesetz", fragment: "B" },
     ],
   },
@@ -106,9 +88,7 @@ const TASKS = [
     steps: [
       { rule: "Gesetze von De Morgan", fragment: "(¬A ∨ ¬¬A) ∧ B" },
       { rule: "doppelte Negation", fragment: "(¬A ∨ A) ∧ B" },
-      { rule: "Kommutativgesetz", fragment: "(A ∨ ¬A) ∧ B" },
       { rule: "Komplementgesetz", fragment: "1 ∧ B" },
-      { rule: "Kommutativgesetz", fragment: "B ∧ 1" },
       { rule: "Neutralgesetz", fragment: "B" },
     ],
   },
@@ -227,6 +207,165 @@ function areEquivalent(left, right) {
   } catch {
     return false;
   }
+}
+
+function tokenizeBoolean(js) {
+  const tokens = [];
+  let i = 0;
+
+  while (i < js.length) {
+    if (js.slice(i, i + 2) === "&&") {
+      tokens.push({ type: "AND" });
+      i += 2;
+      continue;
+    }
+
+    if (js.slice(i, i + 2) === "||") {
+      tokens.push({ type: "OR" });
+      i += 2;
+      continue;
+    }
+
+    if (js[i] === "!") {
+      tokens.push({ type: "NOT" });
+      i += 1;
+      continue;
+    }
+
+    if (js[i] === "(") {
+      tokens.push({ type: "LPAREN" });
+      i += 1;
+      continue;
+    }
+
+    if (js[i] === ")") {
+      tokens.push({ type: "RPAREN" });
+      i += 1;
+      continue;
+    }
+
+    if (js.slice(i, i + 4) === "true") {
+      tokens.push({ type: "CONST", value: 1 });
+      i += 4;
+      continue;
+    }
+
+    if (js.slice(i, i + 5) === "false") {
+      tokens.push({ type: "CONST", value: 0 });
+      i += 5;
+      continue;
+    }
+
+    if (/[A-Z]/.test(js[i])) {
+      tokens.push({ type: "VAR", value: js[i] });
+      i += 1;
+      continue;
+    }
+
+    throw new Error("unexpected token");
+  }
+
+  tokens.push({ type: "EOF" });
+  return tokens;
+}
+
+function parseBoolean(js) {
+  const tokens = tokenizeBoolean(js);
+  let index = 0;
+
+  const peek = () => tokens[index];
+  const consume = (type) => {
+    if (peek().type !== type) throw new Error("parse error");
+    return tokens[index++];
+  };
+
+  function parseOr() {
+    let left = parseAnd();
+    while (peek().type === "OR") {
+      consume("OR");
+      left = { type: "or", left, right: parseAnd() };
+    }
+    return left;
+  }
+
+  function parseAnd() {
+    let left = parseNot();
+    while (peek().type === "AND") {
+      consume("AND");
+      left = { type: "and", left, right: parseNot() };
+    }
+    return left;
+  }
+
+  function parseNot() {
+    if (peek().type === "NOT") {
+      consume("NOT");
+      return { type: "not", value: parseNot() };
+    }
+    return parsePrimary();
+  }
+
+  function parsePrimary() {
+    const token = peek();
+
+    if (token.type === "VAR") {
+      consume("VAR");
+      return { type: "var", name: token.value };
+    }
+
+    if (token.type === "CONST") {
+      consume("CONST");
+      return { type: "const", value: token.value };
+    }
+
+    if (token.type === "LPAREN") {
+      consume("LPAREN");
+      const expr = parseOr();
+      consume("RPAREN");
+      return expr;
+    }
+
+    throw new Error("parse error");
+  }
+
+  const ast = parseOr();
+  if (peek().type !== "EOF") throw new Error("parse error");
+  return ast;
+}
+
+function astKey(ast) {
+  if (ast.type === "var") return `V:${ast.name}`;
+  if (ast.type === "const") return `C:${ast.value}`;
+  if (ast.type === "not") return `N(${astKey(ast.value)})`;
+
+  const leftKey = astKey(ast.left);
+  const rightKey = astKey(ast.right);
+  return `${ast.type}(${[leftKey, rightKey].sort().join(",")})`;
+}
+
+function canonicalKey(expr) {
+  const js = toJsExpression(expr);
+  if (!js) return null;
+
+  try {
+    return astKey(parseBoolean(js));
+  } catch {
+    return null;
+  }
+}
+
+// Structural equality up to reordering of ∧/∨ operands (commutativity),
+// so a typed fragment isn't rejected merely for writing "B ∧ A" where the
+// task's stored fragment happens to read "A ∧ B".
+function sameFragment(a, b) {
+  const keyA = canonicalKey(a);
+  const keyB = canonicalKey(b);
+
+  if (keyA === null || keyB === null) {
+    return normalizeText(a) === normalizeText(b);
+  }
+
+  return keyA === keyB;
 }
 
 function updateHud() {
@@ -442,7 +581,7 @@ function checkLevelTwoCard(card) {
     return;
   }
 
-  if (normalizeText(answer) !== normalizeText(expected)) {
+  if (!sameFragment(answer, expected)) {
     input.value = "";
     blink([input]);
     setFeedback("");

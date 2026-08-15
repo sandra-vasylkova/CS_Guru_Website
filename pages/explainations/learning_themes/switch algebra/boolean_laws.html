@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Die acht Booleschen Gesetze kennenlernen, mit denen sich logische Ausdrücke umformen und vereinfachen lassen."
+    />
+    <title>CS Guru | Boolesche Gesetze</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow:wght@100;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CS Guru | Boolesche Gesetze" />
+    <meta
+      property="og:description"
+      content="Die acht Booleschen Gesetze kennenlernen, mit denen sich logische Ausdrücke umformen und vereinfachen lassen."
+    />
+    <meta property="og:image" content="/assets/web-app-manifest-512x512.png" />
+    <meta property="og:locale" content="de_DE" />
+    <meta name="twitter:card" content="summary" />
+
+    <link rel="stylesheet" href="/style.css" />
+    <script src="/app.js" defer></script>
+
+    <link
+      rel="icon"
+      type="image/png"
+      href="/assets/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+    <link rel="shortcut icon" href="/assets/favicon.ico" />
+  </head>
+
+  <body>
+    <div class="page learn-page lesson-page lesson-page--logic">
+      <nav class="nav">
+        <a href="/index.html" class="nav__logo">
+          <img
+            src="/assets/favicon-purple.ico"
+            alt="CS Guru"
+            class="nav__favicon"
+          />
+          <span class="nav__brand">CS <span>Guru</span></span>
+        </a>
+
+        <ul class="nav__links">
+          <li><a href="/index.html" class="nav__link">Home</a></li>
+          <li>
+            <a href="/pages/discover.html" class="nav__link">Entdecken</a>
+          </li>
+          <li>
+            <a href="/pages/learn.html" class="nav__link nav__link--active"
+              >Lernen</a
+            >
+          </li>
+          <li><a href="/pages/play.html" class="nav__link">Spielen</a></li>
+          <li><a href="/pages/tools.html" class="nav__link">Werkzeuge</a></li>
+        </ul>
+
+        <div class="nav__actions">
+          <button class="nav__action nav__contact-button" type="button">
+            <span class="nav__action-icon">✉</span>
+            Kontakt
+          </button>
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSdTqXspWFUsLsN_17e1_QqPylcYwD8ifro1duAEqonBuqhtIg/viewform"
+            class="nav__action"
+          >
+            <span class="nav__action-icon">✎</span>
+            Feedback
+          </a>
+        </div>
+
+        <button
+          class="nav__menu-btn"
+          type="button"
+          aria-label="Menü öffnen"
+          aria-expanded="false"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </nav>
+
+      <div class="mobile-menu" aria-hidden="true">
+        <div class="mobile-menu__panel">
+          <div class="mobile-menu__head">
+            <a href="/index.html" class="mobile-menu__brand"
+              >CS <span>Guru</span></a
+            >
+            <button
+              class="mobile-menu__close"
+              type="button"
+              aria-label="Menü schließen"
+            >
+              ×
+            </button>
+          </div>
+
+          <a href="/index.html" class="mobile-menu__link">Home</a>
+          <a
+            href="/pages/learn.html"
+            class="mobile-menu__link mobile-menu__link--active"
+            >Lernen</a
+          >
+          <a href="/pages/play.html" class="mobile-menu__link">Spielen</a>
+          <a href="/pages/tools.html" class="mobile-menu__link">Werkzeuge</a>
+          <a href="/pages/discover.html" class="mobile-menu__link">Entdecken</a>
+
+          <div class="mobile-menu__actions">
+            <button
+              class="mobile-menu__link mobile-menu__contact contact-modal-trigger"
+              type="button"
+            >
+              Kontakt
+            </button>
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSdTqXspWFUsLsN_17e1_QqPylcYwD8ifro1duAEqonBuqhtIg/viewform"
+              class="mobile-menu__link"
+              >Feedback</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <main class="lesson">
+        <div class="lesson__glow" aria-hidden="true"></div>
+
+        <div class="lesson__shell">
+          <aside class="lesson-sidebar">
+            <a class="lesson-sidebar__back" href="/pages/learn.html">
+              <span>‹</span> Alle Themen
+            </a>
+            <div class="lesson-sidebar__topic">
+              <span class="lesson-sidebar__eyebrow">Schaltalgebra</span>
+              <strong>Boolesche Gesetze</strong>
+            </div>
+            <nav class="lesson-sidebar__nav" aria-label="Themenübersicht">
+              <a class="lesson-sidebar__link" href="#assoziativ-kommutativ"
+                >Assoziativ- &amp; Kommutativgesetz</a
+              >
+              <a class="lesson-sidebar__link" href="#distributiv"
+                >Distributivgesetz</a
+              >
+              <a class="lesson-sidebar__link" href="#negation-komplement"
+                >Negation &amp; Komplement</a
+              >
+              <a class="lesson-sidebar__link" href="#idempotenz-neutral"
+                >Idempotenz &amp; neutrale Elemente</a
+              >
+              <a class="lesson-sidebar__link" href="#de-morgan">De Morgan</a>
+              <a class="lesson-sidebar__link" href="#wissenscheck"
+                >Wissenscheck</a
+              >
+            </nav>
+          </aside>
+
+          <article class="lesson-content">
+            <header class="lesson-hero">
+              <div class="lesson-hero__index">04</div>
+              <div>
+                <p class="lesson-hero__eyebrow">Schaltalgebra</p>
+                <h1>Boolesche Gesetze<span>.</span></h1>
+                <p class="lesson-hero__intro">
+                  Acht feste Regeln, mit denen du logische Ausdrücke umformen
+                  und vereinfachen kannst.
+                </p>
+              </div>
+            </header>
+
+            <section class="lesson-section" id="assoziativ-kommutativ">
+              <div class="lesson-section__number">01</div>
+              <div class="lesson-section__body">
+                <h2>Assoziativgesetz und Kommutativgesetz</h2>
+                <p>
+                  Um Ausdrücke zu vereinfachen, gibt es insgesamt acht solche
+                  Gesetze. Die ersten beiden kennst du wahrscheinlich schon aus
+                  der Mathematik.
+                </p>
+                <p>
+                  Wenn Operanden mit denselben Operatoren verbunden sind und
+                  mehrere davon in Klammern stehen, darfst du beim
+                  <strong>Assoziativgesetz</strong> die Klammern verschieben.
+                </p>
+
+                <div class="lesson-code" aria-label="Assoziativgesetz">
+                  <div class="lesson-code__head">
+                    <span>Assoziativgesetz</span>
+                    <span>∨</span>
+                  </div>
+                  <pre><code><span class="code-name">A</span> <span class="code-operator">∨</span> (<span class="code-name">B</span> <span class="code-operator">∨</span> <span class="code-name">C</span>) <span class="code-operator">=</span> (<span class="code-name">A</span> <span class="code-operator">∨</span> <span class="code-name">B</span>) <span class="code-operator">∨</span> <span class="code-name">C</span></code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Das <strong>Kommutativgesetz</strong> erlaubt dir, wie in der
+                  Mathematik, die Operanden zu vertauschen, solange sie mit
+                  demselben Operator verbunden sind.
+                </p>
+
+                <div class="lesson-code" aria-label="Kommutativgesetz">
+                  <div class="lesson-code__head">
+                    <span>Kommutativgesetz</span>
+                    <span>∨</span>
+                  </div>
+                  <pre><code><span class="code-name">A</span> <span class="code-operator">∨</span> <span class="code-name">B</span> <span class="code-operator">=</span> <span class="code-name">B</span> <span class="code-operator">∨</span> <span class="code-name">A</span></code></pre>
+                </div>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="distributiv">
+              <div class="lesson-section__number">02</div>
+              <div class="lesson-section__body">
+                <h2>Distributivgesetz</h2>
+                <p>
+                  Das ist wie das Ausmultiplizieren von Klammern in der
+                  Mathematik. Es gilt, wenn ein Operand mit anderen Operanden in
+                  einer Klammer verbunden ist und die verbindenden Operatoren
+                  sich unterscheiden. Dann wird der Operand außerhalb der
+                  Klammer mit jedem Operanden in der Klammer verbunden, wobei
+                  die Operatoren die Plätze tauschen.
+                </p>
+
+                <div class="lesson-code" aria-label="Distributivgesetz">
+                  <div class="lesson-code__head">
+                    <span>Distributivgesetz</span>
+                    <span>∨, ∧</span>
+                  </div>
+                  <pre><code><span class="code-name">A</span> <span class="code-operator">∨</span> (<span class="code-name">B</span> <span class="code-operator">∧</span> <span class="code-name">C</span>) <span class="code-operator">=</span> (<span class="code-name">A</span> <span class="code-operator">∨</span> <span class="code-name">B</span>) <span class="code-operator">∧</span> (<span class="code-name">A</span> <span class="code-operator">∨</span> <span class="code-name">C</span>)</code></pre>
+                </div>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="negation-komplement">
+              <div class="lesson-section__number">03</div>
+              <div class="lesson-section__body">
+                <h2>Doppelte Negation und Komplementgesetz</h2>
+                <p>
+                  Wie du weißt, ergibt Minus mal Minus ein Plus. Genauso hier:
+                  Bei der <strong>doppelten Negation</strong> heben sich zwei
+                  Verneinungen gegenseitig auf, und der Operand bleibt, was er
+                  war.
+                </p>
+
+                <div class="lesson-code" aria-label="Doppelte Negation">
+                  <div class="lesson-code__head">
+                    <span>Doppelte Negation</span>
+                    <span>¬</span>
+                  </div>
+                  <pre><code><span class="code-operator">¬</span><span class="code-operator">¬</span><span class="code-name">A</span> <span class="code-operator">=</span> <span class="code-name">A</span></code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Das <strong>Komplementgesetz</strong> haben wir am Anfang
+                  schon teilweise behandelt, und es unterscheidet sich ebenfalls
+                  nicht von der Mathematik.
+                </p>
+
+                <div class="lesson-code" aria-label="Komplementgesetz">
+                  <div class="lesson-code__head">
+                    <span>Komplementgesetz</span>
+                    <span>∨, ∧</span>
+                  </div>
+                  <pre><code><span class="code-name">A</span> <span class="code-operator">∨</span> <span class="code-operator">¬</span><span class="code-name">A</span> <span class="code-operator">=</span> <span class="code-value">1</span>
+<span class="code-name">A</span> <span class="code-operator">∧</span> <span class="code-operator">¬</span><span class="code-name">A</span> <span class="code-operator">=</span> <span class="code-value">0</span></code></pre>
+                </div>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="idempotenz-neutral">
+              <div class="lesson-section__number">04</div>
+              <div class="lesson-section__body">
+                <h2>Idempotenzgesetz und Gesetze der neutralen Elemente</h2>
+                <p>
+                  Beim <strong>Idempotenzgesetz</strong> gilt: Wenn die
+                  Operanden gleich sind, ergeben sie genau diesen Operanden –
+                  unabhängig davon, welcher Operator sie verbindet.
+                </p>
+
+                <div class="lesson-code" aria-label="Idempotenzgesetz">
+                  <div class="lesson-code__head">
+                    <span>Idempotenzgesetz</span>
+                    <span>∨, ∧</span>
+                  </div>
+                  <pre><code><span class="code-name">A</span> <span class="code-operator">∨</span> <span class="code-name">A</span> <span class="code-operator">=</span> <span class="code-name">A</span>
+<span class="code-name">A</span> <span class="code-operator">∧</span> <span class="code-name">A</span> <span class="code-operator">=</span> <span class="code-name">A</span></code></pre>
+                </div>
+
+                <p style="margin-top: 18px">
+                  Wenn Operanden auf <strong>neutrale Elemente</strong>
+                  treffen, funktioniert wieder alles wie in der Mathematik. Der
+                  Operand verhält sich hier wie jede andere Zahl: Multiplizierst
+                  du mit 1 (also mit dem Operator ∧), bleibt das Ergebnis
+                  unverändert. Multiplizierst du mit 0, wird das Ergebnis
+                  falsch. Der einzige Unterschied: Addierst du 1 (Operator ∨),
+                  wird das Ergebnis wahr.
+                </p>
+
+                <div class="lesson-code" aria-label="Neutrale Elemente">
+                  <div class="lesson-code__head">
+                    <span>Neutrale Elemente</span>
+                    <span>∨, ∧</span>
+                  </div>
+                  <pre><code><span class="code-name">A</span> <span class="code-operator">∧</span> <span class="code-value">1</span> <span class="code-operator">=</span> <span class="code-name">A</span>
+<span class="code-name">A</span> <span class="code-operator">∧</span> <span class="code-value">0</span> <span class="code-operator">=</span> <span class="code-value">0</span>
+<span class="code-name">A</span> <span class="code-operator">∨</span> <span class="code-value">0</span> <span class="code-operator">=</span> <span class="code-name">A</span>
+<span class="code-name">A</span> <span class="code-operator">∨</span> <span class="code-value">1</span> <span class="code-operator">=</span> <span class="code-value">1</span></code></pre>
+                </div>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="de-morgan">
+              <div class="lesson-section__number">05</div>
+              <div class="lesson-section__body">
+                <h2>De Morgan</h2>
+                <p>
+                  Steht eine Negation vor einer ganzen Klammer, gilt das Gesetz
+                  von <strong>De Morgan</strong>: Um die Klammer aufzulösen,
+                  tauschst du den Operator zwischen den Operanden und negierst
+                  beide Operanden.
+                </p>
+
+                <div class="lesson-code" aria-label="De Morgan">
+                  <div class="lesson-code__head">
+                    <span>De Morgan</span>
+                    <span>∨, ∧</span>
+                  </div>
+                  <pre><code><span class="code-operator">¬</span>(<span class="code-name">A</span> <span class="code-operator">∧</span> <span class="code-name">B</span>) <span class="code-operator">=</span> <span class="code-operator">¬</span><span class="code-name">A</span> <span class="code-operator">∨</span> <span class="code-operator">¬</span><span class="code-name">B</span>
+<span class="code-operator">¬</span>(<span class="code-name">A</span> <span class="code-operator">∨</span> <span class="code-name">B</span>) <span class="code-operator">=</span> <span class="code-operator">¬</span><span class="code-name">A</span> <span class="code-operator">∧</span> <span class="code-operator">¬</span><span class="code-name">B</span></code></pre>
+                </div>
+              </div>
+            </section>
+
+            <section class="lesson-section" id="wissenscheck">
+              <div class="lesson-section__number">06</div>
+              <div class="lesson-section__body">
+                <h2>Bereit?</h2>
+
+                <div
+                  class="lesson-exercise"
+                  data-exercise="law-quiz"
+                  id="law-quiz"
+                >
+                  <span class="lesson-exercise__label">Quick-Check</span>
+                  <p>Wähl deine Übungsrichtung:</p>
+
+                  <div
+                    class="lesson-law-quiz__modes"
+                    role="group"
+                    aria-label="Übungsrichtung wählen"
+                  >
+                    <button
+                      type="button"
+                      class="lesson-law-quiz__mode is-active"
+                      data-mode="expr-to-law"
+                      aria-pressed="true"
+                    >
+                      Ausdruck → Gesetz
+                    </button>
+                    <button
+                      type="button"
+                      class="lesson-law-quiz__mode"
+                      data-mode="law-to-expr"
+                      aria-pressed="false"
+                    >
+                      Gesetz → Ausdruck
+                    </button>
+                  </div>
+
+                  <ul class="lesson-law-quiz__data" hidden>
+                    <li
+                      data-law-id="assoziativ"
+                      data-law-name="Assoziativgesetz"
+                      data-law-left="A ∨ (B ∨ C)"
+                      data-law-right="(A ∨ B) ∨ C"
+                    ></li>
+                    <li
+                      data-law-id="kommutativ"
+                      data-law-name="Kommutativgesetz"
+                      data-law-left="A ∨ B"
+                      data-law-right="B ∨ A"
+                    ></li>
+                    <li
+                      data-law-id="distributiv"
+                      data-law-name="Distributivgesetz"
+                      data-law-left="A ∨ (B ∧ C)"
+                      data-law-right="(A ∨ B) ∧ (A ∨ C)"
+                    ></li>
+                    <li
+                      data-law-id="doppelte-negation"
+                      data-law-name="Doppelte Negation"
+                      data-law-left="¬¬A"
+                      data-law-right="A"
+                    ></li>
+                    <li
+                      data-law-id="komplement"
+                      data-law-name="Komplementgesetz"
+                      data-law-left="A ∨ ¬A"
+                      data-law-right="1"
+                    ></li>
+                    <li
+                      data-law-id="idempotenz"
+                      data-law-name="Idempotenzgesetz"
+                      data-law-left="A ∨ A"
+                      data-law-right="A"
+                    ></li>
+                    <li
+                      data-law-id="neutrale-elemente"
+                      data-law-name="Gesetz der neutralen Elemente"
+                      data-law-left="A ∧ 1"
+                      data-law-right="A"
+                    ></li>
+                    <li
+                      data-law-id="de-morgan"
+                      data-law-name="De Morgan"
+                      data-law-left="¬(A ∧ B)"
+                      data-law-right="¬A ∨ ¬B"
+                    ></li>
+                  </ul>
+
+                  <div class="lesson-law-quiz__board" data-law-quiz-board></div>
+                </div>
+              </div>
+            </section>
+
+            <div class="lesson-next">
+              <div>
+                <span>Nächstes Thema</span>
+                <strong>5. Vereinfachung</strong>
+              </div>
+              <a href="simplification.html" aria-label="Zum Thema Vereinfachung"
+                >›</a
+              >
+            </div>
+          </article>
+        </div>
+      </main>
+    </div>
+
+    <div class="contact-modal" aria-hidden="true">
+      <div
+        class="contact-modal__box"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="contact-title"
+      >
+        <button
+          class="contact-modal__close"
+          type="button"
+          aria-label="Kontaktfenster schließen"
+        >
+          ×
+        </button>
+
+        <h2 id="contact-title">Kontakt</h2>
+        <div class="contact-modal__line"></div>
+        <p class="contact-modal__intro">
+          Bei Fragen, Anregungen oder Problemen kannst du mich gerne
+          kontaktieren.
+        </p>
+
+        <a
+          href="https://mail.google.com/mail/?view=cm&fs=1&to=sandravasylkova@gmail.com"
+          target="_blank"
+          rel="noopener"
+          class="contact-modal__row"
+        >
+          <span class="contact-modal__icon">✉</span>
+          <span>
+            <strong>Email</strong>
+            <small>sandravasylkova@gmail.com</small>
+          </span>
+        </a>
+
+        <a
+          href="https://www.microsoft.com/en-us/microsoft-teams/log-in"
+          class="contact-modal__row"
+        >
+          <span class="teams__icon" role="img" aria-label="Microsoft Teams"></span>
+          <span>
+            <strong>Teams</strong>
+            <small>Oleksandra Vasylkova</small>
+          </span>
+        </a>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,6 +1,4 @@
-# Claude Code local settings: machine-specific permissions, not shared.
-.claude/settings.local.json
-
 # OS / editor cruft
 .DS_Store
 Thumbs.db
+*.swp

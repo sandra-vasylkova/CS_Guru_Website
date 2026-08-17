@@ -138,16 +138,12 @@ body:has(.play-page) {
   width: 100%;
 }
 
-/* Nav hover dropdowns (built by app.js): hovering Lernen/Spielen/Werkzeuge
-   lists every major topic/game/tool so a click jumps straight to it. */
 .nav__links li {
   position: relative;
 }
 
 .nav__dropdown {
   position: absolute;
-  /* Clears the nav__link::after underline (sits at bottom: -6px on the
-     link) so the dropdown's opaque background never paints over it. */
   top: calc(100% + 14px);
   left: 50%;
   transform: translateX(-50%);
@@ -162,8 +158,6 @@ body:has(.play-page) {
   z-index: 30;
 }
 
-/* Invisible bridge over the gap above, so the pointer travelling straight
-   down from the link to the dropdown never leaves a hoverable box. */
 .nav__dropdown::before {
   content: "";
   position: absolute;
@@ -475,11 +469,19 @@ body:has(.play-page) {
   line-height: 1;
   font-weight: 900;
   color: var(--white);
-  margin-bottom: 22px;
+  margin-bottom: 0;
 }
 
 .topics__intro h1 span {
   color: var(--turquoise);
+}
+
+.topics__line {
+  width: 70px;
+  height: 5px;
+  background: var(--turquoise);
+  margin: 14px 0 24px;
+  border-radius: 999px;
 }
 
 .topics__intro p {
@@ -534,8 +536,6 @@ body:has(.play-page) {
   cursor: pointer;
 }
 
-/* hover:hover guards this against touch browsers that keep :hover "stuck"
-   on an element after a tap until the user taps elsewhere. */
 @media (hover: hover) and (pointer: fine) {
   .topic__head:hover {
     opacity: 0.8;
@@ -591,6 +591,7 @@ body:has(.play-page) {
 }
 
 .subtopic {
+  position: relative;
   min-height: 145px;
   display: grid;
   grid-template-columns: 58px 1fr 22px;
@@ -645,13 +646,14 @@ body:has(.play-page) {
 }
 
 .subtopic__done-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  margin-top: 8px;
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: var(--green);
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #8bc34a;
+  box-shadow: 0 0 8px rgba(139, 195, 74, 0.7);
 }
 
 .learn-page .nav__link--active,
@@ -769,7 +771,7 @@ body:has(.play-page) {
   width: 70px;
   height: 5px;
   background: var(--amber);
-  margin: 34px 0 42px;
+  margin: 14px 0 32px;
   border-radius: 999px;
 }
 
@@ -786,6 +788,23 @@ body:has(.play-page) {
   font-weight: 500;
   line-height: 1.55;
   color: rgba(255, 255, 255, 0.65);
+}
+
+.discover__github-text {
+  margin-top: 18px;
+  max-width: 380px;
+}
+
+.discover__github-link {
+  color: var(--amber);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: opacity 0.15s ease;
+}
+
+.discover__github-link:hover {
+  opacity: 0.75;
 }
 
 .discover__icon {
@@ -1033,11 +1052,19 @@ body:has(.play-page) {
   line-height: 1;
   font-weight: 900;
   color: var(--white);
-  margin-bottom: 22px;
+  margin-bottom: 0;
 }
 
 .play__intro h1 span {
   color: var(--red);
+}
+
+.play__line {
+  width: 70px;
+  height: 5px;
+  background: var(--red);
+  margin: 14px 0 24px;
+  border-radius: 999px;
 }
 
 .play__intro p {
@@ -1236,9 +1263,10 @@ body:has(.play-page) {
 .tools__left {
   width: 34%;
   padding-left: 90px;
+  padding-top: 190px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .tools__title {
@@ -1257,7 +1285,7 @@ body:has(.play-page) {
   width: 70px;
   height: 5px;
   background: var(--green);
-  margin: 34px 0 42px;
+  margin: 14px 0 32px;
   border-radius: 999px;
 }
 
@@ -1294,7 +1322,7 @@ body:has(.play-page) {
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 22px;
   align-items: stretch;
-  padding: 180px 70px 80px 20px;
+  padding: 200px 70px 60px 20px;
 }
 
 .tool-card {
@@ -1339,7 +1367,7 @@ body:has(.play-page) {
   display: grid;
   place-items: center;
   color: var(--green);
-  font-weight: 600;
+  font-weight: 700;
   box-shadow: 0 0 24px rgba(35, 245, 53, 0.12);
 }
 
@@ -1355,9 +1383,9 @@ body:has(.play-page) {
   display: grid;
   place-items: center;
   font-size: 5.6rem;
-  font-weight: 100;
+  font-weight: 500;
   line-height: 1;
-  opacity: 0.25;
+  opacity: 0.3;
 }
 
 .tool-card__icon--circle span {
@@ -1383,10 +1411,10 @@ body:has(.play-page) {
 }
 
 .tool-card__icon--table {
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(5, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(5, minmax(0, 1fr));
   padding: 16px;
-  font-size: 1rem;
+  font-size: 0.86rem;
 }
 
 .tool-card__icon--table div {
@@ -1394,12 +1422,17 @@ body:has(.play-page) {
   height: 100%;
   display: grid;
   place-items: center;
-  border-bottom: 1px solid var(--green);
-  border-right: 1px solid var(--green);
+  line-height: 1;
+  border-bottom: 1.5px solid var(--green);
+  border-right: 1.5px solid var(--green);
 }
 
 .tool-card__icon--table div:nth-child(3n) {
   border-right: none;
+}
+
+.tool-card__icon--table div:nth-last-child(-n + 3) {
+  border-bottom: none;
 }
 
 .tool-card__icon--logic {
@@ -1417,11 +1450,6 @@ body:has(.play-page) {
   text-align: center;
   font-size: 1.15rem;
   line-height: 1.1;
-}
-
-.tool-card__icon--decimal span:first-child,
-.tool-card__icon--decimal span:last-child {
-  font-weight: 900;
 }
 
 .tool-card__icon--decimal span:nth-child(2) {
@@ -1496,8 +1524,8 @@ body:has(.play-page) {
   }
 
   .tool-card__icon--table {
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(5, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(5, minmax(0, 1fr));
     padding: 12px;
     font-size: 0.86rem;
     line-height: 1;
@@ -1697,6 +1725,7 @@ body:has(.play-page) {
     width: 100%;
     max-width: 620px;
     padding-left: 0;
+    padding-top: 0;
   }
 
   .tools__right {
@@ -1792,6 +1821,10 @@ body:has(.play-page) {
     width: 100%;
     padding-left: 0;
     padding-right: 0;
+  }
+
+  .tools__left {
+    padding-top: 0;
   }
 
   .discover__right,
@@ -2320,6 +2353,7 @@ body:has(.tool-app-page) {
 }
 
 /*  Decimal converter spacing  */
+
 .decimal-grid {
   display: grid;
   gap: 28px;
@@ -2339,15 +2373,8 @@ body:has(.tool-app-page) {
   line-height: 1.1;
 }
 
-.decimal-result-block {
-  margin-top: 28px;
-}
-
-.decimal-result-block .tool-panel__title {
-  margin-bottom: 14px;
-}
-
 /*  Decimal result  */
+
 .decimal-result-block {
   margin-top: 32px;
 }
@@ -2478,6 +2505,7 @@ body:has(.tool-app-page) {
   margin: 0 auto 28px;
   color: rgba(255, 255, 255, 0.68);
   font-size: 0.95rem;
+  font-weight: 500;
   line-height: 1.55;
   text-align: center;
 }
@@ -2791,7 +2819,9 @@ body:has(.tool-app-page) {
   color: rgba(255, 255, 255, 0.72);
   font-size: 0.95rem;
 }
+
 /*  Nibbleman  */
+
 body:has(.conversion-game-page) {
   --page-accent: var(--red);
 }
@@ -3395,8 +3425,8 @@ body:has(.conversion-game-page) {
   }
 
   .tool-card__icon--table {
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(5, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(5, minmax(0, 1fr));
     padding: 10px;
     font-size: 0.78rem;
     line-height: 1;
@@ -3884,7 +3914,9 @@ body:has(.conversion-game-page) {
 .conversion-bit-input--blink {
   animation: conversionBlink 0.24s linear 6;
 }
+
 /*  Floor is Lava  */
+
 body:has(.two-pow-game-page),
 body:has(.lava-game) {
   --page-accent: var(--red);
@@ -4344,7 +4376,9 @@ body:has(.lava-game) {
   opacity: 0.45;
   cursor: not-allowed;
 }
+
 /*  Simplify game  */
+
 body:has(.simplify-game-page) {
   --page-accent: var(--red);
 }
@@ -4917,7 +4951,9 @@ body:has(.simplify-game-page) {
 .simplify-game-page .simplify-workspace {
   margin-top: 24px;
 }
+
 /*  Circuit game  */
+
 body:has(.circuit-game-page) {
   --page-accent: var(--red);
 }
@@ -6708,6 +6744,7 @@ body:has(.circuit-game-page) {
 }
 
 /*  Play iPad fit  */
+
 @media (min-width: 1101px) and (max-width: 1280px) and (max-height: 950px) {
   .play-page .play {
     padding: 34px clamp(70px, 7vw, 90px) 34px;
@@ -6798,6 +6835,7 @@ body:has(.circuit-game-page) {
 }
 
 /*  Game background cleanup  */
+
 .conversion-game::before,
 .two-pow-game-page .lava-game::before,
 .page:has(.lava-game) .lava-game::before,
@@ -6855,16 +6893,13 @@ body:has(.circuit-game-page) {
 }
 
 /*  Learn lesson pages  */
+
 body:has(.lesson-page) {
   --page-accent: var(--turquoise);
   overflow-x: clip;
   scroll-behavior: smooth;
 }
 
-/* The contact modal is a sibling of .page, not a descendant, so it only ever
-   sees --page-accent, never a --lesson-accent set on .lesson-page--*. Re-set
-   --page-accent here, on body, so the modal (and anything else outside .page)
-   picks up the same topic colour as the lesson content. */
 body:has(.lesson-page--numbers) {
   --page-accent: #ffe100;
 }
@@ -6873,16 +6908,12 @@ body:has(.lesson-page--logic) {
   --page-accent: #b873ff;
 }
 
-/* A lesson page takes the accent colour of its topic in learn.html (.topic--*).
-   Default is the turquoise of "Python Grundlagen". */
 .lesson-page {
   --lesson-accent: var(--page-accent);
   --lesson-operator: var(--turquoise);
   overflow: visible;
 }
 
-/* Turquoise operators would clash inside a yellow code block, so here the signs
-   step back into dim white and the yellow values carry the line. */
 .lesson-page--numbers {
   --lesson-accent: #ffe100;
   --lesson-operator: rgba(255, 255, 255, 0.5);
@@ -6892,8 +6923,6 @@ body:has(.lesson-page--logic) {
   background: var(--turquoise);
 }
 
-/* Zahlensysteme & Datenrepräsentation lessons carry a yellow lesson accent,
-   so the navbar drops the default turquoise brand colour to match it. */
 .lesson-page--numbers .nav__favicon {
   background: var(--lesson-accent);
 }
@@ -7137,7 +7166,8 @@ body:has(.lesson-page--logic) {
   min-width: 0;
 }
 
-/* Interactive exercises (reusable across lessons) */
+/* Interactive exercises*/
+
 .lesson-exercise {
   margin-top: 24px;
   padding: 22px 24px;
@@ -7216,8 +7246,6 @@ body:has(.lesson-page--logic) {
   color: #ff6b7a;
 }
 
-/* Solid, filled primary button — deliberately different from the outlined,
-   faint-turquoise answer chips, so it never blends in with picked answers. */
 .lesson-exercise__check {
   min-height: 46px;
   margin-top: 18px;
@@ -7454,7 +7482,8 @@ body:has(.lesson-page--logic) {
   letter-spacing: 0.04em;
 }
 
-/* Direction toggle for the Boolesche-Gesetze quiz (Ausdruck ↔ Gesetz). */
+/* Direction toggle for the Boolesche-Gesetze quiz */
+
 .lesson-law-quiz__modes {
   display: flex;
   flex-wrap: wrap;
@@ -7519,8 +7548,6 @@ body:has(.lesson-page--logic) {
   text-align: center;
 }
 
-/* Step-reveal demo table (data-step-table in app.js): derived columns stay
-   hidden until the visitor clicks through them one at a time. */
 .step-col.is-hidden {
   display: none;
 }
@@ -7531,7 +7558,8 @@ body:has(.lesson-page--logic) {
   min-height: 44px;
   padding: 0 20px;
   border: none;
-  border-top: 1px solid color-mix(in srgb, var(--lesson-accent) 30%, transparent);
+  border-top: 1px solid
+    color-mix(in srgb, var(--lesson-accent) 30%, transparent);
   border-radius: 0 0 10px 10px;
   background: color-mix(in srgb, var(--lesson-accent) 8%, transparent);
   color: var(--lesson-accent);
@@ -7545,7 +7573,8 @@ body:has(.lesson-page--logic) {
   background: color-mix(in srgb, var(--lesson-accent) 16%, transparent);
 }
 
-/* Expandable method reference: click a row to reveal a full example. */
+/* Expandable method reference */
+
 .method-hint {
   margin-top: 4px;
   color: rgba(255, 255, 255, 0.5);
@@ -7631,7 +7660,8 @@ body:has(.lesson-page--logic) {
   color: var(--white);
 }
 
-/* Lesson sub-heading (was inline per lesson page). */
+/* Lesson sub-heading */
+
 .lesson-section h3 {
   margin-top: 26px;
   margin-bottom: 4px;
@@ -7640,7 +7670,8 @@ body:has(.lesson-page--logic) {
   font-weight: 800;
 }
 
-/* Callout box for tips and warnings inside a lesson. */
+/* Callout box inside a lesson. */
+
 .lesson-callout {
   margin: 20px 0;
   padding: 16px 20px;
@@ -7663,7 +7694,8 @@ body:has(.lesson-page--logic) {
   text-transform: uppercase;
 }
 
-/* Reveal-answer toggle (Bedingungen and Schleifen). */
+/* Reveal-answer toggle */
+
 .conditions-note {
   margin-top: 18px;
   color: rgba(255, 255, 255, 0.58);
@@ -7692,7 +7724,8 @@ body:has(.lesson-page--logic) {
   cursor: pointer;
 }
 
-/* Comparison table (e.g. the number-systems overview). */
+/* Comparison table */
+
 .lesson-table {
   margin-top: 18px;
   overflow-x: auto;
@@ -7733,9 +7766,8 @@ body:has(.lesson-page--logic) {
   border-bottom: none;
 }
 
-/* Schaltnetz diagrams (Halb-/Volladdierer): an SVG circuit rendered inside a
-   card matching .lesson-table's frame. Gate shapes and wires are styled here
-   so the same classes work across every diagram in the lesson. */
+/* Schaltnetz diagrams (Halb-/Volladdierer) */
+
 .lesson-diagram {
   margin-top: 18px;
   padding: 20px;
@@ -7813,9 +7845,7 @@ body:has(.lesson-page--logic) {
   text-anchor: middle;
 }
 
-/* Interactive truth-table exercise (data-exercise="truth" in app.js): a
-   .lesson-table whose result cells each hold a one-digit input instead of
-   static text. */
+/* Interactive truth-table exercise */
 .lesson-truth-table td:has(.lesson-truth-table__input) {
   width: 100px;
 }
@@ -7858,9 +7888,8 @@ body:has(.lesson-page--logic) {
   font-weight: 700;
 }
 
-/* Row-selection stage of the "normalform" exercise (app.js): whole <tr>s
-   become clickable so the learner can pick which rows belong to the
-   canonical DNF/KNF they chose. */
+/* Row-selection stage of the "normalform" exercise */
+
 .lesson-truth-table tbody tr.is-selectable {
   cursor: pointer;
 }
@@ -7886,8 +7915,8 @@ body:has(.lesson-page--logic) {
   outline-offset: -1px;
 }
 
-/* Canonical-formula builder (final stage of "normalform"): clickable literal
-   pills plus paired ∧/∨ operator buttons the learner fills in. */
+/* Canonical-formula builder */
+
 .lesson-nf-board {
   display: flex;
   flex-wrap: wrap;
@@ -8002,7 +8031,8 @@ body:has(.lesson-page--logic) {
   font-weight: 700;
 }
 
-/* Typeset formula box: a numbered formula with a symbol legend. */
+/* Typeset formula box */
+
 .lesson-formula {
   margin-top: 18px;
   padding: 20px 24px;
@@ -8200,8 +8230,8 @@ body:has(.lesson-page--logic) {
   font-size: 0.92em;
 }
 
-/* Hover glossary: a term in the running text that shows the matching values
-   from the code example of its section. */
+/* Hover glossary */
+
 .lesson-term {
   position: relative;
   display: inline-block;
@@ -8246,7 +8276,8 @@ body:has(.lesson-page--logic) {
   pointer-events: none;
 }
 
-/* Little arrow, kept over the word even when the popup is nudged sideways. */
+/* Little arrow, kept over the word */
+
 .lesson-term__pop::before {
   content: "";
   position: absolute;
@@ -8429,9 +8460,9 @@ body:has(.lesson-page--logic) {
   border-color: rgba(255, 255, 255, 0.15);
 }
 
-/* Operator cards — shared by comparison and boolean operator sections */
-/* Place-value table of a byte: one column per bit, the stellen with a 1 are
-   highlighted (Bits, Bytes und Stellenwerte). */
+/* Operator cards */
+/* Place-value table of a byte */
+
 .bit-table {
   margin-top: 18px;
   overflow: hidden;
@@ -8444,8 +8475,8 @@ body:has(.lesson-page--logic) {
   overflow-x: auto;
 }
 
-/* Fixed layout so all eight bit columns end up the same width; below the
-   min-width the wrapper scrolls instead of squeezing the stellenwerte. */
+/* Fixed layout */
+
 .bit-table table {
   width: 100%;
   min-width: 430px;
@@ -8803,6 +8834,7 @@ body:has(.lesson-page--logic) {
 }
 
 /*  Variables lesson sidebar  */
+
 .lesson-sidebar {
   scrollbar-width: thin;
   scrollbar-color: color-mix(in srgb, var(--lesson-accent) 42%, transparent)
@@ -8853,21 +8885,13 @@ body:has(.lesson-page--logic) {
   }
 }
 
-/* Below 821px .lesson__shell drops to a single column (see the max-width:
-   1000px rule above), so the sidebar is no longer a side rail next to the
-   content — it's stacked above it. Staying sticky there means it pins to
-   the top of the screen and the content scrolls up underneath/behind it,
-   hiding whatever's at the top of the page. Sticky only makes sense in the
-   side-by-side layouts (desktop, and the 821-1000px tablet range above). */
 @media (max-width: 820px) {
   .lesson-sidebar {
     position: static;
   }
 }
 
-/*  Mobile learning-page fixes  */
 @media (max-width: 700px) {
-  /* Prevent the topic cards from keeping the later two-column tablet layout. */
   .topics,
   .topics__list,
   .topic,
@@ -8891,10 +8915,6 @@ body:has(.lesson-page--logic) {
     gap: 12px;
   }
 
-  .topic__divider {
-    display: none;
-  }
-
   .topic h2,
   .subtopic h3,
   .subtopic p {
@@ -8910,7 +8930,6 @@ body:has(.lesson-page--logic) {
     min-width: 0;
   }
 
-  /* Keep lesson cards and code examples inside the phone viewport. */
   .lesson,
   .lesson__shell,
   .lesson-content,
@@ -8965,7 +8984,6 @@ body:has(.lesson-page--logic) {
   }
 }
 
-/*  Final mobile navigation fix  */
 @media (max-width: 700px) {
   .nav {
     width: calc(100% - 32px);
@@ -9022,7 +9040,6 @@ body:has(.lesson-page--logic) {
   }
 }
 
-/*  Final mobile topic-card layout  */
 @media (max-width: 700px) {
   .topics {
     padding: 38px 18px 56px;
@@ -9062,10 +9079,6 @@ body:has(.lesson-page--logic) {
     font-size: 1rem;
   }
 
-  .topic__divider {
-    display: none;
-  }
-
   .topic h2 {
     grid-area: title;
     align-self: center;
@@ -9102,12 +9115,6 @@ body:has(.lesson-page--logic) {
   }
 }
 
-/*  Accessibility: baseline focus + reduced motion  */
-/* Guarantees a visible keyboard-focus indicator on every interactive
-   element, even where a component defines no :focus style of its own
-   (or turns the native outline off). Placed last so it wins cascade
-   ties against earlier same-specificity rules; components with a
-   bespoke :focus glow keep that too, this just adds the outline. */
 :focus-visible {
   outline: 2px solid var(--page-accent, var(--amber));
   outline-offset: 2px;

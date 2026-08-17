@@ -171,8 +171,11 @@ if (lessonSections.length && lessonSidebarLinks.length) {
 }
 
 // Lesson progress (localStorage only, no accounts/server): remember which
-// lessons a learner has scrolled through to the end, so /pages/learn.html
-// can show a "done" badge on return visits.
+// lessons a learner has finished, so /pages/learn.html can show a "done"
+// badge on return visits. A lesson with a quiz / quick-check
+// (.lesson-exercise) only counts as finished once every exercise on the
+// page has been graded fully correct at least once; lessons with no
+// exercise fall back to "scrolled to the last section".
 (() => {
   const PROGRESS_KEY = "csguru:lesson-progress";
 
@@ -192,31 +195,70 @@ if (lessonSections.length && lessonSidebarLinks.length) {
     }
   }
 
-  // Mark the current lesson done once its last section scrolls into view.
-  const finalSection = lessonSections[lessonSections.length - 1];
-
-  if (finalSection) {
+  const markDone = () => {
     const currentPath = normalizePath(location.pathname);
+    const progress = readProgress();
+    if (progress[currentPath]) return;
+    progress[currentPath] = true;
+    try {
+      localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
+    } catch {
+      // Private browsing / quota exceeded - progress just won't persist.
+    }
+  };
 
-    const completionObserver = new IntersectionObserver(
-      (entries) => {
-        if (!entries.some((entry) => entry.isIntersecting)) return;
+  const exercises = [...document.querySelectorAll(".lesson-exercise")];
 
-        const progress = readProgress();
-        if (!progress[currentPath]) {
-          progress[currentPath] = true;
-          try {
-            localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
-          } catch {
-            // Private browsing / quota exceeded - progress just won't persist.
-          }
-        }
-        completionObserver.disconnect();
-      },
-      { threshold: 0.4 },
-    );
+  if (exercises.length) {
+    // Every exercise type (multi/match/truth/slice/logic-build/law-quiz/…)
+    // renders a ".lesson-exercise__result--ok" message on a fully correct
+    // grading, so watch each exercise's own subtree for it instead of
+    // hooking into every grading implementation separately.
+    //
+    // A multi-stage exercise (e.g. "normalform") renders one
+    // .lesson-exercise__feedback per stage, in DOM order, so an early stage's
+    // leftover --ok from a past round would otherwise count the whole
+    // exercise as done before the final stage is ever reached. Checking only
+    // the last .lesson-exercise__feedback sidesteps that without needing to
+    // know which exercises are multi-stage: single-stage exercises have just
+    // one feedback element, so "last" and "only" are the same thing there.
+    const passed = new Set();
 
-    completionObserver.observe(finalSection);
+    exercises.forEach((exercise) => {
+      const checkPassed = () => {
+        const feedbacks = exercise.querySelectorAll(
+          ".lesson-exercise__feedback",
+        );
+        const finalFeedback = feedbacks[feedbacks.length - 1];
+        if (!finalFeedback?.querySelector(".lesson-exercise__result--ok"))
+          return;
+        passed.add(exercise);
+        if (passed.size === exercises.length) markDone();
+      };
+
+      new MutationObserver(checkPassed).observe(exercise, {
+        childList: true,
+        subtree: true,
+      });
+
+      checkPassed();
+    });
+  } else {
+    // Mark the current lesson done once its last section scrolls into view.
+    const finalSection = lessonSections[lessonSections.length - 1];
+
+    if (finalSection) {
+      const completionObserver = new IntersectionObserver(
+        (entries) => {
+          if (!entries.some((entry) => entry.isIntersecting)) return;
+          markDone();
+          completionObserver.disconnect();
+        },
+        { threshold: 0.4 },
+      );
+
+      completionObserver.observe(finalSection);
+    }
   }
 
   // Render "done" badges on the lessons overview page.
@@ -232,13 +274,11 @@ if (lessonSections.length && lessonSidebarLinks.length) {
     if (!progress[linkPath]) return;
 
     link.classList.add("subtopic--done");
-    const content = link.querySelector("div:not(.subtopic__icon)");
-    if (!content) return;
 
     const badge = document.createElement("span");
     badge.className = "subtopic__done-badge";
-    badge.textContent = "✓ Erledigt";
-    content.appendChild(badge);
+    badge.setAttribute("aria-label", "Erledigt");
+    link.appendChild(badge);
   });
 })();
 

@@ -31,7 +31,9 @@
     <meta property="og:locale" content="de_DE" />
     <meta name="twitter:card" content="summary" />
     <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/assets/danke.css" />
     <script src="../app.js" defer></script>
+    <script src="/assets/danke.js" defer></script>
     <link
       rel="icon"
       type="image/png"
@@ -153,9 +155,30 @@
             Und das beste daran: ganz ohne Zwischenschritte.
           </p>
 
-          <a style="text-decoration: none; color: var(--amber)" href="#">
+          <p class="discover__text discover__github-text">
+            Eine ausführliche Beschreibung sowie alle Dateien und den Code
+            findest du auf meinem
+            <a
+              href="https://github.com/sandra-vasylkova/CS_Guru_Website"
+              target="_blank"
+              rel="noopener"
+              class="discover__github-link"
+              >GitHub</a
+            >.
+          </p>
+
+          <button
+            type="button"
+            id="danke-trigger"
+            style="
+              background: none;
+              border: none;
+              padding: 0;
+              cursor: pointer;
+            "
+          >
             <div class="discover__icon">&lt;/&gt;</div>
-          </a>
+          </button>
         </section>
 
         <section class="discover__right">
@@ -281,6 +304,128 @@
             <small>Oleksandra Vasylkova</small>
           </span>
         </a>
+      </div>
+    </div>
+
+    <div class="danke-modal" id="danke-modal" aria-hidden="true">
+      <div
+        class="danke-modal__box"
+        id="modal-box"
+        role="dialog"
+        aria-modal="true"
+      >
+        <button
+          class="danke-modal__close"
+          type="button"
+          id="danke-modal-close"
+          aria-label="Schließen"
+        >
+          ×
+        </button>
+
+        <section class="danke-gate" id="gate">
+          <label for="gate-input" class="danke-gate__label"
+            >Passwort eingeben</label
+          >
+          <form class="danke-gate__form" id="gate-form" autocomplete="off">
+            <input
+              type="password"
+              id="gate-input"
+              class="danke-gate__input"
+              autocomplete="off"
+              autocapitalize="off"
+              autocorrect="off"
+              spellcheck="false"
+            />
+            <button
+              type="submit"
+              class="danke-gate__submit"
+              id="gate-submit"
+              aria-label="Bestätigen"
+            >
+              →
+            </button>
+          </form>
+
+          <p class="danke-gate__error" id="gate-error" aria-live="polite"></p>
+        </section>
+
+        <section class="danke-cs" id="cs-content" hidden>
+          <div class="danke-cs__prompt" id="cs-prompt">
+            <div
+              class="danke-marquee"
+              id="danke-marquee"
+              aria-hidden="true"
+            ></div>
+
+            <p class="danke-cs__prompt-text">
+              Möchten Sie einen Kartentrick sehen?
+            </p>
+            <button
+              type="button"
+              class="danke-cs__prompt-btn"
+              id="cs-trick-btn"
+            >
+              Selbstverständlich!
+            </button>
+          </div>
+
+          <div class="danke-cs__table" id="cs-table" hidden>
+            <p class="danke-cs__instruction">Ziehen Sie eine Karte.</p>
+
+            <div class="danke-cs__stage">
+              <div class="danke-reveal" id="cs-reveal"></div>
+              <div class="danke-cards" id="cs-cards"></div>
+            </div>
+
+            <p class="danke-cs__warning" id="cs-warning" aria-live="polite"></p>
+          </div>
+        </section>
+
+        <section class="danke-math" id="math-content" hidden>
+          <div
+            class="danke-formulas"
+            id="danke-formulas"
+            aria-hidden="true"
+          ></div>
+
+          <p class="danke-math__hint">Klicken und ziehen, um zu drehen.</p>
+
+          <div class="danke-cube-stage" id="cube-stage">
+            <div class="danke-cube" id="cube">
+              <div
+                class="danke-cube__face danke-cube__face--front"
+                data-face="front"
+              >
+              </div>
+              <div
+                class="danke-cube__face danke-cube__face--back"
+                data-face="back"
+              >
+              </div>
+              <div
+                class="danke-cube__face danke-cube__face--right"
+                data-face="right"
+              >
+              </div>
+              <div
+                class="danke-cube__face danke-cube__face--left"
+                data-face="left"
+              >
+              </div>
+              <div
+                class="danke-cube__face danke-cube__face--top"
+                data-face="top"
+              >
+              </div>
+              <div
+                class="danke-cube__face danke-cube__face--bottom"
+                data-face="bottom"
+              >
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   </body>

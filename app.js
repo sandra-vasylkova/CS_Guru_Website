@@ -786,6 +786,271 @@ if (lessonSections.length && lessonSidebarLinks.length) {
     });
 })();
 
+// Interactive exercises: "order" — put scrambled code lines into the right
+// order. Each .lesson-exercise__row carries data-answer (its 1-based correct
+// position as a string); a <select> with options 1..N (N = row count) is
+// appended to every row, and grading compares the chosen number to it.
+(() => {
+  document
+    .querySelectorAll('.lesson-exercise[data-exercise="order"]')
+    .forEach((exercise) => {
+      const rowsWrap = exercise.querySelector(".lesson-exercise__rows");
+      const checkBtn = exercise.querySelector(".lesson-exercise__check");
+      const feedback = exercise.querySelector(".lesson-exercise__feedback");
+      if (!rowsWrap || !checkBtn || !feedback) return;
+
+      let checked = false;
+      const rows = () => [
+        ...rowsWrap.querySelectorAll(".lesson-exercise__row"),
+      ];
+
+      const makeSelect = (count) => {
+        const select = document.createElement("select");
+        select.className = "lesson-exercise__select";
+        const blank = document.createElement("option");
+        blank.value = "";
+        blank.textContent = "–";
+        select.appendChild(blank);
+        for (let i = 1; i <= count; i += 1) {
+          const option = document.createElement("option");
+          option.value = String(i);
+          option.textContent = String(i);
+          select.appendChild(option);
+        }
+        return select;
+      };
+
+      rows().forEach((row) => {
+        if (!row.querySelector("select"))
+          row.appendChild(makeSelect(rows().length));
+      });
+
+      const freshBoard = () => {
+        checked = false;
+        feedback.hidden = true;
+        feedback.innerHTML = "";
+        checkBtn.textContent = "Prüfen";
+        rows().forEach((row) => {
+          row.classList.remove("is-correct", "is-wrong");
+          row.querySelector(".lesson-exercise__solution")?.remove();
+          const select = row.querySelector("select");
+          select.value = "";
+          select.disabled = false;
+        });
+      };
+
+      const grade = () => {
+        checked = true;
+        let correct = 0;
+        const all = rows();
+        all.forEach((row) => {
+          const select = row.querySelector("select");
+          select.disabled = true;
+          const isRight = select.value === row.dataset.answer;
+          row.classList.add(isRight ? "is-correct" : "is-wrong");
+          if (isRight) {
+            correct += 1;
+          } else {
+            const solution = document.createElement("span");
+            solution.className = "lesson-exercise__solution";
+            solution.textContent = `→ ${row.dataset.answer}`;
+            row.appendChild(solution);
+          }
+        });
+        feedback.innerHTML =
+          correct === all.length
+            ? '<p class="lesson-exercise__result lesson-exercise__result--ok">Gut gemacht!</p>'
+            : `<p class="lesson-exercise__result">${correct} von ${all.length} richtig. Nochmal?</p>`;
+        feedback.hidden = false;
+        checkBtn.textContent = "Nochmal";
+      };
+
+      checkBtn.addEventListener("click", () => {
+        if (checked) freshBoard();
+        else grade();
+      });
+    });
+})();
+
+// Interactive exercises: "base-match" — pick the matching value for each
+// row from a shared set of options. The exercise container carries
+// data-options (pipe-separated, e.g. "2|8|10|16"); every row gets a select
+// built from that list and carries data-answer (the correct option).
+(() => {
+  document
+    .querySelectorAll('.lesson-exercise[data-exercise="base-match"]')
+    .forEach((exercise) => {
+      const rowsWrap = exercise.querySelector(".lesson-exercise__rows");
+      const checkBtn = exercise.querySelector(".lesson-exercise__check");
+      const feedback = exercise.querySelector(".lesson-exercise__feedback");
+      if (!rowsWrap || !checkBtn || !feedback) return;
+
+      const options = (exercise.dataset.options || "")
+        .split("|")
+        .filter(Boolean);
+
+      let checked = false;
+      const rows = () => [
+        ...rowsWrap.querySelectorAll(".lesson-exercise__row"),
+      ];
+
+      const makeSelect = () => {
+        const select = document.createElement("select");
+        select.className = "lesson-exercise__select";
+        const blank = document.createElement("option");
+        blank.value = "";
+        blank.textContent = "–";
+        select.appendChild(blank);
+        options.forEach((value) => {
+          const option = document.createElement("option");
+          option.value = value;
+          option.textContent = value;
+          select.appendChild(option);
+        });
+        return select;
+      };
+
+      rows().forEach((row) => {
+        if (!row.querySelector("select")) row.appendChild(makeSelect());
+      });
+
+      const freshBoard = () => {
+        checked = false;
+        feedback.hidden = true;
+        feedback.innerHTML = "";
+        checkBtn.textContent = "Prüfen";
+        rows().forEach((row) => {
+          row.classList.remove("is-correct", "is-wrong");
+          row.querySelector(".lesson-exercise__solution")?.remove();
+          const select = row.querySelector("select");
+          select.value = "";
+          select.disabled = false;
+        });
+      };
+
+      const grade = () => {
+        checked = true;
+        let correct = 0;
+        const all = rows();
+        all.forEach((row) => {
+          const select = row.querySelector("select");
+          select.disabled = true;
+          const isRight = select.value === row.dataset.answer;
+          row.classList.add(isRight ? "is-correct" : "is-wrong");
+          if (isRight) {
+            correct += 1;
+          } else {
+            const solution = document.createElement("span");
+            solution.className = "lesson-exercise__solution";
+            solution.textContent = `→ ${row.dataset.answer}`;
+            row.appendChild(solution);
+          }
+        });
+        feedback.innerHTML =
+          correct === all.length
+            ? '<p class="lesson-exercise__result lesson-exercise__result--ok">Gut gemacht!</p>'
+            : `<p class="lesson-exercise__result">${correct} von ${all.length} richtig. Nochmal?</p>`;
+        feedback.hidden = false;
+        checkBtn.textContent = "Nochmal";
+      };
+
+      checkBtn.addEventListener("click", () => {
+        if (checked) freshBoard();
+        else grade();
+      });
+    });
+})();
+
+// Interactive exercises: "predict-output" — type the exact expected text for
+// each .lesson-exercise__row (data-answer), trimmed and compared
+// case-sensitively by default, or case-insensitively when the row carries
+// data-ci="true" (for word answers where case shouldn't matter, unlike
+// Python output). data-explain supplies the "why", shown for every row once
+// checked, right or wrong.
+(() => {
+  document
+    .querySelectorAll('.lesson-exercise[data-exercise="predict-output"]')
+    .forEach((exercise) => {
+      const rowsWrap = exercise.querySelector(".lesson-exercise__rows");
+      const checkBtn = exercise.querySelector(".lesson-exercise__check");
+      const feedback = exercise.querySelector(".lesson-exercise__feedback");
+      if (!rowsWrap || !checkBtn || !feedback) return;
+
+      let checked = false;
+      const rows = () => [
+        ...rowsWrap.querySelectorAll(".lesson-exercise__row"),
+      ];
+
+      const isRowRight = (row, raw) => {
+        const given = raw.trim();
+        const answer = row.dataset.answer || "";
+        return row.dataset.ci === "true"
+          ? given.toLowerCase() === answer.toLowerCase()
+          : given === answer;
+      };
+
+      const freshBoard = () => {
+        checked = false;
+        feedback.hidden = true;
+        feedback.innerHTML = "";
+        checkBtn.textContent = "Prüfen";
+        rows().forEach((row) => {
+          row.classList.remove("is-correct", "is-wrong");
+          row.querySelector(".lesson-exercise__solution")?.remove();
+          row.querySelector(".lesson-exercise__note")?.remove();
+          const input = row.querySelector(".lesson-exercise__input");
+          input.value = "";
+          input.disabled = false;
+        });
+      };
+
+      const grade = () => {
+        checked = true;
+        let correct = 0;
+        const all = rows();
+        all.forEach((row) => {
+          const input = row.querySelector(".lesson-exercise__input");
+          input.disabled = true;
+          const isRight = isRowRight(row, input.value);
+          row.classList.add(isRight ? "is-correct" : "is-wrong");
+          if (isRight) correct += 1;
+          else if (row.dataset.answer) {
+            const solution = document.createElement("span");
+            solution.className = "lesson-exercise__solution";
+            solution.textContent = `→ ${row.dataset.answer}`;
+            row.appendChild(solution);
+          }
+          if (row.dataset.explain) {
+            const note = document.createElement("p");
+            note.className = "lesson-exercise__note";
+            note.textContent = row.dataset.explain;
+            row.appendChild(note);
+          }
+        });
+        feedback.innerHTML =
+          correct === all.length
+            ? '<p class="lesson-exercise__result lesson-exercise__result--ok">Gut gemacht!</p>'
+            : `<p class="lesson-exercise__result">${correct} von ${all.length} richtig. Nochmal?</p>`;
+        feedback.hidden = false;
+        checkBtn.textContent = "Nochmal";
+      };
+
+      checkBtn.addEventListener("click", () => {
+        if (checked) freshBoard();
+        else grade();
+      });
+
+      rowsWrap.querySelectorAll(".lesson-exercise__input").forEach((input) => {
+        input.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" && !checked) {
+            event.preventDefault();
+            grade();
+          }
+        });
+      });
+    });
+})();
+
 // Interactive exercises: "truth" — fill in 0/1 for each cell of a truth
 // table. Each <input class="lesson-truth-table__input"> carries its own
 // data-answer ("0" or "1"); one "Prüfen" button grades every input at once.

@@ -1,0 +1,1551 @@
+/* Encrypted gratitude modal, opened from the </> icon on the Entdecken page.
+   Pops up over the current page rather than navigating away. */
+
+[hidden] {
+  display: none !important;
+}
+
+/* Fixed blurred backdrop, centred box. The whole flow lives in that box, which
+   widens once unlocked. */
+
+.encrypted-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 130;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  overflow-y: auto;
+  background: rgba(0, 0, 0, 0.88);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  backdrop-filter: blur(10px);
+  transition:
+    opacity 0.22s ease,
+    visibility 0.22s ease;
+}
+
+.encrypted-modal--open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.encrypted-modal__box {
+  position: relative;
+  isolation: isolate;
+  width: min(420px, 100%);
+  padding: 2.75rem 2.25rem;
+  border: 1px solid rgba(245, 166, 35, 0.3);
+  border-radius: 16px;
+  background: rgba(6, 6, 6, 0.97);
+  box-shadow: 0 34px 90px rgba(0, 0, 0, 0.75);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition:
+    width 0.5s cubic-bezier(0.2, 0.7, 0.2, 1),
+    background 0.6s ease,
+    border-color 0.6s ease;
+}
+
+.encrypted-modal__box--unlocked {
+  width: min(880px, 100%);
+}
+
+/* Cards on the table: the box goes black and one spreading light comes up over
+   it. Screen blend, so it adds light rather than greying the dark; radial with
+   stepped falloff, so it has no edge and no shape. */
+
+.encrypted-modal__box--table {
+  background:
+    /* a touch of lift across the top, so the upper half is dim rather
+       than dead black */
+    radial-gradient(ellipse 30% 34% at 50% 1%, #121212 0%, transparent 76%),
+    radial-gradient(
+      ellipse 52% 44% at 50% 54%,
+      #0a0a0a 0%,
+      #030303 58%,
+      #000000 100%
+    );
+  border-color: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 40px 110px rgba(0, 0, 0, 0.9);
+}
+
+.encrypted-modal__box::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  pointer-events: none;
+  opacity: 0;
+  mix-blend-mode: screen;
+  transition: opacity 0.8s ease;
+  /* Behind the content but above the box background, so nothing in the panel
+     needs position/z-index of its own — .encrypted-cs having it stole the
+     marquee's containing block and shrank the wallpaper to a band. */
+  z-index: -1;
+  background:
+    /* Narrow at the source, widening as it falls. Three ellipses rather than
+       a cone: each is soft-edged, so the column has no straight sides. */
+    radial-gradient(
+      ellipse 14% 20% at 50% -1%,
+      rgba(255, 255, 255, 0.3) 0%,
+      rgba(255, 255, 255, 0.22) 22%,
+      rgba(255, 255, 255, 0.14) 42%,
+      rgba(255, 255, 255, 0.075) 62%,
+      rgba(255, 255, 255, 0.03) 80%,
+      transparent 100%
+    ),
+    radial-gradient(
+      ellipse 26% 28% at 50% 24%,
+      rgba(255, 255, 255, 0.2) 0%,
+      rgba(255, 255, 255, 0.15) 24%,
+      rgba(255, 255, 255, 0.1) 44%,
+      rgba(255, 255, 255, 0.055) 64%,
+      rgba(255, 255, 255, 0.02) 82%,
+      transparent 100%
+    ),
+    /* the pool it throws, widest and lowest */
+    radial-gradient(
+      ellipse 46% 40% at 50% 62%,
+      rgba(255, 255, 255, 0.58) 0%,
+      rgba(255, 255, 255, 0.48) 12%,
+      rgba(255, 255, 255, 0.37) 26%,
+      rgba(255, 255, 255, 0.25) 40%,
+      rgba(255, 255, 255, 0.15) 55%,
+      rgba(255, 255, 255, 0.075) 70%,
+      rgba(255, 255, 255, 0.028) 85%,
+      transparent 100%
+    );
+}
+
+/* The falloff sits on the panel, not on the stage. On the stage its own top
+   and bottom edges cut visible steps across the panel, because the stage is
+   only 300px tall. Bounded to the panel, the one place a discontinuity is
+   already expected is the panel edge itself.
+
+   screen adds light and cannot take it away, so this multiplies instead:
+   white in the middle leaves the centre cards untouched, grey towards the
+   sides puts the outer two into shadow. */
+
+.encrypted-modal__box--table::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 7;
+  border-radius: 16px;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  background: radial-gradient(
+    ellipse 30% 96% at 50% 52%,
+    #ffffff 0%,
+    #fbfbfb 30%,
+    #f2f2f2 50%,
+    #e2e2e2 68%,
+    #d0d0d0 84%,
+    #c4c4c4 100%
+  );
+}
+
+.encrypted-modal__box--table::after {
+  opacity: 1;
+}
+
+/* Sheen over the cards themselves. The pool sits behind them and so can only
+   light the panel around them; this one is above the reveal stage, so the
+   light actually falls on the cards. Kept low so the artwork still reads. */
+
+
+
+.encrypted-modal__box--table .encrypted-cs__stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  background: radial-gradient(
+    ellipse 38% 42% at 50% 44%,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.06) 38%,
+    rgba(255, 255, 255, 0.025) 62%,
+    transparent 100%
+  );
+}
+
+/* Trigger on the Entdecken page. Its parent is a flex column, so without
+   align-self the button stretches the full column width and the click area
+   runs far past the icon. The 55px offset moves off the icon and onto the
+   button, so the button's box hugs the icon exactly. */
+
+.encrypted-trigger {
+  align-self: flex-start;
+  margin-top: 55px;
+  padding: 0;
+  border: none;
+  background: none;
+  line-height: 0;
+  cursor: pointer;
+}
+
+.encrypted-trigger .discover__icon {
+  margin-top: 0;
+}
+
+.encrypted-modal__close {
+  position: absolute;
+  z-index: 2;
+  top: 18px;
+  right: 20px;
+  border: none;
+  background: transparent;
+  color: var(--white);
+  font-size: 1.75rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+/* Gate */
+
+.encrypted-gate {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.encrypted-gate.is-shaking {
+  animation: encrypted-shake 0.4s ease;
+}
+
+@keyframes encrypted-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-8px);
+  }
+  40% {
+    transform: translateX(7px);
+  }
+  60% {
+    transform: translateX(-5px);
+  }
+  80% {
+    transform: translateX(3px);
+  }
+}
+
+.encrypted-gate__label {
+  display: block;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 1.5rem;
+}
+
+/* One height for the input and the button, so the two can't drift apart. */
+
+.encrypted-gate__form {
+  --gate-h: 46px;
+  width: 100%;
+  display: flex;
+  gap: 0.6rem;
+}
+
+.encrypted-gate__input {
+  flex: 1;
+  min-width: 0;
+  height: var(--gate-h);
+  background: var(--card-bg);
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 0 1rem;
+  color: var(--white);
+  font-family: var(--font);
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.encrypted-gate__input:focus {
+  border-color: var(--amber);
+}
+
+/* Arrow as SVG, not a glyph: the ink of "→" sits ~3px below the line box
+   centre, and CSS centres the line box, not the ink. */
+
+.encrypted-gate__submit {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: var(--gate-h);
+  height: var(--gate-h);
+  background: var(--amber);
+  color: var(--black);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.encrypted-gate__submit svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.encrypted-gate__submit:hover {
+  transform: translateX(2px);
+}
+
+.encrypted-gate__submit:disabled {
+  opacity: 0.6;
+  cursor: default;
+  transform: none;
+}
+
+.encrypted-gate__error {
+  margin-top: 1rem;
+  min-height: 1.2em;
+  color: var(--red);
+  font-size: 0.9rem;
+}
+
+/* CS teacher — card table */
+
+.encrypted-cs {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.encrypted-cs__prompt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.75rem;
+}
+
+/* Same serif as the maths side, so both halves read alike. */
+
+.encrypted-cs__prompt-text {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.2rem, 3.6vw, 1.5rem);
+  font-weight: 500;
+}
+
+/* "Not if, but when" behind the question. Sits inside #cs-prompt but is
+   positioned against the modal box, so hiding the prompt removes it.
+   The upright frame clips to the panel; the rotated stage inside runs the
+   lines diagonally, oversized so its corners still cover the panel. */
+
+.encrypted-marquee {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  border-radius: 16px;
+  pointer-events: none;
+  /* Fade on the frame, not on the stage: the stage is 168% wide and offset,
+     so stops set on it fall outside the panel and are never seen. */
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 18%,
+    #000 82%,
+    transparent
+  );
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 18%,
+    #000 82%,
+    transparent
+  );
+}
+
+.encrypted-marquee__stage {
+  position: absolute;
+  left: -34%;
+  top: -58%;
+  width: 168%;
+  height: 216%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  rotate: -21deg;
+}
+
+.encrypted-marquee__row {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* Track holds the phrase group twice, so -50% loops seamlessly. */
+
+.encrypted-marquee__row i {
+  display: inline-block;
+  white-space: nowrap;
+  font-family: var(--font);
+  font-style: normal;
+  font-weight: 900;
+  font-size: 1.45rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: rgba(245, 166, 35, var(--o, 0.07));
+  animation: encrypted-marquee var(--d, 22s) linear infinite;
+}
+
+.encrypted-marquee__row:nth-child(even) i {
+  animation-direction: reverse;
+}
+
+@keyframes encrypted-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .encrypted-marquee__row i {
+    animation: none;
+  }
+}
+
+/* Question and button sit above the wallpaper. */
+
+.encrypted-cs__prompt-text,
+.encrypted-cs__prompt-btn {
+  position: relative;
+  z-index: 1;
+}
+
+.encrypted-cs__prompt-btn {
+  background: var(--amber);
+  color: var(--black);
+  border: none;
+  border-radius: 10px;
+  padding: 0.85rem 1.6rem;
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.encrypted-cs__prompt-btn:hover {
+  transform: translateY(-2px) scale(1.03);
+}
+
+.encrypted-cs__table {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.encrypted-cs__instruction {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.55);
+  margin-bottom: 1rem;
+}
+
+.encrypted-cs__stage {
+  position: relative;
+  width: 100%;
+}
+
+/* Reveal stage: absolute overlay, so drawn cards cover the fan instead of
+   pushing it down. */
+
+.encrypted-reveal {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1800px;
+  /* Above the sheen (6) and the falloff (7). Both stop at the panel edge, so
+     anything below them gets a hard line drawn across it wherever it reaches
+     past the panel. The fan stays under them and keeps its shading. */
+  z-index: 8;
+  pointer-events: none;
+}
+
+.encrypted-reveal .quote-card.is-drawn {
+  pointer-events: auto;
+}
+
+/* Fan of face-down cards */
+
+.quote-cards {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  perspective: 1400px;
+}
+
+.quote-card-slot {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 148px;
+  margin-left: -74px;
+  transform-origin: bottom center;
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease;
+}
+
+.quote-card {
+  appearance: none;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--font);
+  width: 148px;
+  height: 240px;
+  transform-style: preserve-3d;
+  transition: transform 0.25s ease;
+}
+
+.quote-card-slot:hover .quote-card:not(.is-drawn) {
+  transform: translateY(-16px) scale(1.05);
+}
+
+.quote-card--center {
+  width: 162px;
+  height: 262px;
+}
+
+/* Cards pulled into the reveal stage */
+
+.quote-card.is-drawn {
+  position: relative;
+  width: 300px;
+  height: 482px;
+}
+
+.encrypted-reveal .quote-card.is-drawn {
+  transform: rotate(-2deg);
+}
+
+.quote-card--center.is-drawn {
+  width: 328px;
+  height: 526px;
+}
+
+.quote-card.is-drawn.is-glowing .quote-card__face--back,
+.quote-card.is-drawn.is-glowing .quote-card__face--front {
+  box-shadow:
+    0 0 34px rgba(245, 166, 35, 0.55),
+    0 0 70px rgba(245, 166, 35, 0.22),
+    0 18px 38px rgba(0, 0, 0, 0.5);
+}
+
+.quote-card--center.is-drawn.is-glowing .quote-card__face--back,
+.quote-card--center.is-drawn.is-glowing .quote-card__face--front {
+  box-shadow:
+    0 0 34px rgba(255, 43, 43, 0.55),
+    0 0 70px rgba(255, 43, 43, 0.22),
+    0 18px 38px rgba(0, 0, 0, 0.5);
+}
+
+.quote-card__flip {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.2, 0.6, 0.2, 1);
+}
+
+.quote-card.is-flipped .quote-card__flip {
+  transform: rotateY(180deg);
+}
+
+.quote-card__face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 12px;
+  /* Cards in the fan overlap; without this they read as flat stickers.
+     box-shadow rather than filter: drop-shadow, which would flatten the
+     card's preserve-3d flip. */
+  box-shadow:
+    0 6px 14px rgba(0, 0, 0, 0.45),
+    0 14px 30px rgba(0, 0, 0, 0.32);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: box-shadow 0.5s ease;
+}
+
+/* Back: one design for the whole deck, red on the middle card only. Percentage
+   sizes keep the mosaic in proportion at both card sizes. */
+
+.quote-card__face--back {
+  --fc: var(--amber);
+  --fc-13: rgba(245, 166, 35, 0.07);
+  --fc-20: rgba(245, 166, 35, 0.26);
+  --fc-08: rgba(245, 166, 35, 0.08);
+  --fc-42: rgba(245, 166, 35, 0.42);
+  --fc-12: rgba(245, 166, 35, 0.12);
+  --fc-34: rgba(245, 166, 35, 0.34);
+  background: linear-gradient(150deg, #191919, #0a0a0a);
+  border: 2px solid var(--fc);
+}
+
+.quote-card--center .quote-card__face--back {
+  --fc: var(--red);
+  --fc-13: rgba(255, 43, 43, 0.07);
+  --fc-20: rgba(255, 43, 43, 0.26);
+  --fc-08: rgba(255, 43, 43, 0.08);
+  --fc-42: rgba(255, 43, 43, 0.42);
+  --fc-12: rgba(255, 43, 43, 0.12);
+  --fc-34: rgba(255, 43, 43, 0.34);
+}
+
+/* Diamond grid + two diagonal rasters = guilloche. */
+
+.quote-card__face--back::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-conic-gradient(
+        from 45deg at 50% 50%,
+        transparent 0 25%,
+        var(--fc-13) 0 50%
+      )
+      0 0 / 16% 10%,
+    repeating-linear-gradient(45deg, var(--fc-20) 0 1px, transparent 1px 9%),
+    repeating-linear-gradient(-45deg, var(--fc-20) 0 1px, transparent 1px 9%);
+}
+
+.quote-card__face--back::after {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border: 1px solid var(--fc-42);
+  border-radius: 8px;
+  box-shadow: inset 0 0 0 3px var(--fc-08);
+}
+
+/* Four pips mark the axes. */
+
+.quote-card__pips i {
+  position: absolute;
+  z-index: 1;
+  width: 8%;
+  aspect-ratio: 1;
+  rotate: 45deg;
+  border-radius: 1px;
+  background: var(--fc);
+  opacity: 0.5;
+}
+
+.quote-card__pips i:nth-child(1) {
+  left: 46%;
+  top: 9%;
+}
+
+.quote-card__pips i:nth-child(2) {
+  left: 46%;
+  bottom: 9%;
+}
+
+.quote-card__pips i:nth-child(3) {
+  left: 13%;
+  top: 46%;
+}
+
+.quote-card__pips i:nth-child(4) {
+  right: 13%;
+  top: 46%;
+}
+
+.quote-card__logo {
+  position: relative;
+  z-index: 1;
+  width: 33%;
+  height: auto;
+  opacity: 0.95;
+  border-radius: 22%;
+  box-shadow:
+    0 0 0 5px var(--fc-12),
+    0 0 0 6px var(--fc-34);
+}
+
+/* Front: each theme sets the --f-* properties and its own art layer;
+   everything else is shared. Art stays behind the text. */
+
+.quote-card {
+  --f-bg: var(--white);
+  --f-ink: var(--black);
+  --f-accent: var(--amber);
+  --f-frame: rgba(0, 0, 0, 0.18);
+  --f-muted: rgba(0, 0, 0, 0.55);
+}
+
+.quote-card__face--front {
+  background: var(--f-bg);
+  color: var(--f-ink);
+  transform: rotateY(180deg);
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0.4rem;
+  padding: 1.5rem 0.7rem 1.9rem;
+  text-align: center;
+}
+
+.quote-card__face--front::after {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  z-index: 3;
+  border: 1px solid var(--f-frame);
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+.quote-card__art {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Corner index, both ways up. */
+
+.quote-card__ix {
+  position: absolute;
+  z-index: 2;
+  top: 0.55rem;
+  left: 0.6rem;
+  font-family: var(--font);
+  font-weight: 900;
+  font-size: 0.55rem;
+  line-height: 1;
+  color: var(--f-accent);
+}
+
+.quote-card__ix--br {
+  top: auto;
+  left: auto;
+  bottom: 0.55rem;
+  right: 0.6rem;
+  rotate: 180deg;
+}
+
+.quote-card__ix i {
+  display: block;
+  font-style: normal;
+  font-size: 1.25em;
+  margin-top: 0.1em;
+}
+
+.quote-card__emblem {
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quote-card__connector {
+  position: relative;
+  z-index: 2;
+  font-family: var(--font);
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  color: var(--f-accent);
+}
+
+/* Block, not flex. As a flex container the text node and the "mehr" span
+   became separate flex items, which put the link beside the paragraph instead
+   of after the last word. Auto side margins centre it vertically instead. */
+
+.quote-card__text {
+  position: relative;
+  z-index: 2;
+  display: block;
+  margin: auto 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.66rem;
+  line-height: 1.38;
+  font-weight: 500;
+}
+
+.quote-card__attribution {
+  position: absolute;
+  z-index: 2;
+  left: 1.5rem;
+  right: 1.5rem;
+  bottom: 0.85rem;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.58rem;
+  color: var(--f-muted);
+}
+
+/* Continuation is in the markup from the start and only revealed, so the link
+   is never destroyed and survives repeated draws. */
+
+.quote-card__rest {
+  display: none;
+}
+
+.quote-card--expanded .quote-card__rest {
+  display: inline;
+}
+
+.quote-card--expanded .quote-card__more {
+  display: none;
+}
+
+/* Cue only — the whole drawn card handles the click (see encrypted.js). No box
+   or padding: giving it geometry of its own moved its hover area off the word. */
+
+.quote-card__more {
+  color: var(--f-accent);
+  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: var(--f-accent);
+  text-underline-offset: 2px;
+}
+
+/* 1 · Kreuz-Bube — Militär */
+
+.quote-card--mil {
+  --f-bg: linear-gradient(158deg, #333d29, #1b2117 70%);
+  --f-ink: #f3f1e7;
+  --f-accent: var(--amber);
+  --f-frame: rgba(245, 166, 35, 0.36);
+  --f-muted: rgba(243, 241, 231, 0.5);
+}
+
+.quote-card--mil .quote-card__art {
+  background:
+    radial-gradient(
+      ellipse 40% 19% at 20% 14%,
+      rgba(128, 146, 96, 0.62) 0 55%,
+      transparent 57%
+    ),
+    radial-gradient(
+      ellipse 44% 22% at 80% 36%,
+      rgba(48, 60, 38, 0.95) 0 58%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 34% 17% at 30% 70%,
+      rgba(128, 146, 96, 0.42) 0 56%,
+      transparent 58%
+    ),
+    radial-gradient(
+      ellipse 30% 15% at 84% 82%,
+      rgba(40, 50, 32, 0.95) 0 56%,
+      transparent 58%
+    ),
+    radial-gradient(
+      ellipse 26% 13% at 52% 52%,
+      rgba(96, 112, 74, 0.4) 0 55%,
+      transparent 57%
+    ),
+    radial-gradient(
+      ellipse 22% 12% at 12% 46%,
+      rgba(44, 54, 34, 0.9) 0 55%,
+      transparent 57%
+    ),
+    repeating-linear-gradient(
+      118deg,
+      rgba(0, 0, 0, 0.2) 0 6%,
+      transparent 6% 17%
+    );
+}
+
+.quote-card--mil .quote-card__emblem {
+  width: 2.2em;
+  height: 2.2em;
+  border-radius: 50%;
+  border: 2px solid var(--f-accent);
+  color: var(--f-accent);
+  font-size: 0.9rem;
+  background: radial-gradient(
+    circle at 40% 32%,
+    rgba(245, 166, 35, 0.24),
+    rgba(0, 0, 0, 0.42)
+  );
+  box-shadow: 0 0 0 3px rgba(245, 166, 35, 0.12);
+}
+
+/* 2 · Joker — Harlekin. The two colours interleave rather than overlap;
+   translucent amber stacked on translucent red goes brown. */
+
+.quote-card--jok {
+  --f-bg: linear-gradient(165deg, #17171b, #0d0d10);
+  --f-ink: #ffffff;
+  --f-accent: var(--turquoise);
+  --f-frame: rgba(34, 214, 205, 0.4);
+  --f-muted: rgba(255, 255, 255, 0.48);
+}
+
+.quote-card--jok .quote-card__art {
+  background:
+    repeating-conic-gradient(
+        from 45deg,
+        rgba(34, 214, 205, 0.15) 0 25%,
+        transparent 0 50%
+      )
+      0 0 / 22% 13%,
+    repeating-conic-gradient(
+        from 45deg,
+        transparent 0 25%,
+        rgba(255, 43, 43, 0.13) 0 50%
+      )
+      11% 6.5% / 22% 13%;
+}
+
+.quote-card--jok .quote-card__emblem {
+  width: 3.4em;
+  height: 2em;
+  font-size: 0.85rem;
+}
+
+.encrypted-jester {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.encrypted-jester i {
+  position: absolute;
+  bottom: 0;
+  width: 40%;
+  height: 92%;
+  /* Cones, not blobs: three points fanning from one band. */
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  transform-origin: bottom center;
+}
+
+.encrypted-jester i:nth-child(1) {
+  left: -4%;
+  rotate: -30deg;
+  background: var(--red);
+}
+
+.encrypted-jester i:nth-child(2) {
+  left: 30%;
+  background: var(--turquoise);
+}
+
+.encrypted-jester i:nth-child(3) {
+  right: -4%;
+  rotate: 30deg;
+  background: var(--amber);
+}
+
+.encrypted-jester b {
+  position: absolute;
+  width: 15%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.encrypted-jester b:nth-of-type(1) {
+  left: 2%;
+  top: 14%;
+}
+
+.encrypted-jester b:nth-of-type(2) {
+  left: 42.5%;
+  top: -6%;
+}
+
+.encrypted-jester b:nth-of-type(3) {
+  right: 2%;
+  top: 14%;
+}
+
+/* 3 · Herz-Dame — Beige mit rotem Muster */
+
+.quote-card--qh {
+  /* Blood red, lightening gently towards the middle. The lift lives in this
+     gradient rather than in a separate veil — a veil over the top gave a pale
+     blob with an edge to it. All the type is light, so nothing depends on
+     landing inside the lighter area. */
+  --f-bg: radial-gradient(
+    ellipse 80% 64% at 50% 46%,
+    #a3111e 0%,
+    #911019 26%,
+    #7c0a14 50%,
+    #64070f 72%,
+    #4a040b 88%,
+    #3a030a 100%
+  );
+  --f-ink: #ffeae6;
+  --f-accent: #ffd2c9;
+  --f-frame: rgba(255, 205, 195, 0.3);
+  --f-muted: rgba(255, 222, 216, 0.7);
+}
+
+/* "mehr" cannot inherit --f-accent here: it has to stand out from the quote,
+   not match the label above it. */
+
+.quote-card--qh .quote-card__more {
+  color: #ffffff;
+  font-weight: 800;
+  text-decoration-color: rgba(255, 255, 255, 0.85);
+  text-decoration-thickness: 2px;
+}
+
+
+/* Red lattice, same guilloche as the card backs. */
+
+.quote-card__pattern {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+
+/* Beige veil over the middle keeps the quote clear; the pattern stays visible
+   at the edges. */
+
+
+
+/* Light type on a dark ground: a soft shadow keeps the edges from picking up
+   the red beneath them. */
+
+.quote-card--qh .quote-card__text {
+  font-weight: 600;
+  text-shadow: 0 1px 3px rgba(30, 2, 6, 0.55);
+}
+
+/* 4 · Pik-Bube — Perfektion */
+
+.quote-card--sp {
+  --f-bg: linear-gradient(170deg, #fdfdfd, #ececed);
+  --f-ink: #111111;
+  --f-accent: var(--amber);
+  --f-frame: rgba(17, 17, 17, 0.22);
+  --f-muted: rgba(17, 17, 17, 0.5);
+}
+
+.quote-card--sp .quote-card__art {
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(0, 0, 0, 0.03) 0 1px,
+    transparent 1px 7px
+  );
+}
+
+/* Engine-turned rosette: fine rays over concentric rings, masked out towards
+   the edges. */
+
+.quote-card--sp .quote-card__art::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  width: 148%;
+  aspect-ratio: 1;
+  background:
+    repeating-conic-gradient(
+      from 0deg,
+      rgba(17, 17, 17, 0.055) 0 0.55deg,
+      transparent 0.55deg 3deg
+    ),
+    repeating-radial-gradient(
+      circle,
+      rgba(17, 17, 17, 0.05) 0 1px,
+      transparent 1px 9px
+    );
+  mask-image: radial-gradient(circle, #000 26%, transparent 62%);
+  -webkit-mask-image: radial-gradient(circle, #000 26%, transparent 62%);
+}
+
+.quote-card--sp .quote-card__emblem {
+  font-size: 1.2rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: var(--f-accent);
+  line-height: 1;
+  align-items: baseline;
+  gap: 0.02em;
+}
+
+/* Written as a score, so the achieved value carries the weight. */
+
+.quote-card--sp .quote-card__emblem span {
+  font-size: 0.6em;
+  font-weight: 800;
+  color: var(--f-muted);
+}
+
+/* 5 · Karo-König — Code */
+
+.quote-card--kd {
+  --f-bg: radial-gradient(ellipse at 50% 38%, #08170c, #030803 74%);
+  --f-ink: #d9f5d9;
+  --f-accent: #3ec93e;
+  --f-frame: rgba(62, 201, 62, 0.38);
+  --f-muted: rgba(120, 200, 120, 0.6);
+}
+
+.quote-card--kd .quote-card__art::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    rgba(0, 0, 0, 0.3) 0 1px,
+    transparent 1px 3px
+  );
+}
+
+.encrypted-rain {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 0.34rem;
+  line-height: 1.5;
+  color: #3ec93e;
+  word-break: break-all;
+}
+
+.encrypted-rain b {
+  position: absolute;
+  top: -4%;
+  width: 7%;
+  font-weight: 400;
+  opacity: 0.22;
+}
+
+.encrypted-rain b:nth-child(even) {
+  opacity: 0.13;
+}
+
+.quote-card--kd .quote-card__emblem {
+  width: 1.5em;
+  height: 1.5em;
+  font-size: 0.9rem;
+  rotate: 45deg;
+  border: 2px solid var(--f-accent);
+  border-radius: 2px;
+  box-shadow:
+    0 0 12px rgba(62, 201, 62, 0.45),
+    inset 0 0 8px rgba(62, 201, 62, 0.3);
+}
+
+/* Card carries the hover state; the word brightens with it. */
+
+.quote-card.is-drawn:hover .quote-card__more {
+  opacity: 0.75;
+}
+
+.quote-card.is-drawn .quote-card__connector {
+  font-size: 1.05rem;
+}
+
+.quote-card.is-drawn .quote-card__text {
+  font-size: 1.05rem;
+  line-height: 1.4;
+}
+
+.quote-card.is-drawn .quote-card__attribution {
+  font-size: 0.88rem;
+  left: 1.5rem;
+  right: 1.5rem;
+  bottom: 1.5rem;
+}
+
+.quote-card.is-drawn .quote-card__face--front {
+  padding: 2.6rem 1.5rem 3.4rem;
+  gap: 0.9rem;
+}
+
+.quote-card.is-drawn .quote-card__logo {
+  width: 30%;
+}
+
+/* Drawn cards are roughly twice the size — scale the theme artwork with them. */
+
+.quote-card.is-drawn .quote-card__ix {
+  font-size: 0.95rem;
+  top: 0.9rem;
+  left: 1rem;
+}
+
+.quote-card.is-drawn .quote-card__ix--br {
+  top: auto;
+  left: auto;
+  bottom: 0.9rem;
+  right: 1rem;
+}
+
+.quote-card.is-drawn .quote-card__emblem {
+  font-size: 1.5rem;
+}
+
+.quote-card--sp.is-drawn .quote-card__emblem {
+  font-size: 2.2rem;
+}
+
+.quote-card.is-drawn .quote-card__face--front::after {
+  inset: 10px;
+  border-radius: 9px;
+}
+
+.quote-card.is-drawn .encrypted-rain {
+  font-size: 0.62rem;
+}
+
+.encrypted-cs__warning {
+  margin-top: 4.5rem;
+  min-height: 1.2em;
+  color: var(--amber);
+  font-size: 0.9rem;
+  font-weight: 600;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.encrypted-cs__warning.is-visible {
+  opacity: 1;
+}
+
+/* Math teacher — Rubik's cube */
+
+.encrypted-math {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Formulae as wallpaper, two brightnesses, serif italic. */
+
+.encrypted-formulas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  border-radius: 16px;
+  pointer-events: none;
+  font-family: Georgia, "Times New Roman", serif;
+  font-style: italic;
+}
+
+.encrypted-formulas span {
+  position: absolute;
+  white-space: nowrap;
+  color: color-mix(in srgb, var(--page-accent) 16%, transparent);
+}
+
+/* The quieter half stays neutral grey, so only the topic accent carries
+   colour back there. */
+
+.encrypted-formulas span.is-dim {
+  color: rgba(255, 255, 255, 0.075);
+}
+
+/* Filled from the vault, never from the markup — it is gratitude text like the
+   rest, so it must not sit in the page source. */
+
+.encrypted-math__intro {
+  position: relative;
+  z-index: 1;
+  /* No width cap: 46ch resolved to 537px against a 545px line, so the heading
+     wrapped for the sake of 8px. The unlocked panel gives it 808px. */
+  margin-bottom: 1.6rem;
+  /* The serif the rest of this section already uses — the formula wallpaper
+     and the cube's tile glyphs are set in it. */
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1rem, 2.5vw, 1.24rem);
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.4;
+  color: var(--white);
+}
+
+
+
+.encrypted-math__intro:empty {
+  display: none;
+}
+
+.encrypted-math__hint {
+  position: relative;
+  z-index: 1;
+  color: rgba(255, 255, 255, 0.55);
+  margin-bottom: 3rem;
+}
+
+.encrypted-cube-stage {
+  position: relative;
+  z-index: 1;
+  width: 320px;
+  height: 320px;
+  perspective: 1200px;
+  cursor: grab;
+  touch-action: none;
+}
+
+/* Glow sits on the stage, not on the cube: a filter on a preserve-3d element
+   flattens it. */
+
+.encrypted-cube-stage::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 56%;
+  translate: -50% -50%;
+  width: 118%;
+  height: 82%;
+  z-index: 0;
+  background: radial-gradient(
+    ellipse at center,
+    color-mix(in srgb, var(--page-accent) 22%, transparent),
+    transparent 70%
+  );
+  filter: blur(10px);
+  pointer-events: none;
+}
+
+.encrypted-cube-stage:active {
+  cursor: grabbing;
+}
+
+.encrypted-cube {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transform: rotateX(-20deg) rotateY(-30deg);
+  transition: transform 0.15s ease-out;
+}
+
+.encrypted-cube.is-dragging {
+  transition: none;
+}
+
+/* Each face is a 3x3 grid. --fc is the face colour, --dim its shading. */
+
+.encrypted-cube__face {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 6px;
+  padding: 8px;
+  background: var(--card-bg);
+  border: 2px solid var(--fc, var(--turquoise));
+  border-radius: 6px;
+  box-shadow: inset 0 0 30px color-mix(in srgb, var(--fc) 10%, transparent);
+}
+
+/* Shading as an overlay rather than a filter, for the same reason. */
+
+/* Shades the face for volume, but sits under the tiles so it darkens the face
+   itself and never the glyphs. */
+
+.encrypted-cube__face::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, var(--dim, 0));
+  pointer-events: none;
+}
+
+.encrypted-cube__tile {
+  display: grid;
+  place-items: center;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  font-family: Georgia, "Times New Roman", serif;
+  font-style: italic;
+  font-size: 0.9rem;
+  line-height: 1;
+  /* Same white on every face, lit tile or not — above the shading overlay, so
+     no face renders its symbols grey. */
+  position: relative;
+  z-index: 1;
+  color: var(--white);
+}
+
+.encrypted-cube__tile--on {
+  background: color-mix(in srgb, var(--fc) 34%, transparent);
+  border-color: color-mix(in srgb, var(--fc) 70%, transparent);
+  box-shadow: inset 0 0 12px color-mix(in srgb, var(--fc) 26%, transparent);
+  color: var(--white);
+}
+
+/* Message takes the middle row, so the face still reads as a face. */
+
+.encrypted-cube__text {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: 4px 7px;
+  border-radius: 4px;
+  background: rgba(10, 10, 10, 0.9);
+  border: 1px solid color-mix(in srgb, var(--fc) 50%, transparent);
+  /* Same serif as the heading; upright, where the tile glyphs are italic. */
+  font-family: Georgia, "Times New Roman", serif;
+  font-style: normal;
+  font-size: 0.78rem;
+  line-height: 1.4;
+  font-weight: 500;
+  color: var(--white);
+}
+
+/* Six cube colours in opposite pairs: white/yellow (top/bottom), green/blue
+   (left/right), red/orange (back/front). Blue and green sit slightly off the
+   true Rubik shades; the darker originals go muddy at 34% over near-black. */
+
+.encrypted-cube {
+  --cube-white: #ffffff;
+  --cube-yellow: #ffd500;
+  --cube-green: #23b45a;
+  --cube-blue: #2f6fed;
+  --cube-red: var(--red);
+  --cube-orange: #ff7a1a;
+}
+
+.encrypted-cube__face--top {
+  --fc: var(--cube-white);
+  --dim: 0;
+}
+
+.encrypted-cube__face--bottom {
+  --fc: var(--cube-yellow);
+  --dim: 0.45;
+}
+
+.encrypted-cube__face--left {
+  --fc: var(--cube-green);
+  --dim: 0.4;
+}
+
+.encrypted-cube__face--right {
+  --fc: var(--cube-blue);
+  --dim: 0.28;
+}
+
+.encrypted-cube__face--back {
+  --fc: var(--cube-red);
+  --dim: 0.4;
+}
+
+.encrypted-cube__face--front {
+  --fc: var(--cube-orange);
+  --dim: 0;
+}
+
+.encrypted-cube__face--front {
+  transform: translateZ(160px);
+}
+
+.encrypted-cube__face--back {
+  transform: rotateY(180deg) translateZ(160px);
+}
+
+.encrypted-cube__face--right {
+  transform: rotateY(90deg) translateZ(160px);
+}
+
+.encrypted-cube__face--left {
+  transform: rotateY(-90deg) translateZ(160px);
+}
+
+.encrypted-cube__face--top {
+  transform: rotateX(90deg) translateZ(160px);
+}
+
+.encrypted-cube__face--bottom {
+  transform: rotateX(-90deg) translateZ(160px);
+}
+
+@media (max-width: 480px) {
+  .encrypted-cube-stage {
+    width: 240px;
+    height: 240px;
+  }
+
+  .encrypted-cube__face {
+    gap: 4px;
+    padding: 6px;
+  }
+
+  .encrypted-cube__tile {
+    font-size: 0.72rem;
+  }
+
+  .encrypted-cube__text {
+    font-size: 0.62rem;
+    padding: 3px 5px;
+  }
+
+  .encrypted-cube__face--front,
+  .encrypted-cube__face--back,
+  .encrypted-cube__face--right,
+  .encrypted-cube__face--left,
+  .encrypted-cube__face--top,
+  .encrypted-cube__face--bottom {
+    --tz: 100px;
+  }
+
+  .encrypted-cube__face--front {
+    transform: translateZ(120px);
+  }
+  .encrypted-cube__face--back {
+    transform: rotateY(180deg) translateZ(120px);
+  }
+  .encrypted-cube__face--right {
+    transform: rotateY(90deg) translateZ(120px);
+  }
+  .encrypted-cube__face--left {
+    transform: rotateY(-90deg) translateZ(120px);
+  }
+  .encrypted-cube__face--top {
+    transform: rotateX(90deg) translateZ(120px);
+  }
+  .encrypted-cube__face--bottom {
+    transform: rotateX(-90deg) translateZ(120px);
+  }
+}

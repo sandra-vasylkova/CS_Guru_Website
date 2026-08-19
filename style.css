@@ -7086,9 +7086,11 @@ body:has(.lesson-page--logic) {
 }
 
 .lesson-sidebar__back span {
+  display: inline-block;
   color: var(--lesson-accent);
   font-size: 1.7rem;
-  line-height: 0;
+  line-height: 1;
+  transform: translateY(-3px);
 }
 
 .lesson-sidebar__back:hover {
@@ -7258,14 +7260,11 @@ body:has(.lesson-page--logic) {
   font-weight: 800;
   letter-spacing: 0.02em;
   cursor: pointer;
-  transition:
-    background 0.15s ease,
-    box-shadow 0.15s ease;
+  transition: filter 0.15s ease;
 }
 
 .lesson-exercise__check:hover {
-  background: #3fe3da;
-  box-shadow: 0 0 16px color-mix(in srgb, var(--lesson-accent) 35%, transparent);
+  filter: brightness(0.85);
 }
 
 .lesson-exercise__feedback {
@@ -7533,11 +7532,12 @@ body:has(.lesson-page--logic) {
   opacity: 1;
 }
 
-.lesson-exercise__row .lesson-exercise__logic-input {
+.lesson-exercise__row .lesson-exercise__input.lesson-exercise__logic-input {
   flex: 1;
   max-width: 320px;
   margin-top: 0;
   margin-left: 14px;
+  text-align: left;
 }
 
 .lesson-exercise__row .lesson-exercise__input {
@@ -7546,6 +7546,29 @@ body:has(.lesson-page--logic) {
   margin-top: 0;
   margin-left: 14px;
   text-align: center;
+}
+
+.lesson-exercise__row--predict {
+  flex-wrap: wrap;
+}
+
+.lesson-exercise__row--predict .lesson-exercise__literal {
+  font-size: 1rem;
+}
+
+.lesson-exercise__row--predict .lesson-exercise__input {
+  max-width: 220px;
+  text-align: left;
+}
+
+.lesson-exercise__note {
+  flex-basis: 100%;
+  margin: 10px 0 0;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.88rem;
+  line-height: 1.6;
 }
 
 .step-col.is-hidden {
@@ -8888,6 +8911,12 @@ body:has(.lesson-page--logic) {
 @media (max-width: 820px) {
   .lesson-sidebar {
     position: static;
+  }
+}
+
+@media (max-width: 480px) {
+  .lesson-sidebar {
+    display: none;
   }
 }
 

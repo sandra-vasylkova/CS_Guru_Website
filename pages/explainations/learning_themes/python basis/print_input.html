@@ -150,6 +150,9 @@
               <a class="lesson-sidebar__link" href="#f-strings">f-Strings</a>
               <a class="lesson-sidebar__link" href="#input">Input</a>
               <a class="lesson-sidebar__link" href="#zahlen">Zahlen einlesen</a>
+              <a class="lesson-sidebar__link" href="#quick-check"
+                >Quick-Check</a
+              >
             </nav>
           </aside>
 
@@ -336,6 +339,115 @@
                 </p>
               </div>
             </section>
+            <section class="lesson-section" id="quick-check">
+              <div class="lesson-section__number">07</div>
+              <div class="lesson-section__body">
+                <h2>Quick-Check: Ausgabe vorhersagen</h2>
+                <p>
+                  Lies den Code, ohne ihn auszuführen, und tippe genau das, was
+                  in der Konsole erscheinen würde.
+                </p>
+                <div class="lesson-exercise" data-exercise="predict-output">
+                  <span class="lesson-exercise__label">Quick-Check</span>
+                  <p>Was gibt jede dieser Zeilen aus?</p>
+                  <div class="lesson-exercise__rows">
+                    <div
+                      class="lesson-exercise__row lesson-exercise__row--predict"
+                      data-answer="Hello World"
+                      data-explain="print() setzt zwischen mehreren Werten automatisch ein Leerzeichen ein."
+                    >
+                      <span class="lesson-exercise__literal"
+                        ><span class="code-name">print</span>(<span
+                          class="code-value"
+                          >"Hello"</span
+                        >, <span class="code-value">"World"</span>)</span
+                      >
+                      <input
+                        class="lesson-exercise__input"
+                        type="text"
+                        autocomplete="off"
+                        spellcheck="false"
+                        placeholder="Ausgabe …"
+                      />
+                    </div>
+                    <div
+                      class="lesson-exercise__row lesson-exercise__row--predict"
+                      data-answer="a-b-c"
+                      data-explain='sep="-" ersetzt das Standard-Leerzeichen.'
+                    >
+                      <span class="lesson-exercise__literal"
+                        ><span class="code-name">print</span>(<span
+                          class="code-value"
+                          >"a"</span
+                        >, <span class="code-value">"b"</span>,
+                        <span class="code-value">"c"</span>,
+                        <span class="code-name">sep</span
+                        ><span class="code-operator">=</span
+                        ><span class="code-value">"-"</span>)</span
+                      >
+                      <input
+                        class="lesson-exercise__input"
+                        type="text"
+                        autocomplete="off"
+                        spellcheck="false"
+                        placeholder="Ausgabe …"
+                      />
+                    </div>
+                    <div
+                      class="lesson-exercise__row lesson-exercise__row--predict"
+                      data-answer="7"
+                      data-explain="3 und 4 sind Zahlen (int). Der Operator + addiert sie deshalb rechnerisch."
+                    >
+                      <span class="lesson-exercise__literal"
+                        ><span class="code-name">print</span>(<span
+                          class="code-value"
+                          >3</span
+                        >
+                        <span class="code-operator">+</span>
+                        <span class="code-value">4</span>)</span
+                      >
+                      <input
+                        class="lesson-exercise__input"
+                        type="text"
+                        autocomplete="off"
+                        spellcheck="false"
+                        placeholder="Ausgabe …"
+                      />
+                    </div>
+                    <div
+                      class="lesson-exercise__row lesson-exercise__row--predict"
+                      data-answer="34"
+                      data-explain='"3" und "4" sind Strings. Bei Strings hängt + sie nur aneinander.'
+                    >
+                      <span class="lesson-exercise__literal"
+                        ><span class="code-name">print</span>(<span
+                          class="code-value"
+                          >"3"</span
+                        >
+                        <span class="code-operator">+</span>
+                        <span class="code-value">"4"</span>)</span
+                      >
+                      <input
+                        class="lesson-exercise__input"
+                        type="text"
+                        autocomplete="off"
+                        spellcheck="false"
+                        placeholder="Ausgabe …"
+                      />
+                    </div>
+                  </div>
+                  <button class="lesson-exercise__check" type="button">
+                    Prüfen
+                  </button>
+                  <div
+                    class="lesson-exercise__feedback"
+                    aria-live="polite"
+                    hidden
+                  ></div>
+                </div>
+              </div>
+            </section>
+
             <div class="lesson-next">
               <div>
                 <span>Nächstes Thema</span>
@@ -383,7 +495,11 @@
           class="contact-modal__row"
           href="https://www.microsoft.com/en-us/microsoft-teams/log-in"
         >
-          <span class="teams__icon" role="img" aria-label="Microsoft Teams"></span>
+          <span
+            class="teams__icon"
+            role="img"
+            aria-label="Microsoft Teams"
+          ></span>
           <span>
             <strong>Teams</strong>
             <small>Oleksandra Vasylkova</small>

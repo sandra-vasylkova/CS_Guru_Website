@@ -31,9 +31,9 @@
     <meta property="og:locale" content="de_DE" />
     <meta name="twitter:card" content="summary" />
     <link rel="stylesheet" href="/style.css" />
-    <link rel="stylesheet" href="/assets/danke.css" />
+    <link rel="stylesheet" href="/assets/encrypted.css" />
     <script src="../app.js" defer></script>
-    <script src="/assets/danke.js" defer></script>
+    <script src="/assets/encrypted.js" defer></script>
     <link
       rel="icon"
       type="image/png"
@@ -169,13 +169,8 @@
 
           <button
             type="button"
-            id="danke-trigger"
-            style="
-              background: none;
-              border: none;
-              padding: 0;
-              cursor: pointer;
-            "
+            id="encrypted-trigger"
+            class="encrypted-trigger"
           >
             <div class="discover__icon">&lt;/&gt;</div>
           </button>
@@ -307,31 +302,31 @@
       </div>
     </div>
 
-    <div class="danke-modal" id="danke-modal" aria-hidden="true">
+    <div class="encrypted-modal" id="encrypted-modal" aria-hidden="true">
       <div
-        class="danke-modal__box"
+        class="encrypted-modal__box"
         id="modal-box"
         role="dialog"
         aria-modal="true"
       >
         <button
-          class="danke-modal__close"
+          class="encrypted-modal__close"
           type="button"
-          id="danke-modal-close"
+          id="encrypted-modal-close"
           aria-label="Schließen"
         >
           ×
         </button>
 
-        <section class="danke-gate" id="gate">
-          <label for="gate-input" class="danke-gate__label"
+        <section class="encrypted-gate" id="gate">
+          <label for="gate-input" class="encrypted-gate__label"
             >Passwort eingeben</label
           >
-          <form class="danke-gate__form" id="gate-form" autocomplete="off">
+          <form class="encrypted-gate__form" id="gate-form" autocomplete="off">
             <input
               type="password"
               id="gate-input"
-              class="danke-gate__input"
+              class="encrypted-gate__input"
               autocomplete="off"
               autocapitalize="off"
               autocorrect="off"
@@ -339,87 +334,97 @@
             />
             <button
               type="submit"
-              class="danke-gate__submit"
+              class="encrypted-gate__submit"
               id="gate-submit"
               aria-label="Bestätigen"
             >
-              →
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 12h16M13.5 5.5 20 12l-6.5 6.5" />
+              </svg>
             </button>
           </form>
 
-          <p class="danke-gate__error" id="gate-error" aria-live="polite"></p>
+          <p class="encrypted-gate__error" id="gate-error" aria-live="polite"></p>
         </section>
 
-        <section class="danke-cs" id="cs-content" hidden>
-          <div class="danke-cs__prompt" id="cs-prompt">
+        <section class="encrypted-cs" id="cs-content" hidden>
+          <div class="encrypted-cs__prompt" id="cs-prompt">
             <div
-              class="danke-marquee"
-              id="danke-marquee"
+              class="encrypted-marquee"
+              id="encrypted-marquee"
               aria-hidden="true"
             ></div>
 
-            <p class="danke-cs__prompt-text">
+            <p class="encrypted-cs__prompt-text">
               Möchten Sie einen Kartentrick sehen?
             </p>
             <button
               type="button"
-              class="danke-cs__prompt-btn"
+              class="encrypted-cs__prompt-btn"
               id="cs-trick-btn"
             >
               Selbstverständlich!
             </button>
           </div>
 
-          <div class="danke-cs__table" id="cs-table" hidden>
-            <p class="danke-cs__instruction">Ziehen Sie eine Karte.</p>
+          <div class="encrypted-cs__table" id="cs-table" hidden>
+            <p class="encrypted-cs__instruction">Ziehen Sie eine Karte.</p>
 
-            <div class="danke-cs__stage">
-              <div class="danke-reveal" id="cs-reveal"></div>
-              <div class="danke-cards" id="cs-cards"></div>
+            <div class="encrypted-cs__stage">
+              <div class="quote-cards" id="cs-cards"></div>
             </div>
 
-            <p class="danke-cs__warning" id="cs-warning" aria-live="polite"></p>
+            <!-- Outside the stage on purpose: it is positioned against the
+                 modal box, so a drawn card centres on the panel rather than
+                 on the 300px-tall fan area. -->
+            <div class="encrypted-reveal" id="cs-reveal"></div>
+
+            <p class="encrypted-cs__warning" id="cs-warning" aria-live="polite"></p>
           </div>
         </section>
 
-        <section class="danke-math" id="math-content" hidden>
+        <section class="encrypted-math" id="math-content" hidden>
           <div
-            class="danke-formulas"
-            id="danke-formulas"
+            class="encrypted-formulas"
+            id="encrypted-formulas"
             aria-hidden="true"
           ></div>
 
-          <p class="danke-math__hint">Klicken und ziehen, um zu drehen.</p>
+          <p class="encrypted-math__intro" id="math-intro">
+            Eine Darstellung Ihres Einflusses auf meine Arbeit in 6 Akten
+          </p>
 
-          <div class="danke-cube-stage" id="cube-stage">
-            <div class="danke-cube" id="cube">
+          <p class="encrypted-math__hint">Klicken und ziehen, um zu drehen.</p>
+
+          <div class="encrypted-cube-stage" id="cube-stage">
+            <div class="encrypted-cube" id="cube">
               <div
-                class="danke-cube__face danke-cube__face--front"
+                class="encrypted-cube__face encrypted-cube__face--front"
                 data-face="front"
               >
               </div>
               <div
-                class="danke-cube__face danke-cube__face--back"
+                class="encrypted-cube__face encrypted-cube__face--back"
                 data-face="back"
               >
               </div>
               <div
-                class="danke-cube__face danke-cube__face--right"
+                class="encrypted-cube__face encrypted-cube__face--right"
                 data-face="right"
               >
               </div>
               <div
-                class="danke-cube__face danke-cube__face--left"
+                class="encrypted-cube__face encrypted-cube__face--left"
                 data-face="left"
               >
               </div>
               <div
-                class="danke-cube__face danke-cube__face--top"
+                class="encrypted-cube__face encrypted-cube__face--top"
                 data-face="top"
               >
               </div>
               <div
-                class="danke-cube__face danke-cube__face--bottom"
+                class="encrypted-cube__face encrypted-cube__face--bottom"
                 data-face="bottom"
               >
               </div>

@@ -2,3 +2,6 @@
 .DS_Store
 Thumbs.db
 *.swp
+
+# local-only helper, never ship
+vault-tool.html

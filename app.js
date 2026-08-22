@@ -137,8 +137,14 @@ contactModal?.addEventListener("click", (e) => {
   }
 });
 
-// Lesson sidebar scroll tracking
-const lessonSections = [...document.querySelectorAll(".lesson-section[id]")];
+// Lesson sidebar scroll tracking. The Niveau-Test builds its outline from
+// quiz groups instead of .lesson-section blocks, so those count as sections
+// here too - otherwise its sidebar would never advance past the intro.
+const lessonSections = [
+  ...document.querySelectorAll(
+    ".lesson-section[id], .level-test__group[id], .level-test__actions[id]",
+  ),
+];
 const lessonSidebarLinks = [
   ...document.querySelectorAll(".lesson-sidebar__link[href^='#']"),
 ];
@@ -1988,9 +1994,6 @@ if (lessonSections.length && lessonSidebarLinks.length) {
     });
 })();
 
-// Interactive exercises: "combo-count" — type the number of combinations
-// (N = 2^n) an expression needs. On a correct answer, the exercise named by
-// data-reveal (usually a hidden data-exercise="truth" board) is unhidden.
 (() => {
   document
     .querySelectorAll('.lesson-exercise[data-exercise="combo-count"]')
@@ -2675,5 +2678,227 @@ if (lessonSections.length && lessonSidebarLinks.length) {
       });
 
       newExercise();
+    });
+})();
+
+// Interactive exercises: "level-test" — the Python-Grundlagen placement test.
+// Every question sits in a [data-lt-question] block inside a [data-lt-group]
+// section that names its topic and lesson file, so the grading below stays
+// generic: it only counts checked radios that carry data-correct.
+(() => {
+  document
+    .querySelectorAll('.lesson-exercise[data-exercise="level-test"]')
+    .forEach((exercise) => {
+      const checkBtn = exercise.querySelector("[data-lt-check]");
+      const resetBtn = exercise.querySelector("[data-lt-reset]");
+      const result = exercise.querySelector("[data-lt-result]");
+      const hint = exercise.querySelector("[data-lt-hint]");
+      const meter = exercise.querySelector("[data-lt-meter]");
+      const meterFill = exercise.querySelector("[data-lt-meter-fill]");
+      const answeredOut = exercise.querySelector("[data-lt-answered]");
+      if (!checkBtn || !result) return;
+
+      const groups = [...exercise.querySelectorAll("[data-lt-group]")].map(
+        (group) => ({
+          el: group,
+          topic: group.dataset.topic || "",
+          lesson: group.dataset.lesson || "",
+          questions: [...group.querySelectorAll("[data-lt-question]")],
+        }),
+      );
+
+      const questions = groups.flatMap((group) => group.questions);
+      const total = questions.length;
+      let graded = false;
+
+      const inputsOf = (question) => [
+        ...question.querySelectorAll('input[type="radio"]'),
+      ];
+
+      const pickedOf = (question) =>
+        inputsOf(question).find((input) => input.checked) || null;
+
+      const answeredCount = () =>
+        questions.filter((question) => pickedOf(question)).length;
+
+      const updateMeter = () => {
+        const done = answeredCount();
+        const share = total ? (done / total) * 100 : 0;
+        if (meterFill) meterFill.style.width = `${share}%`;
+        meter?.setAttribute("aria-valuenow", String(done));
+        if (answeredOut) answeredOut.textContent = String(done);
+      };
+
+      // Percentage bands double as the wording of the verdict, so the same
+      // table drives both the overall level and each topic's label.
+      const bandFor = (percent) => {
+        if (percent >= 85) return { label: "Sicher", tone: "high" };
+        if (percent >= 60) return { label: "Solide", tone: "mid" };
+        if (percent >= 35) return { label: "Grundlagen da", tone: "low" };
+        return { label: "Noch offen", tone: "none" };
+      };
+
+      const markQuestion = (question) => {
+        const picked = pickedOf(question);
+        let right = false;
+
+        inputsOf(question).forEach((input) => {
+          const option = input.closest(".level-test__option");
+          input.disabled = true;
+          if (!option) return;
+          if (input.dataset.correct === "true") {
+            option.classList.add("is-correct");
+            if (input.checked) right = true;
+          } else if (input.checked) {
+            option.classList.add("is-wrong");
+          }
+        });
+
+        question.classList.add(
+          right ? "is-right" : picked ? "is-wrong" : "is-blank",
+        );
+
+        const explain = question.querySelector("[data-lt-explain]");
+        if (explain) explain.hidden = false;
+
+        return right;
+      };
+
+      const renderResult = (scores, correct) => {
+        const percent = total ? Math.round((correct / total) * 100) : 0;
+        const band = bandFor(percent);
+        const weak = scores.filter((score) => score.percent < 70);
+
+        const rows = scores
+          .map((score) => {
+            const scoreBand = bandFor(score.percent);
+            const link = score.lesson
+              ? `<a class="level-test__score-link" href="${score.lesson}">Lektion öffnen ›</a>`
+              : "";
+            return `
+              <li class="level-test__score" data-tone="${scoreBand.tone}">
+                <div class="level-test__score-head">
+                  <strong>${score.topic}</strong>
+                  <span class="level-test__score-value">${score.percent}&nbsp;%</span>
+                </div>
+                <div class="level-test__score-track">
+                  <span class="level-test__score-fill" style="width: ${score.percent}%"></span>
+                </div>
+                <div class="level-test__score-foot">
+                  <span>${score.correct} von ${score.total} richtig · ${scoreBand.label}</span>
+                  ${link}
+                </div>
+              </li>`;
+          })
+          .join("");
+
+        const advice = weak.length
+          ? `<p class="level-test__advice">Am meisten bringt dir gerade: ${weak
+              .map((score) => `<strong>${score.topic}</strong>`)
+              .join(", ")}.</p>`
+          : `<p class="level-test__advice">Kein Thema unter 70&nbsp;%. Du bist also in Python kein Newbie.</p>`;
+
+        result.innerHTML = `
+          <p class="lesson-exercise__result lesson-exercise__result--ok">
+            Auswertung <span class="beta-badge">Beta</span>
+          </p>
+          <div class="level-test__overall" data-tone="${band.tone}">
+            <span class="level-test__overall-value">${percent}&nbsp;%</span>
+            <span class="level-test__overall-meta">
+              <strong>${band.label}</strong>
+              ${correct} von ${total} Fragen richtig
+            </span>
+          </div>
+          <ul class="level-test__scores">${rows}</ul>
+          ${advice}
+          <p class="level-test__note">
+            Bei jeder Frage siehst du jetzt die richtige Antwort mit einer
+            kurzen Erklärung.
+          </p>`;
+        result.hidden = false;
+      };
+
+      const grade = () => {
+        graded = true;
+        let correct = 0;
+
+        const scores = groups.map((group) => {
+          const right = group.questions.filter(markQuestion).length;
+          correct += right;
+          return {
+            topic: group.topic,
+            lesson: group.lesson,
+            correct: right,
+            total: group.questions.length,
+            percent: group.questions.length
+              ? Math.round((right / group.questions.length) * 100)
+              : 0,
+          };
+        });
+
+        renderResult(scores, correct);
+        checkBtn.hidden = true;
+        if (resetBtn) resetBtn.hidden = false;
+        if (hint) hint.textContent = "";
+        result.focus();
+        result.scrollIntoView({ behavior: "smooth", block: "start" });
+      };
+
+      const reset = () => {
+        graded = false;
+        questions.forEach((question) => {
+          question.classList.remove("is-right", "is-wrong", "is-blank");
+          question.querySelectorAll("[data-lt-explain]").forEach((explain) => {
+            explain.hidden = true;
+          });
+          inputsOf(question).forEach((input) => {
+            input.disabled = false;
+            input.checked = false;
+            input
+              .closest(".level-test__option")
+              ?.classList.remove("is-correct", "is-wrong");
+          });
+        });
+
+        result.hidden = true;
+        result.innerHTML = "";
+        checkBtn.hidden = false;
+        if (resetBtn) resetBtn.hidden = true;
+        if (hint) {
+          hint.textContent = "";
+          delete hint.dataset.warned;
+        }
+        updateMeter();
+        exercise.scrollIntoView({ behavior: "smooth", block: "start" });
+      };
+
+      exercise.addEventListener("change", (event) => {
+        if (graded || !event.target.matches('input[type="radio"]')) return;
+        updateMeter();
+        if (hint) hint.textContent = "";
+      });
+
+      // A form would reload the page on Enter; the test is graded by button.
+      exercise.addEventListener("submit", (event) => event.preventDefault());
+
+      checkBtn.addEventListener("click", () => {
+        if (graded) return;
+        const open = total - answeredCount();
+        // First click on an incomplete test warns instead of grading, so
+        // nobody loses points to a question they simply scrolled past.
+        if (open && hint && !hint.dataset.warned) {
+          hint.dataset.warned = "true";
+          hint.textContent =
+            open === 1
+              ? "Eine Frage ist noch offen und würde als falsch zählen. Nochmal klicken, um trotzdem auszuwerten."
+              : `${open} Fragen sind noch offen und würden als falsch zählen. Nochmal klicken, um trotzdem auszuwerten.`;
+          return;
+        }
+        grade();
+      });
+
+      resetBtn?.addEventListener("click", reset);
+
+      updateMeter();
     });
 })();

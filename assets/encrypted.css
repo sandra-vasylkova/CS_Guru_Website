@@ -135,7 +135,10 @@
   content: "";
   position: absolute;
   inset: 0;
-  z-index: 7;
+  /* Below the mask and the cards. Above them it cut a brightness step across
+     whatever crossed the panel border; the cards take their shadow from
+     --f-shade instead. */
+  z-index: 1;
   border-radius: 16px;
   pointer-events: none;
   mix-blend-mode: multiply;
@@ -450,7 +453,12 @@
   transform: translateY(-2px) scale(1.03);
 }
 
+/* Drops the whole arrangement — mask, fan, glove and warning — down the
+   panel together. The mask and glove are positioned against the stage, so
+   they travel with it. */
+
 .encrypted-cs__table {
+  padding-top: 2rem;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -469,6 +477,74 @@
   width: 100%;
 }
 
+/* The mask floats behind the fan and a little higher. It sits before
+   .quote-cards in the markup and both are positioned, so the cards paint over
+   it by document order without either needing a z-index. */
+
+.encrypted-mask {
+  position: absolute;
+  left: 50%;
+  /* Above the falloff, so the panel's light stops at the panel border instead
+     of cutting a step across the mask; below the fan, which sits at 3. */
+  z-index: 2;
+  bottom: 44%;
+  translate: -50% 0;
+  width: min(470px, 135%);
+  aspect-ratio: 356 / 220;
+  pointer-events: none;
+  background: url("/assets/encrypted-mask.svg") center / contain no-repeat;
+  opacity: 0;
+  transition: opacity 0.9s ease;
+}
+
+/* Only once the cards are on the table. */
+
+.encrypted-modal__box--table .encrypted-mask {
+  opacity: 0.92;
+}
+
+/* Holds the shared <symbol>; never rendered itself. */
+
+.encrypted-glove-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+/* Both glove layers instance the same <symbol> and differ only in which half
+   they switch on and where they sit in the stack. The palm paints over the fan
+   (4); the thumb runs behind it (2). */
+
+.encrypted-hand {
+  position: absolute;
+  left: 50%;
+  /* Sits low, so the fan is gripped from underneath. The cuff still has to
+     finish inside the panel, which it clears by ~50px. */
+  bottom: -55%;
+  z-index: 4;
+  translate: -50% 0;
+  width: min(250px, 54%);
+  aspect-ratio: 295 / 330;
+  pointer-events: none;
+  --glove-palm: inline;
+  --glove-thumb: none;
+  opacity: 0;
+  transition: opacity 0.9s ease;
+}
+
+.encrypted-modal__box--table .encrypted-hand {
+  opacity: 1;
+}
+
+/* The thumb runs behind the fan, so the cards sit in the grip. Alongside the
+   mask at 2, before .quote-cards in the markup. */
+
+.encrypted-hand--thumb {
+  z-index: 2;
+  --glove-palm: none;
+  --glove-thumb: inline;
+}
+
 /* Reveal stage: absolute overlay, so drawn cards cover the fan instead of
    pushing it down. */
 
@@ -482,7 +558,7 @@
   /* Above the sheen (6) and the falloff (7). Both stop at the panel edge, so
      anything below them gets a hard line drawn across it wherever it reaches
      past the panel. The fan stays under them and keeps its shading. */
-  z-index: 8;
+  z-index: 9;
   pointer-events: none;
 }
 
@@ -494,6 +570,8 @@
 
 .quote-cards {
   position: relative;
+  /* over the mask (2), under the palm (4) */
+  z-index: 3;
   width: 100%;
   height: 300px;
   perspective: 1400px;
@@ -552,8 +630,8 @@
 .quote-card.is-drawn.is-glowing .quote-card__face--back,
 .quote-card.is-drawn.is-glowing .quote-card__face--front {
   box-shadow:
-    0 0 34px rgba(245, 166, 35, 0.55),
-    0 0 70px rgba(245, 166, 35, 0.22),
+    0 0 34px rgba(223, 230, 234, 0.5),
+    0 0 70px rgba(223, 230, 234, 0.2),
     0 18px 38px rgba(0, 0, 0, 0.5);
 }
 
@@ -586,9 +664,10 @@
   /* Cards in the fan overlap; without this they read as flat stickers.
      box-shadow rather than filter: drop-shadow, which would flatten the
      card's preserve-3d flip. */
-  box-shadow:
-    0 6px 14px rgba(0, 0, 0, 0.45),
-    0 14px 30px rgba(0, 0, 0, 0.32);
+  /* Only the tight contact shadow. The wide soft one spread 30px behind each
+     card and landed on the thumb passing underneath, greying it. This keeps
+     the cards separated from each other without shading what is behind. */
+  box-shadow: 0 5px 11px rgba(0, 0, 0, 0.42);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -599,14 +678,38 @@
 /* Back: one design for the whole deck, red on the middle card only. Percentage
    sizes keep the mosaic in proportion at both card sizes. */
 
+/* Matches what the panel-wide falloff used to multiply at each fan position:
+   77% at the outer pair, 88% at the next. A drawn card leaves the slot, so it
+   stops inheriting the shade and is lit in full. */
+
+.quote-card__face::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: inherit;
+  pointer-events: none;
+  background: rgba(0, 0, 0, var(--f-shade, 0));
+}
+
+.quote-card-slot:nth-child(1),
+.quote-card-slot:nth-child(5) {
+  --f-shade: 0.23;
+}
+
+.quote-card-slot:nth-child(2),
+.quote-card-slot:nth-child(4) {
+  --f-shade: 0.12;
+}
+
 .quote-card__face--back {
-  --fc: var(--amber);
-  --fc-13: rgba(245, 166, 35, 0.07);
-  --fc-20: rgba(245, 166, 35, 0.26);
-  --fc-08: rgba(245, 166, 35, 0.08);
-  --fc-42: rgba(245, 166, 35, 0.42);
-  --fc-12: rgba(245, 166, 35, 0.12);
-  --fc-34: rgba(245, 166, 35, 0.34);
+  --fc: #dfe6ea;
+  --fc-13: rgba(223, 230, 234, 0.07);
+  --fc-20: rgba(223, 230, 234, 0.26);
+  --fc-08: rgba(223, 230, 234, 0.08);
+  --fc-42: rgba(223, 230, 234, 0.42);
+  --fc-12: rgba(223, 230, 234, 0.12);
+  --fc-34: rgba(223, 230, 234, 0.34);
   background: linear-gradient(150deg, #191919, #0a0a0a);
   border: 2px solid var(--fc);
 }
@@ -1226,8 +1329,10 @@
 }
 
 .encrypted-cs__warning {
-  margin-top: 4.5rem;
-  min-height: 1.2em;
+  /* the glove hangs below the stage, so the warning needs clearance to
+     land under it rather than behind it */
+  margin-top: 11.5rem;
+  min-height: 2.4em;
   color: var(--amber);
   font-size: 0.9rem;
   font-weight: 600;

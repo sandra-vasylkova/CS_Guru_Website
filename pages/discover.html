@@ -199,12 +199,12 @@
 
               <div class="discover-guide__text">
                 <p>
-                  Hier lernst du alle relevanten Themen für die Klausur und
-                  das Alltagsleben: ohne Umschweife, direkt zur Sache.
+                  Hier lernst du alle relevanten Themen für die Klausur und das
+                  Alltagsleben: ohne Umschweife, direkt zur Sache.
                 </p>
                 <p>
-                  <strong>Du erlernst:</strong> Python Grundlagen,
-                  Zahlensysteme und Schaltalgebra.
+                  <strong>Du erlernst:</strong> Python Grundlagen, Zahlensysteme
+                  und Schaltalgebra.
                 </p>
               </div>
 
@@ -293,7 +293,11 @@
           href="https://www.microsoft.com/en-us/microsoft-teams/log-in"
           class="contact-modal__row"
         >
-          <span class="teams__icon" role="img" aria-label="Microsoft Teams"></span>
+          <span
+            class="teams__icon"
+            role="img"
+            aria-label="Microsoft Teams"
+          ></span>
           <span>
             <strong>Teams</strong>
             <small>Oleksandra Vasylkova</small>
@@ -344,7 +348,11 @@
             </button>
           </form>
 
-          <p class="encrypted-gate__error" id="gate-error" aria-live="polite"></p>
+          <p
+            class="encrypted-gate__error"
+            id="gate-error"
+            aria-live="polite"
+          ></p>
         </section>
 
         <section class="encrypted-cs" id="cs-content" hidden>
@@ -368,18 +376,78 @@
           </div>
 
           <div class="encrypted-cs__table" id="cs-table" hidden>
-            <p class="encrypted-cs__instruction">Ziehen Sie eine Karte.</p>
-
             <div class="encrypted-cs__stage">
+              <svg class="encrypted-glove-defs" aria-hidden="true">
+                <symbol id="glove" viewBox="50 34 295 330">
+                  <g transform="rotate(17 180 300)">
+                    <g
+                      style="display: var(--glove-thumb, inline)"
+                      fill="none"
+                      stroke-linecap="round"
+                    >
+                      <path
+                        d="M104,258 C86,236 62,208 42,164"
+                        stroke="#000000"
+                        stroke-width="72"
+                      />
+                      <path
+                        d="M104,258 C86,236 62,208 42,164"
+                        stroke="#ffffff"
+                        stroke-width="50"
+                      />
+                    </g>
+                    <g style="display: var(--glove-palm, inline)">
+                      <g
+                        fill="#ffffff"
+                        stroke="#000000"
+                        stroke-width="11"
+                        stroke-linejoin="round"
+                        stroke-linecap="round"
+                      >
+                        <!-- Left edge opens where the thumb joins, so no outline crosses it. -->
+                        <path
+                          stroke-dasharray="2000 72"
+                          stroke-dashoffset="2000"
+                          d="M104,296 C94,262 90,212 94,176 C95,169 95,166 96,162 L96,76 A27,27 0 0 1 150,76 L150,152 C152,160 158,160 160,152 L160,58 A27,27 0 0 1 214,58 L214,152 C216,160 222,160 224,152 L224,80 A26,26 0 0 1 276,80 L276,186 C280,226 276,266 258,296 Z"
+                        />
+                        <path
+                          d="M100,288 C92,300 92,312 100,326 L262,326 C270,312 270,300 262,282 Z"
+                        />
+                      </g>
+                      <g
+                        fill="none"
+                        stroke="#000000"
+                        stroke-width="10"
+                        stroke-linecap="round"
+                      >
+                        <path d="M132,214 C130,228 129,240 131,252" />
+                        <path d="M172,212 C171,226 171,239 173,251" />
+                        <path d="M212,214 C213,228 214,240 213,252" />
+                      </g>
+                    </g>
+                  </g>
+                </symbol>
+              </svg>
+              <div class="encrypted-mask" aria-hidden="true"></div>
+              <svg
+                class="encrypted-hand encrypted-hand--thumb"
+                aria-hidden="true"
+              >
+                <use href="#glove" />
+              </svg>
               <div class="quote-cards" id="cs-cards"></div>
+              <svg class="encrypted-hand" aria-hidden="true">
+                <use href="#glove" />
+              </svg>
             </div>
 
-            <!-- Outside the stage on purpose: it is positioned against the
-                 modal box, so a drawn card centres on the panel rather than
-                 on the 300px-tall fan area. -->
             <div class="encrypted-reveal" id="cs-reveal"></div>
 
-            <p class="encrypted-cs__warning" id="cs-warning" aria-live="polite"></p>
+            <p
+              class="encrypted-cs__warning"
+              id="cs-warning"
+              aria-live="polite"
+            ></p>
           </div>
         </section>
 
@@ -401,33 +469,27 @@
               <div
                 class="encrypted-cube__face encrypted-cube__face--front"
                 data-face="front"
-              >
-              </div>
+              ></div>
               <div
                 class="encrypted-cube__face encrypted-cube__face--back"
                 data-face="back"
-              >
-              </div>
+              ></div>
               <div
                 class="encrypted-cube__face encrypted-cube__face--right"
                 data-face="right"
-              >
-              </div>
+              ></div>
               <div
                 class="encrypted-cube__face encrypted-cube__face--left"
                 data-face="left"
-              >
-              </div>
+              ></div>
               <div
                 class="encrypted-cube__face encrypted-cube__face--top"
                 data-face="top"
-              >
-              </div>
+              ></div>
               <div
                 class="encrypted-cube__face encrypted-cube__face--bottom"
                 data-face="bottom"
-              >
-              </div>
+              ></div>
             </div>
           </div>
         </section>

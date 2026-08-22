@@ -1,0 +1,1507 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Beta: Selbsttest zu den Python-Grundlagen mit 28 Fragen zu allen sieben Themen und einer Auswertung in Prozent pro Thema."
+    />
+    <title>CS Guru | Teste dein Niveau (Beta)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow:wght@100;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CS Guru | Teste dein Niveau (Beta)" />
+    <meta
+      property="og:description"
+      content="Beta: Selbsttest zu den Python-Grundlagen mit 28 Fragen zu allen sieben Themen und einer Auswertung in Prozent pro Thema."
+    />
+    <meta
+      property="og:image"
+      content="https://csguru.vercel.app/assets/web-app-manifest-512x512.png"
+    />
+    <meta
+      property="og:url"
+      content="https://csguru.vercel.app/pages/explainations/learning_themes/python%20basis/level_test.html"
+    />
+    <meta property="og:locale" content="de_DE" />
+    <meta name="twitter:card" content="summary" />
+
+    <link rel="stylesheet" href="/style.css" />
+    <script src="/app.js" defer></script>
+
+    <link
+      rel="icon"
+      type="image/png"
+      href="/assets/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+    <link rel="shortcut icon" href="/assets/favicon.ico" />
+  </head>
+
+  <body>
+    <div class="page learn-page lesson-page">
+      <nav class="nav">
+        <a href="/index.html" class="nav__logo">
+          <img
+            src="/assets/favicon_turquise.ico"
+            alt="CS Guru"
+            class="nav__favicon"
+          />
+          <span class="nav__brand">CS <span>Guru</span></span>
+        </a>
+
+        <ul class="nav__links">
+          <li><a href="/index.html" class="nav__link">Home</a></li>
+          <li>
+            <a href="/pages/discover.html" class="nav__link">Entdecken</a>
+          </li>
+          <li>
+            <a href="/pages/learn.html" class="nav__link nav__link--active"
+              >Lernen</a
+            >
+          </li>
+          <li><a href="/pages/play.html" class="nav__link">Spielen</a></li>
+          <li><a href="/pages/tools.html" class="nav__link">Werkzeuge</a></li>
+        </ul>
+
+        <div class="nav__actions">
+          <button class="nav__action nav__contact-button" type="button">
+            <span class="nav__action-icon">✉</span>
+            Kontakt
+          </button>
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSdTqXspWFUsLsN_17e1_QqPylcYwD8ifro1duAEqonBuqhtIg/viewform"
+            class="nav__action"
+          >
+            <span class="nav__action-icon">✎</span>
+            Feedback
+          </a>
+        </div>
+
+        <button
+          class="nav__menu-btn"
+          type="button"
+          aria-label="Menü öffnen"
+          aria-expanded="false"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </nav>
+
+      <div class="mobile-menu" aria-hidden="true">
+        <div class="mobile-menu__panel">
+          <div class="mobile-menu__head">
+            <a href="/index.html" class="mobile-menu__brand"
+              >CS <span>Guru</span></a
+            >
+            <button
+              class="mobile-menu__close"
+              type="button"
+              aria-label="Menü schließen"
+            >
+              ×
+            </button>
+          </div>
+
+          <a href="/index.html" class="mobile-menu__link">Home</a>
+          <a
+            href="/pages/learn.html"
+            class="mobile-menu__link mobile-menu__link--active"
+            >Lernen</a
+          >
+          <a href="/pages/play.html" class="mobile-menu__link">Spielen</a>
+          <a href="/pages/tools.html" class="mobile-menu__link">Werkzeuge</a>
+          <a href="/pages/discover.html" class="mobile-menu__link">Entdecken</a>
+
+          <div class="mobile-menu__actions">
+            <button
+              class="mobile-menu__link mobile-menu__contact contact-modal-trigger"
+              type="button"
+            >
+              Kontakt
+            </button>
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSdTqXspWFUsLsN_17e1_QqPylcYwD8ifro1duAEqonBuqhtIg/viewform"
+              class="mobile-menu__link"
+              >Feedback</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <main class="lesson">
+        <div class="lesson__glow" aria-hidden="true"></div>
+
+        <div class="lesson__shell">
+          <aside class="lesson-sidebar">
+            <a class="lesson-sidebar__back" href="/pages/learn.html">
+              <span>‹</span> Alle Themen
+            </a>
+            <div class="lesson-sidebar__topic">
+              <span class="lesson-sidebar__eyebrow">Python Grundlagen</span>
+              <strong>Teste dein Niveau</strong>
+              <span class="beta-badge">Beta</span>
+            </div>
+            <nav class="lesson-sidebar__nav" aria-label="Themenübersicht">
+              <a class="lesson-sidebar__link" href="#anleitung"
+                >So funktioniert&rsquo;s</a
+              >
+              <a class="lesson-sidebar__link" href="#lt-variablen"
+                >1. Variablen</a
+              >
+              <a class="lesson-sidebar__link" href="#lt-datentypen"
+                >2. Datentypen</a
+              >
+              <a class="lesson-sidebar__link" href="#lt-print-input"
+                >3. Print &amp; Input</a
+              >
+              <a class="lesson-sidebar__link" href="#lt-bedingungen"
+                >4. Bedingungen</a
+              >
+              <a class="lesson-sidebar__link" href="#lt-datenstrukturen"
+                >5. Datenstrukturen</a
+              >
+              <a class="lesson-sidebar__link" href="#lt-schleifen"
+                >6. Schleifen</a
+              >
+              <a class="lesson-sidebar__link" href="#lt-funktionen"
+                >7. Funktionen</a
+              >
+              <a class="lesson-sidebar__link" href="#auswertung">Auswertung</a>
+            </nav>
+          </aside>
+
+          <article class="lesson-content">
+            <header class="lesson-hero">
+              <div class="lesson-hero__index">00</div>
+              <div>
+                <p class="lesson-hero__eyebrow">
+                  Python Grundlagen
+                  <span class="beta-badge beta-badge--solid">Beta</span>
+                </p>
+                <h1>Teste dein Niveau<span>.</span></h1>
+                <p class="lesson-hero__intro">
+                  28 Fragen zu allen sieben Themen. Finde genau heraus, in
+                  welchen Themen du sicher bist und welche du noch einmal
+                  durchgehen solltest.
+                </p>
+              </div>
+            </header>
+
+            <div class="lesson-beta" role="note">
+              <span class="beta-badge beta-badge--solid">Beta</span>
+              <div>
+                <strong>Dieser Test ist eine Beta-Version.</strong>
+                <p>
+                  Fragen, Formulierungen und Bewertung k&ouml;nnen sich noch
+                  &auml;ndern. Wenn dir eine Frage unklar, zu leicht oder zu
+                  schwer vorkommt:
+                  <a
+                    href="https://docs.google.com/forms/d/e/1FAIpQLSdTqXspWFUsLsN_17e1_QqPylcYwD8ifro1duAEqonBuqhtIg/viewform"
+                    >gib mir Bescheid</a
+                  >.
+                </p>
+              </div>
+            </div>
+
+            <section class="lesson-section" id="anleitung">
+              <div class="lesson-section__number">01</div>
+              <div class="lesson-section__body">
+                <h2>So funktioniert&rsquo;s</h2>
+                <p>
+                  Zu jedem der sieben Themen gibt es
+                  <strong>vier Fragen</strong> mit jeweils genau einer richtigen
+                  Antwort. Beantworte so viele wie du kannst und klicke dann auf
+                  <strong>Auswertung anzeigen</strong>.
+                </p>
+                <p>
+                  Nach der Auswertung siehst du bei jeder Frage die richtige
+                  Antwort mit einer kurzen Erklärung.
+                </p>
+              </div>
+            </section>
+
+            <form
+              class="lesson-exercise level-test"
+              data-exercise="level-test"
+              novalidate
+            >
+              <span class="lesson-exercise__label"
+                >Niveau-Test <span class="beta-badge">Beta</span></span
+              >
+              <p class="level-test__lead">
+                7 Themen &middot; 28 Fragen &middot; eine richtige Antwort pro
+                Frage
+              </p>
+
+              <div class="level-test__meter">
+                <div
+                  class="level-test__meter-track"
+                  role="progressbar"
+                  aria-label="Beantwortete Fragen"
+                  aria-valuemin="0"
+                  aria-valuemax="28"
+                  aria-valuenow="0"
+                  data-lt-meter
+                >
+                  <span
+                    class="level-test__meter-fill"
+                    data-lt-meter-fill
+                  ></span>
+                </div>
+                <p class="level-test__meter-text">
+                  <strong data-lt-answered>0</strong> von 28 Fragen beantwortet
+                </p>
+              </div>
+
+              <section
+                class="level-test__group"
+                id="lt-variablen"
+                data-lt-group
+                data-topic="Variablen"
+                data-lesson="variables.html"
+              >
+                <header class="level-test__group-head">
+                  <span class="level-test__group-num">1</span>
+                  <h2>Variablen</h2>
+                </header>
+
+                <div
+                  class="level-test__question"
+                  data-lt-question
+                  role="group"
+                  aria-labelledby="lt-q1-label"
+                >
+                  <p class="level-test__prompt" id="lt-q1-label">
+                    <span class="level-test__q-num">1</span>
+                    <span
+                      >Welche Zeile speichert den Wert <code>17</code> in der
+                      Variablen <code>alter</code>?</span
+                    >
+                  </p>
+                  <div class="level-test__options">
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q1" data-correct="true" />
+                      <span><code>alter = 17</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q1" />
+                      <span><code>alter == 17</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q1" />
+                      <span><code>17 = alter</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q1" />
+                      <span><code>alter -&gt; 17</code></span>
+                    </label>
+                  </div>
+                  <p class="level-test__explain" data-lt-explain hidden>
+                    <code>=</code> ist der Zuweisungsoperator: links der Name,
+                    rechts der Wert. <code>==</code> vergleicht nur.
+                  </p>
+                </div>
+
+                <div
+                  class="level-test__question"
+                  data-lt-question
+                  role="group"
+                  aria-labelledby="lt-q2-label"
+                >
+                  <p class="level-test__prompt" id="lt-q2-label">
+                    <span class="level-test__q-num">2</span>
+                    <span
+                      >Welcher Variablenname ist
+                      <strong>ungültig</strong>?</span
+                    >
+                  </p>
+                  <div class="level-test__options">
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q2" />
+                      <span><code>mein_alter</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q2" data-correct="true" />
+                      <span><code>2fast</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q2" />
+                      <span><code>_temp</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q2" />
+                      <span><code>score1</code></span>
+                    </label>
+                  </div>
+                  <p class="level-test__explain" data-lt-explain hidden>
+                    Ein Variablenname darf nicht mit einer Ziffer beginnen –
+                    Buchstaben und <code>_</code> sind als erstes Zeichen
+                    erlaubt.
+                  </p>
+                </div>
+
+                <div
+                  class="level-test__question"
+                  data-lt-question
+                  role="group"
+                  aria-labelledby="lt-q3-label"
+                >
+                  <p class="level-test__prompt" id="lt-q3-label">
+                    <span class="level-test__q-num">3</span>
+                    <span>Was gibt dieser Code aus?</span>
+                  </p>
+                  <pre class="level-test__code"><code>punkte = 10
+punkte = punkte + 5
+print(punkte)</code></pre>
+                  <div class="level-test__options">
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q3" />
+                      <span><code>10</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q3" data-correct="true" />
+                      <span><code>15</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q3" />
+                      <span><code>105</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q3" />
+                      <span>Eine Fehlermeldung</span>
+                    </label>
+                  </div>
+                  <p class="level-test__explain" data-lt-explain hidden>
+                    Rechts wird zuerst gerechnet (<code>10 + 5</code>), das
+                    Ergebnis überschreibt danach den alten Wert.
+                  </p>
+                </div>
+
+                <div
+                  class="level-test__question"
+                  data-lt-question
+                  role="group"
+                  aria-labelledby="lt-q4-label"
+                >
+                  <p class="level-test__prompt" id="lt-q4-label">
+                    <span class="level-test__q-num">4</span>
+                    <span
+                      >Wie schreibt man in Python üblicherweise eine
+                      Konstante?</span
+                    >
+                  </p>
+                  <div class="level-test__options">
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q4" data-correct="true" />
+                      <span><code>MWST = 0.19</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q4" />
+                      <span><code>const mwst = 0.19</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q4" />
+                      <span><code>final mwst = 0.19</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q4" />
+                      <span><code>mwst! = 0.19</code></span>
+                    </label>
+                  </div>
+                  <p class="level-test__explain" data-lt-explain hidden>
+                    Python kennt kein echtes Konstanten-Schlüsselwort. Man
+                    signalisiert per Konvention mit GROSSBUCHSTABEN, dass ein
+                    Wert nicht verändert werden soll.
+                  </p>
+                </div>
+              </section>
+
+              <section
+                class="level-test__group"
+                id="lt-datentypen"
+                data-lt-group
+                data-topic="Datentypen"
+                data-lesson="data_types.html"
+              >
+                <header class="level-test__group-head">
+                  <span class="level-test__group-num">2</span>
+                  <h2>Datentypen</h2>
+                </header>
+
+                <div
+                  class="level-test__question"
+                  data-lt-question
+                  role="group"
+                  aria-labelledby="lt-q5-label"
+                >
+                  <p class="level-test__prompt" id="lt-q5-label">
+                    <span class="level-test__q-num">5</span>
+                    <span>Welchen Datentyp hat der Wert <code>3.0</code>?</span>
+                  </p>
+                  <div class="level-test__options">
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q5" />
+                      <span><code>int</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q5" data-correct="true" />
+                      <span><code>float</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q5" />
+                      <span><code>str</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q5" />
+                      <span><code>bool</code></span>
+                    </label>
+                  </div>
+                  <p class="level-test__explain" data-lt-explain hidden>
+                    Sobald ein Punkt im Spiel ist, handelt es sich um eine
+                    Kommazahl &ndash; also <code>float</code>, auch bei
+                    <code>3.0</code>.
+                  </p>
+                </div>
+
+                <div
+                  class="level-test__question"
+                  data-lt-question
+                  role="group"
+                  aria-labelledby="lt-q6-label"
+                >
+                  <p class="level-test__prompt" id="lt-q6-label">
+                    <span class="level-test__q-num">6</span>
+                    <span>Was gibt dieser Code aus?</span>
+                  </p>
+                  <pre
+                    class="level-test__code"
+                  ><code>print(type("17"))</code></pre>
+                  <div class="level-test__options">
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q6" />
+                      <span><code>&lt;class &#39;int&#39;&gt;</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q6" data-correct="true" />
+                      <span><code>&lt;class &#39;str&#39;&gt;</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q6" />
+                      <span><code>17</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q6" />
+                      <span>Eine Fehlermeldung</span>
+                    </label>
+                  </div>
+                  <p class="level-test__explain" data-lt-explain hidden>
+                    Die Anf&uuml;hrungszeichen machen aus der Zahl einen Text.
+                    Nicht der Inhalt entscheidet &uuml;ber den Typ, sondern die
+                    Schreibweise.
+                  </p>
+                </div>
+
+                <div
+                  class="level-test__question"
+                  data-lt-question
+                  role="group"
+                  aria-labelledby="lt-q7-label"
+                >
+                  <p class="level-test__prompt" id="lt-q7-label">
+                    <span class="level-test__q-num">7</span>
+                    <span
+                      >Was ist das Ergebnis von <code>int("7") + 3</code>?</span
+                    >
+                  </p>
+                  <div class="level-test__options">
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q7" data-correct="true" />
+                      <span><code>10</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q7" />
+                      <span><code>73</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q7" />
+                      <span><code>"73"</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q7" />
+                      <span>Eine Fehlermeldung</span>
+                    </label>
+                  </div>
+                  <p class="level-test__explain" data-lt-explain hidden>
+                    <code>int()</code> wandelt den Text <code>"7"</code> in die
+                    Zahl <code>7</code> um &ndash; danach wird normal addiert.
+                  </p>
+                </div>
+
+                <div
+                  class="level-test__question"
+                  data-lt-question
+                  role="group"
+                  aria-labelledby="lt-q8-label"
+                >
+                  <p class="level-test__prompt" id="lt-q8-label">
+                    <span class="level-test__q-num">8</span>
+                    <span
+                      >Welchen Datentyp liefert die Division
+                      <code>10 / 2</code>?</span
+                    >
+                  </p>
+                  <div class="level-test__options">
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q8" />
+                      <span><code>int</code>, also <code>5</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q8" data-correct="true" />
+                      <span><code>float</code>, also <code>5.0</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q8" />
+                      <span><code>str</code>, also <code>"5"</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q8" />
+                      <span>Das h&auml;ngt von den Zahlen ab</span>
+                    </label>
+                  </div>
+                  <p class="level-test__explain" data-lt-explain hidden>
+                    <code>/</code> liefert in Python immer einen
+                    <code>float</code>. F&uuml;r eine ganzzahlige Division gibt
+                    es <code>//</code>.
+                  </p>
+                </div>
+              </section>
+
+              <section
+                class="level-test__group"
+                id="lt-print-input"
+                data-lt-group
+                data-topic="Print &amp; Input"
+                data-lesson="print_input.html"
+              >
+                <header class="level-test__group-head">
+                  <span class="level-test__group-num">3</span>
+                  <h2>Print &amp; Input</h2>
+                </header>
+
+                <div
+                  class="level-test__question"
+                  data-lt-question
+                  role="group"
+                  aria-labelledby="lt-q9-label"
+                >
+                  <p class="level-test__prompt" id="lt-q9-label">
+                    <span class="level-test__q-num">9</span>
+                    <span>Welchen Datentyp liefert <code>input()</code>?</span>
+                  </p>
+                  <div class="level-test__options">
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q9" data-correct="true" />
+                      <span>Immer <code>str</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q9" />
+                      <span>Immer <code>int</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q9" />
+                      <span>Je nachdem, was eingegeben wurde</span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q9" />
+                      <span><code>None</code></span>
+                    </label>
+                  </div>
+                  <p class="level-test__explain" data-lt-explain hidden>
+                    Auch <code>42</code> kommt als Text <code>"42"</code> an
+                    &ndash; deshalb muss man vor dem Rechnen mit
+                    <code>int()</code> oder <code>float()</code> umwandeln.
+                  </p>
+                </div>
+
+                <div
+                  class="level-test__question"
+                  data-lt-question
+                  role="group"
+                  aria-labelledby="lt-q10-label"
+                >
+                  <p class="level-test__prompt" id="lt-q10-label">
+                    <span class="level-test__q-num">10</span>
+                    <span>Was gibt dieser Code aus?</span>
+                  </p>
+                  <pre
+                    class="level-test__code"
+                  ><code>print("Hallo", "Welt")</code></pre>
+                  <div class="level-test__options">
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q10" data-correct="true" />
+                      <span><code>Hallo Welt</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q10" />
+                      <span><code>HalloWelt</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q10" />
+                      <span><code>Hallo,Welt</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q10" />
+                      <span
+                        ><code>(&#39;Hallo&#39;, &#39;Welt&#39;)</code></span
+                      >
+                    </label>
+                  </div>
+                  <p class="level-test__explain" data-lt-explain hidden>
+                    Mehrere Werte in <code>print()</code> werden
+                    standardm&auml;&szlig;ig durch ein Leerzeichen getrennt.
+                    &Auml;ndern l&auml;sst sich das mit <code>sep=</code>.
+                  </p>
+                </div>
+
+                <div
+                  class="level-test__question"
+                  data-lt-question
+                  role="group"
+                  aria-labelledby="lt-q11-label"
+                >
+                  <p class="level-test__prompt" id="lt-q11-label">
+                    <span class="level-test__q-num">11</span>
+                    <span
+                      >Wie liest man eine Eingabe direkt als ganze Zahl
+                      ein?</span
+                    >
+                  </p>
+                  <div class="level-test__options">
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q11" />
+                      <span><code>zahl = input()</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q11" data-correct="true" />
+                      <span><code>zahl = int(input())</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q11" />
+                      <span><code>zahl = input(int())</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q11" />
+                      <span><code>int zahl = input()</code></span>
+                    </label>
+                  </div>
+                  <p class="level-test__explain" data-lt-explain hidden>
+                    Erst wird eingelesen, dann umgewandelt: die innere Klammer
+                    <code>input()</code> l&auml;uft zuerst, das Ergebnis geht an
+                    <code>int()</code>.
+                  </p>
+                </div>
+
+                <div
+                  class="level-test__question"
+                  data-lt-question
+                  role="group"
+                  aria-labelledby="lt-q12-label"
+                >
+                  <p class="level-test__prompt" id="lt-q12-label">
+                    <span class="level-test__q-num">12</span>
+                    <span>Was gibt dieser Code aus?</span>
+                  </p>
+                  <pre class="level-test__code"><code>name = "Ada"
+print(f"Hi {name}!")</code></pre>
+                  <div class="level-test__options">
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q12" data-correct="true" />
+                      <span><code>Hi Ada!</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q12" />
+                      <span><code>Hi {name}!</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q12" />
+                      <span><code>f"Hi Ada!"</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q12" />
+                      <span>Eine Fehlermeldung</span>
+                    </label>
+                  </div>
+                  <p class="level-test__explain" data-lt-explain hidden>
+                    Das <code>f</code> vor dem String macht daraus einen
+                    f-String: Alles in geschweiften Klammern wird durch den Wert
+                    der Variablen ersetzt.
+                  </p>
+                </div>
+              </section>
+
+              <section
+                class="level-test__group"
+                id="lt-bedingungen"
+                data-lt-group
+                data-topic="Bedingungen"
+                data-lesson="conditions.html"
+              >
+                <header class="level-test__group-head">
+                  <span class="level-test__group-num">4</span>
+                  <h2>Bedingungen</h2>
+                </header>
+
+                <div
+                  class="level-test__question"
+                  data-lt-question
+                  role="group"
+                  aria-labelledby="lt-q13-label"
+                >
+                  <p class="level-test__prompt" id="lt-q13-label">
+                    <span class="level-test__q-num">13</span>
+                    <span>Welcher Operator pr&uuml;ft auf Gleichheit?</span>
+                  </p>
+                  <div class="level-test__options">
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q13" />
+                      <span><code>=</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q13" data-correct="true" />
+                      <span><code>==</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q13" />
+                      <span><code>=&gt;</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q13" />
+                      <span><code>equals</code></span>
+                    </label>
+                  </div>
+                  <p class="level-test__explain" data-lt-explain hidden>
+                    Ein einzelnes <code>=</code> weist zu, ein doppeltes
+                    <code>==</code> vergleicht und liefert
+                    <code>True</code> oder <code>False</code>.
+                  </p>
+                </div>
+
+                <div
+                  class="level-test__question"
+                  data-lt-question
+                  role="group"
+                  aria-labelledby="lt-q14-label"
+                >
+                  <p class="level-test__prompt" id="lt-q14-label">
+                    <span class="level-test__q-num">14</span>
+                    <span>Was gibt dieser Code aus?</span>
+                  </p>
+                  <pre class="level-test__code"><code>x = 5
+if x &gt; 10:
+    print("gross")
+elif x &gt; 3:
+    print("mittel")
+else:
+    print("klein")</code></pre>
+                  <div class="level-test__options">
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q14" />
+                      <span><code>gross</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q14" data-correct="true" />
+                      <span><code>mittel</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q14" />
+                      <span><code>klein</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q14" />
+                      <span><code>mittel</code> und <code>klein</code></span>
+                    </label>
+                  </div>
+                  <p class="level-test__explain" data-lt-explain hidden>
+                    Python pr&uuml;ft von oben nach unten und f&uuml;hrt nur den
+                    <strong>ersten</strong> zutreffenden Zweig aus. Danach
+                    &uuml;berspringt es den Rest der Kette.
+                  </p>
+                </div>
+
+                <div
+                  class="level-test__question"
+                  data-lt-question
+                  role="group"
+                  aria-labelledby="lt-q15-label"
+                >
+                  <p class="level-test__prompt" id="lt-q15-label">
+                    <span class="level-test__q-num">15</span>
+                    <span
+                      >Was ergibt der Ausdruck
+                      <code>True and not False</code>?</span
+                    >
+                  </p>
+                  <div class="level-test__options">
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q15" data-correct="true" />
+                      <span><code>True</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q15" />
+                      <span><code>False</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q15" />
+                      <span><code>None</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q15" />
+                      <span>Eine Fehlermeldung</span>
+                    </label>
+                  </div>
+                  <p class="level-test__explain" data-lt-explain hidden>
+                    <code>not False</code> ergibt <code>True</code>, und
+                    <code>True and True</code> ist wieder <code>True</code>.
+                  </p>
+                </div>
+
+                <div
+                  class="level-test__question"
+                  data-lt-question
+                  role="group"
+                  aria-labelledby="lt-q16-label"
+                >
+                  <p class="level-test__prompt" id="lt-q16-label">
+                    <span class="level-test__q-num">16</span>
+                    <span
+                      >Was passiert, wenn keine Bedingung zutrifft und es kein
+                      <code>else</code> gibt?</span
+                    >
+                  </p>
+                  <div class="level-test__options">
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q16" data-correct="true" />
+                      <span
+                        >Nichts davon wird ausgef&uuml;hrt, das Programm
+                        l&auml;uft normal weiter</span
+                      >
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q16" />
+                      <span
+                        >Der letzte <code>elif</code>-Zweig wird
+                        ausgef&uuml;hrt</span
+                      >
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q16" />
+                      <span>Das Programm bricht mit einem Fehler ab</span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q16" />
+                      <span>Python fragt nach einer Eingabe</span>
+                    </label>
+                  </div>
+                  <p class="level-test__explain" data-lt-explain hidden>
+                    Ein <code>else</code> ist optional. Ohne passenden Zweig
+                    wird der ganze Block einfach &uuml;bersprungen.
+                  </p>
+                </div>
+              </section>
+
+              <section
+                class="level-test__group"
+                id="lt-datenstrukturen"
+                data-lt-group
+                data-topic="Datenstrukturen"
+                data-lesson="data_structures.html"
+              >
+                <header class="level-test__group-head">
+                  <span class="level-test__group-num">5</span>
+                  <h2>Datenstrukturen</h2>
+                </header>
+
+                <div
+                  class="level-test__question"
+                  data-lt-question
+                  role="group"
+                  aria-labelledby="lt-q17-label"
+                >
+                  <p class="level-test__prompt" id="lt-q17-label">
+                    <span class="level-test__q-num">17</span>
+                    <span>Was gibt dieser Code aus?</span>
+                  </p>
+                  <pre class="level-test__code"><code>zahlen = [10, 20, 30, 40]
+print(zahlen[1])</code></pre>
+                  <div class="level-test__options">
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q17" />
+                      <span><code>10</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q17" data-correct="true" />
+                      <span><code>20</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q17" />
+                      <span><code>30</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q17" />
+                      <span>Eine Fehlermeldung</span>
+                    </label>
+                  </div>
+                  <p class="level-test__explain" data-lt-explain hidden>
+                    Indizes starten bei <code>0</code>. Index <code>1</code> ist
+                    also das <strong>zweite</strong> Element.
+                  </p>
+                </div>
+
+                <div
+                  class="level-test__question"
+                  data-lt-question
+                  role="group"
+                  aria-labelledby="lt-q18-label"
+                >
+                  <p class="level-test__prompt" id="lt-q18-label">
+                    <span class="level-test__q-num">18</span>
+                    <span>Was ergibt <code>"Python"[-2]</code>?</span>
+                  </p>
+                  <div class="level-test__options">
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q18" />
+                      <span><code>"n"</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q18" data-correct="true" />
+                      <span><code>"o"</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q18" />
+                      <span><code>"y"</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q18" />
+                      <span>Eine Fehlermeldung</span>
+                    </label>
+                  </div>
+                  <p class="level-test__explain" data-lt-explain hidden>
+                    Negative Indizes z&auml;hlen von hinten: <code>-1</code> ist
+                    das letzte Zeichen (<code>n</code>), <code>-2</code> das
+                    vorletzte.
+                  </p>
+                </div>
+
+                <div
+                  class="level-test__question"
+                  data-lt-question
+                  role="group"
+                  aria-labelledby="lt-q19-label"
+                >
+                  <p class="level-test__prompt" id="lt-q19-label">
+                    <span class="level-test__q-num">19</span>
+                    <span
+                      >Welche Datenstruktur ist
+                      <strong>unver&auml;nderlich</strong>?</span
+                    >
+                  </p>
+                  <div class="level-test__options">
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q19" />
+                      <span>List</span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q19" data-correct="true" />
+                      <span>Tuple</span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q19" />
+                      <span>Dictionary</span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q19" />
+                      <span>Set</span>
+                    </label>
+                  </div>
+                  <p class="level-test__explain" data-lt-explain hidden>
+                    Ein Tuple <code>(1, 2, 3)</code> l&auml;sst sich nach dem
+                    Erstellen nicht mehr &auml;ndern &ndash; genau das macht es
+                    sicher f&uuml;r feste Wertegruppen.
+                  </p>
+                </div>
+
+                <div
+                  class="level-test__question"
+                  data-lt-question
+                  role="group"
+                  aria-labelledby="lt-q20-label"
+                >
+                  <p class="level-test__prompt" id="lt-q20-label">
+                    <span class="level-test__q-num">20</span>
+                    <span>Wie liest man den Namen aus diesem Dictionary?</span>
+                  </p>
+                  <pre
+                    class="level-test__code"
+                  ><code>person = {"name": "Ada", "alter": 36}</code></pre>
+                  <div class="level-test__options">
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q20" data-correct="true" />
+                      <span><code>person["name"]</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q20" />
+                      <span><code>person.name</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q20" />
+                      <span><code>person[0]</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q20" />
+                      <span><code>person("name")</code></span>
+                    </label>
+                  </div>
+                  <p class="level-test__explain" data-lt-explain hidden>
+                    In einem Dictionary greift man &uuml;ber den
+                    <strong>Schl&uuml;ssel</strong> in eckigen Klammern zu,
+                    nicht &uuml;ber eine Position.
+                  </p>
+                </div>
+              </section>
+
+              <section
+                class="level-test__group"
+                id="lt-schleifen"
+                data-lt-group
+                data-topic="Schleifen"
+                data-lesson="loops.html"
+              >
+                <header class="level-test__group-head">
+                  <span class="level-test__group-num">6</span>
+                  <h2>Schleifen</h2>
+                </header>
+
+                <div
+                  class="level-test__question"
+                  data-lt-question
+                  role="group"
+                  aria-labelledby="lt-q21-label"
+                >
+                  <p class="level-test__prompt" id="lt-q21-label">
+                    <span class="level-test__q-num">21</span>
+                    <span
+                      >Wie oft l&auml;uft der Rumpf von
+                      <code>for i in range(3):</code>?</span
+                    >
+                  </p>
+                  <div class="level-test__options">
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q21" />
+                      <span>2-mal</span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q21" data-correct="true" />
+                      <span>3-mal</span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q21" />
+                      <span>4-mal</span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q21" />
+                      <span>Unendlich oft</span>
+                    </label>
+                  </div>
+                  <p class="level-test__explain" data-lt-explain hidden>
+                    <code>range(3)</code> liefert <code>0, 1, 2</code> &ndash;
+                    drei Werte, also drei Durchl&auml;ufe.
+                  </p>
+                </div>
+
+                <div
+                  class="level-test__question"
+                  data-lt-question
+                  role="group"
+                  aria-labelledby="lt-q22-label"
+                >
+                  <p class="level-test__prompt" id="lt-q22-label">
+                    <span class="level-test__q-num">22</span>
+                    <span>Was gibt dieser Code aus?</span>
+                  </p>
+                  <pre class="level-test__code"><code>for i in range(1, 4):
+    print(i, end=" ")</code></pre>
+                  <div class="level-test__options">
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q22" />
+                      <span><code>0 1 2 3</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q22" data-correct="true" />
+                      <span><code>1 2 3</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q22" />
+                      <span><code>1 2 3 4</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q22" />
+                      <span><code>1 4</code></span>
+                    </label>
+                  </div>
+                  <p class="level-test__explain" data-lt-explain hidden>
+                    Der Startwert geh&ouml;rt dazu, der Endwert nicht:
+                    <code>range(1, 4)</code> ist <code>1, 2, 3</code>.
+                  </p>
+                </div>
+
+                <div
+                  class="level-test__question"
+                  data-lt-question
+                  role="group"
+                  aria-labelledby="lt-q23-label"
+                >
+                  <p class="level-test__prompt" id="lt-q23-label">
+                    <span class="level-test__q-num">23</span>
+                    <span
+                      >Welches Schl&uuml;sselwort bricht eine Schleife sofort
+                      komplett ab?</span
+                    >
+                  </p>
+                  <div class="level-test__options">
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q23" data-correct="true" />
+                      <span><code>break</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q23" />
+                      <span><code>continue</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q23" />
+                      <span><code>stop</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q23" />
+                      <span><code>return</code></span>
+                    </label>
+                  </div>
+                  <p class="level-test__explain" data-lt-explain hidden>
+                    <code>break</code> verl&auml;sst die Schleife ganz.
+                    <code>continue</code> &uuml;berspringt nur den aktuellen
+                    Durchlauf.
+                  </p>
+                </div>
+
+                <div
+                  class="level-test__question"
+                  data-lt-question
+                  role="group"
+                  aria-labelledby="lt-q24-label"
+                >
+                  <p class="level-test__prompt" id="lt-q24-label">
+                    <span class="level-test__q-num">24</span>
+                    <span
+                      >Wann nimmt man eine <code>while</code>-Schleife?</span
+                    >
+                  </p>
+                  <div class="level-test__options">
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q24" data-correct="true" />
+                      <span
+                        >Wenn vorher nicht feststeht, wie viele Durchl&auml;ufe
+                        n&ouml;tig sind</span
+                      >
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q24" />
+                      <span>Wenn man &uuml;ber eine Liste laufen will</span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q24" />
+                      <span>Wenn die Anzahl genau bekannt ist</span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q24" />
+                      <span>Nur bei Strings</span>
+                    </label>
+                  </div>
+                  <p class="level-test__explain" data-lt-explain hidden>
+                    <code>while</code> l&auml;uft, solange eine Bedingung wahr
+                    ist &ndash; ideal z.&nbsp;B. f&uuml;r Eingaben, die so lange
+                    wiederholt werden, bis sie stimmen.
+                  </p>
+                </div>
+              </section>
+
+              <section
+                class="level-test__group"
+                id="lt-funktionen"
+                data-lt-group
+                data-topic="Funktionen"
+                data-lesson="functions.html"
+              >
+                <header class="level-test__group-head">
+                  <span class="level-test__group-num">7</span>
+                  <h2>Funktionen</h2>
+                </header>
+
+                <div
+                  class="level-test__question"
+                  data-lt-question
+                  role="group"
+                  aria-labelledby="lt-q25-label"
+                >
+                  <p class="level-test__prompt" id="lt-q25-label">
+                    <span class="level-test__q-num">25</span>
+                    <span>Wie definiert man in Python eine Funktion?</span>
+                  </p>
+                  <div class="level-test__options">
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q25" data-correct="true" />
+                      <span><code>def gruesse():</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q25" />
+                      <span><code>function gruesse():</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q25" />
+                      <span><code>func gruesse():</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q25" />
+                      <span><code>define gruesse():</code></span>
+                    </label>
+                  </div>
+                  <p class="level-test__explain" data-lt-explain hidden>
+                    Das Schl&uuml;sselwort hei&szlig;t <code>def</code>, danach
+                    folgen Name, Klammern und ein Doppelpunkt.
+                  </p>
+                </div>
+
+                <div
+                  class="level-test__question"
+                  data-lt-question
+                  role="group"
+                  aria-labelledby="lt-q26-label"
+                >
+                  <p class="level-test__prompt" id="lt-q26-label">
+                    <span class="level-test__q-num">26</span>
+                    <span>Was gibt dieser Code aus?</span>
+                  </p>
+                  <pre class="level-test__code"><code>def verdopple(x):
+    return x * 2
+
+print(verdopple(4))</code></pre>
+                  <div class="level-test__options">
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q26" />
+                      <span><code>4</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q26" data-correct="true" />
+                      <span><code>8</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q26" />
+                      <span><code>44</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q26" />
+                      <span><code>None</code></span>
+                    </label>
+                  </div>
+                  <p class="level-test__explain" data-lt-explain hidden>
+                    <code>return</code> gibt den Wert an die aufrufende Stelle
+                    zur&uuml;ck &ndash; dort landet also <code>8</code> im
+                    <code>print()</code>.
+                  </p>
+                </div>
+
+                <div
+                  class="level-test__question"
+                  data-lt-question
+                  role="group"
+                  aria-labelledby="lt-q27-label"
+                >
+                  <p class="level-test__prompt" id="lt-q27-label">
+                    <span class="level-test__q-num">27</span>
+                    <span
+                      >Was liefert eine Funktion <strong>ohne</strong>
+                      <code>return</code> zur&uuml;ck?</span
+                    >
+                  </p>
+                  <div class="level-test__options">
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q27" data-correct="true" />
+                      <span><code>None</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q27" />
+                      <span><code>0</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q27" />
+                      <span>Einen leeren String</span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q27" />
+                      <span>Eine Fehlermeldung</span>
+                    </label>
+                  </div>
+                  <p class="level-test__explain" data-lt-explain hidden>
+                    Ohne <code>return</code> gibt Python automatisch
+                    <code>None</code> zur&uuml;ck &ndash; die Funktion tut
+                    etwas, liefert aber kein Ergebnis.
+                  </p>
+                </div>
+
+                <div
+                  class="level-test__question"
+                  data-lt-question
+                  role="group"
+                  aria-labelledby="lt-q28-label"
+                >
+                  <p class="level-test__prompt" id="lt-q28-label">
+                    <span class="level-test__q-num">28</span>
+                    <span>Was gibt dieser Code aus?</span>
+                  </p>
+                  <pre
+                    class="level-test__code"
+                  ><code>def begruesse(name, gruss="Hallo"):
+    print(gruss, name)
+
+begruesse("Ada")</code></pre>
+                  <div class="level-test__options">
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q28" data-correct="true" />
+                      <span><code>Hallo Ada</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q28" />
+                      <span><code>Ada Hallo</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q28" />
+                      <span><code>gruss Ada</code></span>
+                    </label>
+                    <label class="level-test__option">
+                      <input type="radio" name="lt-q28" />
+                      <span>Eine Fehlermeldung, weil ein Argument fehlt</span>
+                    </label>
+                  </div>
+                  <p class="level-test__explain" data-lt-explain hidden>
+                    <code>gruss</code> hat einen Standardwert. Wird beim Aufruf
+                    nichts &uuml;bergeben, springt automatisch
+                    <code>"Hallo"</code> ein.
+                  </p>
+                </div>
+              </section>
+
+              <div
+                class="lesson-exercise__actions level-test__actions"
+                id="auswertung"
+              >
+                <button
+                  class="lesson-exercise__check"
+                  type="button"
+                  data-lt-check
+                >
+                  Auswertung anzeigen
+                </button>
+                <button
+                  class="lesson-exercise__reveal"
+                  type="button"
+                  data-lt-reset
+                  hidden
+                >
+                  Test neu starten
+                </button>
+              </div>
+
+              <p class="level-test__hint" data-lt-hint role="status"></p>
+
+              <div
+                class="lesson-exercise__feedback level-test__result"
+                data-lt-result
+                tabindex="-1"
+                hidden
+              ></div>
+            </form>
+
+            <div class="lesson-next">
+              <div>
+                <span>N&auml;chstes Thema</span>
+                <strong>1. Variablen</strong>
+              </div>
+              <a href="variables.html" aria-label="Zum Thema Variablen"
+                >&rsaquo;</a
+              >
+            </div>
+          </article>
+        </div>
+      </main>
+    </div>
+
+    <div class="contact-modal" aria-hidden="true">
+      <div
+        class="contact-modal__box"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="contact-title"
+      >
+        <button
+          class="contact-modal__close"
+          type="button"
+          aria-label="Kontaktfenster schließen"
+        >
+          ×
+        </button>
+
+        <h2 id="contact-title">Kontakt</h2>
+        <div class="contact-modal__line"></div>
+        <p class="contact-modal__intro">
+          Bei Fragen, Anregungen oder Problemen kannst du mich gerne
+          kontaktieren.
+        </p>
+
+        <a
+          href="https://mail.google.com/mail/?view=cm&fs=1&to=sandravasylkova@gmail.com"
+          target="_blank"
+          rel="noopener"
+          class="contact-modal__row"
+        >
+          <span class="contact-modal__icon">✉</span>
+          <span>
+            <strong>Email</strong>
+            <small>sandravasylkova@gmail.com</small>
+          </span>
+        </a>
+
+        <a
+          href="https://www.microsoft.com/en-us/microsoft-teams/log-in"
+          class="contact-modal__row"
+        >
+          <span
+            class="teams__icon"
+            role="img"
+            aria-label="Microsoft Teams"
+          ></span>
+          <span>
+            <strong>Teams</strong>
+            <small>Oleksandra Vasylkova</small>
+          </span>
+        </a>
+      </div>
+    </div>
+  </body>
+</html>

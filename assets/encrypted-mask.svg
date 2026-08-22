@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="268 108 356 220" role="img" aria-label="Schwarz-goldene venezianische Maske">
+  <defs>
+    <!-- Colombina: curved edges meeting at cusps, so every corner is a point —
+         the two upswept brow tips, the temples, and the drop at the nose.
+         Symmetric about x=440. -->
+    <path id="ci-mask" d="M280,190
+      C286,158 306,140 330,130
+      C368,146 404,156 440,170
+      C476,156 512,146 550,130
+      C574,140 594,158 600,190
+      C602,226 586,256 556,272
+      C520,288 486,272 462,258
+      C452,268 448,282 440,296
+      C432,282 428,268 418,258
+      C394,272 360,288 324,272
+      C300,268 278,226 280,190 Z"/>
+    <clipPath id="ci-mask-clip"><use href="#ci-mask"/></clipPath>
+
+    <!-- eyes: pointed hard at the temple -->
+    <path id="ci-eye-l" d="M320,206 C336,182 372,172 400,186 C412,192 414,204 402,214
+      C378,232 336,228 320,206 Z"/>
+    <path id="ci-eye-r" d="M560,206 C544,182 508,172 480,186 C468,192 466,204 478,214
+      C502,232 544,228 560,206 Z"/>
+
+    <!-- one half of the filigree; the other is this mirrored about x=440 -->
+    <g id="ci-fil" fill="none" stroke="#e8a93b" stroke-width="3.4" stroke-linecap="round">
+      <path d="M338,176 c8,-16 30,-14 28,2 c-2,12 -18,12 -18,0 c0,-7 9,-7 9,-1"/>
+      <path d="M374,158 c8,-14 26,-12 24,2 c-2,10 -16,10 -16,0"/>
+      <path d="M330,238 c10,14 30,10 28,-4 c-2,-11 -18,-10 -18,1 c0,6 8,6 8,0"/>
+      <path d="M368,252 c9,12 26,8 24,-4"/>
+      <path d="M300,196 c6,-12 20,-14 26,-6"/>
+    </g>
+
+    <linearGradient id="ci-body" x1="0" y1="0" x2="0.55" y2="1">
+      <stop offset="0%" stop-color="#23252c"/>
+      <stop offset="45%" stop-color="#111318"/>
+      <stop offset="100%" stop-color="#05060a"/>
+    </linearGradient>
+    <linearGradient id="ci-trim" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0%" stop-color="#ffdb9c"/>
+      <stop offset="38%" stop-color="#f5a623"/>
+      <stop offset="72%" stop-color="#a86f12"/>
+      <stop offset="100%" stop-color="#ffcd78"/>
+    </linearGradient>
+  </defs>
+
+  <g>
+    <use href="#ci-mask" x="10" y="12" fill="#04070c" opacity="0.7"/>
+
+    <!-- trim band: a wide stroke, then the body fill covers its inner half,
+         leaving the band outside the silhouette -->
+    <use href="#ci-mask" fill="none" stroke="#08090c" stroke-width="20"/>
+    <use href="#ci-mask" fill="none" stroke="url(#ci-trim)" stroke-width="14"/>
+    <use href="#ci-mask" fill="url(#ci-body)"/>
+    <use href="#ci-mask" fill="none" stroke="#ffd489" stroke-width="2" opacity="0.7"/>
+
+    <g clip-path="url(#ci-mask-clip)">
+      <use href="#ci-fil"/>
+      <use href="#ci-fil" transform="matrix(-1,0,0,1,880,0)"/>
+    </g>
+
+    <!-- drop at the nose bridge -->
+    <path d="M440,190 L449,214 L440,246 L431,214 Z" fill="url(#ci-trim)"/>
+    <path d="M440,190 L449,214 L440,246 L431,214 Z" fill="none" stroke="#8a5c10" stroke-width="1.6"/>
+
+    <use href="#ci-eye-l" fill="#04050a"/>
+    <use href="#ci-eye-l" fill="none" stroke="url(#ci-trim)" stroke-width="5"/>
+    <use href="#ci-eye-r" fill="#04050a"/>
+    <use href="#ci-eye-r" fill="none" stroke="url(#ci-trim)" stroke-width="5"/>
+  </g>
+</svg>

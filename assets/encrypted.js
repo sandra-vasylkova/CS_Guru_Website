@@ -438,7 +438,7 @@
         <span class="quote-card__flip">
           <span class="quote-card__face quote-card__face--back">
             <span class="quote-card__pips"><i></i><i></i><i></i><i></i></span>
-            <img src="/assets/favicon-96x96.png" alt="" class="quote-card__logo" />
+            <img src="${isCenter ? "/assets/favicon-96x96.png" : "/assets/favicon_white.png"}" alt="" class="quote-card__logo" />
           </span>
           <span class="quote-card__face quote-card__face--front">
             <span class="quote-card__art">${theme.art || ""}</span>

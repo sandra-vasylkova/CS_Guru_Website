@@ -645,6 +645,17 @@ body:has(.play-page) {
   border-color: color-mix(in srgb, var(--green) 50%, transparent);
 }
 
+/* Placement test: the entry point sitting above lesson 1. */
+.subtopic--test {
+  border-style: dashed;
+  border-color: color-mix(in srgb, var(--turquoise) 45%, transparent);
+  background: color-mix(in srgb, var(--turquoise) 6%, rgba(2, 10, 12, 0.6));
+}
+
+.subtopic--test .subtopic__icon {
+  color: var(--turquoise);
+}
+
 .subtopic__done-badge {
   position: absolute;
   top: 14px;
@@ -8052,6 +8063,523 @@ body:has(.lesson-page--logic) {
   color: var(--lesson-accent);
   font-family: Consolas, Monaco, monospace;
   font-weight: 700;
+}
+
+/* Beta marker: small pill plus the notice box that explains what "Beta" means. */
+
+.beta-badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border: 1px solid color-mix(in srgb, var(--amber) 60%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--amber) 14%, transparent);
+  color: var(--amber);
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.beta-badge--solid {
+  border-color: transparent;
+  background: var(--amber);
+  color: #1a1000;
+}
+
+.lesson-sidebar__topic .beta-badge {
+  margin-top: 10px;
+}
+
+.lesson-hero__eyebrow .beta-badge {
+  margin-left: 8px;
+}
+
+.lesson-exercise__label .beta-badge {
+  margin-left: 6px;
+  letter-spacing: 0.1em;
+}
+
+.subtopic h3 .beta-badge {
+  margin-left: 6px;
+  padding: 2px 6px;
+  font-size: 0.6rem;
+}
+
+.lesson-beta {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-top: 22px;
+  padding: 18px 22px;
+  border: 1px solid color-mix(in srgb, var(--amber) 40%, transparent);
+  border-left: 4px solid var(--amber);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--amber) 7%, rgba(4, 12, 14, 0.84));
+}
+
+.lesson-beta strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--white);
+  font-size: 1.02rem;
+  font-weight: 900;
+}
+
+.lesson-beta p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.74);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.lesson-beta a {
+  color: var(--amber);
+  font-weight: 700;
+}
+
+@media (max-width: 700px) {
+  .lesson-beta {
+    flex-direction: column;
+    gap: 10px;
+    padding: 16px 18px;
+  }
+}
+
+/* Niveau-Test: placement quiz across all Python-Grundlagen topics */
+
+.level-test {
+  margin-top: 28px;
+  padding: 26px 26px 30px;
+}
+
+.level-test__lead {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.level-test__meter {
+  margin-top: 18px;
+}
+
+.level-test__meter-track {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.level-test__meter-fill {
+  display: block;
+  width: 0;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--lesson-accent);
+  transition: width 0.25s ease;
+}
+
+.level-test__meter-text {
+  margin-top: 8px;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.level-test__meter-text strong {
+  color: var(--lesson-accent);
+}
+
+.level-test__group {
+  margin-top: 34px;
+  padding-top: 26px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  scroll-margin-top: 96px;
+}
+
+.level-test__group-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.level-test__group-num {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid color-mix(in srgb, var(--lesson-accent) 45%, transparent);
+  border-radius: 8px;
+  color: var(--lesson-accent);
+  font-size: 0.9rem;
+  font-weight: 900;
+}
+
+.level-test__group-head h2 {
+  color: var(--white);
+  font-size: 1.35rem;
+  font-weight: 900;
+}
+
+.level-test__question {
+  margin-top: 22px;
+  padding: 18px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-left: 3px solid rgba(255, 255, 255, 0.18);
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.22);
+}
+
+.level-test__question.is-right {
+  border-left-color: #3ddc97;
+}
+
+.level-test__question.is-wrong {
+  border-left-color: #ff6b7a;
+}
+
+.level-test__question.is-blank {
+  border-left-color: rgba(255, 255, 255, 0.45);
+}
+
+.level-test__prompt {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 1.02rem;
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+.level-test__q-num {
+  flex: none;
+  min-width: 26px;
+  color: var(--lesson-accent);
+  font-size: 0.85rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+
+.level-test__code {
+  margin: 14px 0 0 38px;
+  padding: 14px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.45);
+  color: rgba(255, 255, 255, 0.9);
+  font-family: Consolas, Monaco, monospace;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  overflow-x: auto;
+}
+
+.level-test__options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 16px 0 0 38px;
+}
+
+.level-test__option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 9px;
+  background: rgba(0, 0, 0, 0.28);
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 0.97rem;
+  line-height: 1.45;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
+}
+
+.level-test__option code {
+  font-family: Consolas, Monaco, monospace;
+  color: var(--white);
+}
+
+.level-test__option:hover {
+  border-color: color-mix(in srgb, var(--lesson-accent) 50%, transparent);
+}
+
+.level-test__option input {
+  flex: none;
+  width: 17px;
+  height: 17px;
+  margin: 0;
+  accent-color: var(--lesson-accent);
+  cursor: pointer;
+}
+
+.level-test__option:has(input:checked) {
+  border-color: var(--lesson-accent);
+  background: color-mix(in srgb, var(--lesson-accent) 12%, transparent);
+}
+
+.level-test__option:has(input:disabled) {
+  cursor: default;
+}
+
+.level-test__option:has(input:disabled):hover {
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.level-test__option.is-correct {
+  border-color: #3ddc97;
+  background: rgba(61, 220, 151, 0.14);
+}
+
+.level-test__option.is-correct::after {
+  content: "✓";
+  margin-left: auto;
+  color: #3ddc97;
+  font-weight: 900;
+}
+
+.level-test__option.is-wrong {
+  border-color: #ff6b7a;
+  background: rgba(255, 107, 122, 0.14);
+}
+
+.level-test__option.is-wrong::after {
+  content: "✗";
+  margin-left: auto;
+  color: #ff6b7a;
+  font-weight: 900;
+}
+
+.level-test__option.is-correct:hover,
+.level-test__option.is-wrong:hover {
+  border-color: currentColor;
+}
+
+.level-test__explain {
+  margin: 14px 0 0 38px;
+  padding-left: 14px;
+  border-left: 2px solid color-mix(in srgb, var(--lesson-accent) 45%, transparent);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.93rem;
+  line-height: 1.65;
+}
+
+.level-test__explain[hidden] {
+  display: none;
+}
+
+.level-test__actions {
+  margin-top: 30px;
+  scroll-margin-top: 96px;
+}
+
+.level-test__actions .lesson-exercise__check[hidden] {
+  display: none;
+}
+
+.level-test__hint {
+  margin-top: 12px;
+  color: #ffc46b;
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.level-test__hint:empty {
+  display: none;
+}
+
+.level-test__result {
+  margin-top: 26px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  scroll-margin-top: 96px;
+  outline: none;
+}
+
+.level-test__result[hidden] {
+  display: none;
+}
+
+.level-test [data-tone="high"] {
+  --lt-tone: #3ddc97;
+}
+
+.level-test [data-tone="mid"] {
+  --lt-tone: var(--lesson-accent);
+}
+
+.level-test [data-tone="low"] {
+  --lt-tone: #f5a623;
+}
+
+.level-test [data-tone="none"] {
+  --lt-tone: #ff6b7a;
+}
+
+.level-test__overall {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 16px;
+  padding: 20px 22px;
+  border: 1px solid color-mix(in srgb, var(--lt-tone) 45%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--lt-tone) 8%, transparent);
+}
+
+.level-test__overall-value {
+  color: var(--lt-tone);
+  font-size: 2.6rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.level-test__overall-meta {
+  display: grid;
+  gap: 4px;
+  color: rgba(255, 255, 255, 0.66);
+  font-size: 0.95rem;
+}
+
+.level-test__overall-meta strong {
+  color: var(--white);
+  font-size: 1.15rem;
+  font-weight: 900;
+}
+
+.level-test__scores {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.level-test__score {
+  padding: 16px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 11px;
+  background: rgba(0, 0, 0, 0.24);
+}
+
+.level-test__score-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.level-test__score-head strong {
+  color: var(--white);
+  font-size: 1.02rem;
+  font-weight: 800;
+}
+
+.level-test__score-value {
+  color: var(--lt-tone);
+  font-size: 1.25rem;
+  font-weight: 900;
+}
+
+.level-test__score-track {
+  height: 6px;
+  margin-top: 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.level-test__score-fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--lt-tone);
+}
+
+.level-test__score-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 10px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.level-test__score-link {
+  color: var(--lesson-accent);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.level-test__score-link:hover {
+  text-decoration: underline;
+}
+
+.level-test__advice {
+  margin-top: 20px;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.level-test__advice strong {
+  color: var(--lesson-accent);
+}
+
+.level-test__note {
+  margin-top: 10px;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 1000px) {
+  .level-test__options,
+  .level-test__scores {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .level-test {
+    padding: 20px 18px 24px;
+  }
+
+  .level-test__group {
+    margin-top: 28px;
+    padding-top: 22px;
+  }
+
+  .level-test__question {
+    padding: 16px 15px;
+  }
+
+  .level-test__code,
+  .level-test__options,
+  .level-test__explain {
+    margin-left: 0;
+  }
+
+  .level-test__overall {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .level-test__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
 }
 
 /* Typeset formula box */

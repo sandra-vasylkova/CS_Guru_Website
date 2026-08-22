@@ -2682,9 +2682,6 @@ if (lessonSections.length && lessonSidebarLinks.length) {
 })();
 
 // Interactive exercises: "level-test" — the Python-Grundlagen placement test.
-// Every question sits in a [data-lt-question] block inside a [data-lt-group]
-// section that names its topic and lesson file, so the grading below stays
-// generic: it only counts checked radios that carry data-correct.
 (() => {
   document
     .querySelectorAll('.lesson-exercise[data-exercise="level-test"]')

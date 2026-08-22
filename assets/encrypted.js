@@ -243,48 +243,64 @@
   //
   // [type, x, y, w, h, rotation, alpha] in a 100 x 161 viewBox.
   const QH_SHAPES = [
-    ["triangle", 9, 13, 21, 19, -23, 0.34],
-    ["square", 24, 7, 13, 13, 37, 0.26],
-    ["bar", 41, 14, 26, 5, -61, 0.22],
-    ["ring", 6, 31, 17, 17, 0, 0.3],
-    ["circle", 31, 24, 11, 11, 0, 0.19],
-    ["hexagon", 47, 6, 14, 14, 13, 0.28],
-    ["square", 18, 39, 9, 9, 45, 0.35],
-    ["cross", 62, 11, 15, 15, 29, 0.24],
-    ["triangle", 78, 5, 17, 17, 143, 0.31],
-    ["bar", 91, 19, 23, 4, 71, 0.21],
-    ["circle", 71, 27, 8, 8, 0, 0.36],
-    ["ring", 95, 41, 13, 13, 0, 0.25],
-    ["square", 84, 36, 14, 14, 12, 0.2],
-    ["triangle", 3, 52, 13, 13, 87, 0.27],
-    ["bar", 14, 61, 18, 3, -34, 0.23],
-    ["circle", 99, 58, 9, 9, 0, 0.22],
-    ["square", 2, 73, 11, 11, 45, 0.18],
-    ["hexagon", 97, 76, 12, 12, 41, 0.26],
-    ["bar", 6, 92, 15, 4, 62, 0.19],
-    ["circle", 93, 99, 6, 6, 0, 0.29],
-    ["triangle", 4, 106, 16, 16, -47, 0.33],
-    ["ring", 88, 112, 15, 15, 0, 0.27],
-    ["square", 17, 118, 15, 15, 23, 0.3],
-    ["cross", 31, 129, 13, 13, 54, 0.25],
-    ["bar", 47, 121, 28, 5, 17, 0.21],
-    ["circle", 8, 136, 12, 12, 0, 0.24],
-    ["triangle", 66, 132, 19, 19, 118, 0.32],
-    ["hexagon", 84, 137, 13, 13, 7, 0.23],
-    ["square", 26, 148, 10, 10, 45, 0.28],
-    ["bar", 55, 150, 21, 4, -26, 0.2],
-    ["ring", 45, 158, 14, 14, 0, 0.22],
-    ["circle", 76, 156, 8, 8, 0, 0.26],
-    ["square", 96, 152, 12, 12, 33, 0.19],
-    ["triangle", 38, 46, 8, 8, 66, 0.16],
-    ["circle", 60, 52, 5, 5, 0, 0.17],
-    ["bar", 70, 96, 12, 3, -52, 0.14],
-    ["square", 33, 88, 7, 7, 45, 0.13],
-    ["circle", 55, 108, 6, 6, 0, 0.15],
+    ["triangle", 9, 13, 13, 11.8, -23, 0.34],
+    ["square", 24, 7, 8.1, 8.1, 37, 0.26],
+    ["bar", 41, 14, 16.1, 3.1, -61, 0.22],
+    ["ring", 6, 31, 10.5, 10.5, 0, 0.3],
+    ["circle", 31, 24, 6.8, 6.8, 0, 0.19],
+    ["hexagon", 47, 6, 8.7, 8.7, 13, 0.28],
+    ["square", 18, 39, 5.6, 5.6, 45, 0.35],
+    ["cross", 62, 11, 9.3, 9.3, 29, 0.24],
+    ["triangle", 78, 5, 10.5, 10.5, 143, 0.31],
+    ["bar", 91, 19, 14.3, 2.5, 71, 0.21],
+    ["circle", 71, 27, 5, 5, 0, 0.36],
+    ["ring", 95, 41, 8.1, 8.1, 0, 0.25],
+    ["square", 84, 36, 8.7, 8.7, 12, 0.2],
+    ["triangle", 3, 52, 8.1, 8.1, 87, 0.27],
+    ["bar", 14, 61, 11.2, 1.9, -34, 0.23],
+    ["circle", 99, 58, 5.6, 5.6, 0, 0.22],
+    ["square", 2, 73, 6.8, 6.8, 45, 0.18],
+    ["hexagon", 97, 76, 7.4, 7.4, 41, 0.26],
+    ["bar", 6, 92, 9.3, 2.5, 62, 0.19],
+    ["circle", 93, 99, 3.7, 3.7, 0, 0.29],
+    ["triangle", 4, 106, 9.9, 9.9, -47, 0.33],
+    ["ring", 88, 112, 9.3, 9.3, 0, 0.27],
+    ["square", 17, 118, 9.3, 9.3, 23, 0.3],
+    ["cross", 31, 129, 8.1, 8.1, 54, 0.25],
+    ["bar", 47, 121, 17.4, 3.1, 17, 0.21],
+    ["circle", 8, 136, 7.4, 7.4, 0, 0.24],
+    ["triangle", 66, 132, 11.8, 11.8, 118, 0.32],
+    ["hexagon", 84, 137, 8.1, 8.1, 7, 0.23],
+    ["square", 26, 148, 6.2, 6.2, 45, 0.28],
+    ["bar", 55, 150, 13, 2.5, -26, 0.2],
+    ["ring", 45, 158, 8.7, 8.7, 0, 0.22],
+    ["circle", 76, 156, 5, 5, 0, 0.26],
+    ["square", 96, 152, 7.4, 7.4, 33, 0.19],
+    ["triangle", 38, 46, 5, 5, 66, 0.16],
+    ["circle", 60, 52, 3.1, 3.1, 0, 0.17],
+    ["bar", 70, 96, 7.4, 1.9, -52, 0.14],
+    ["square", 33, 88, 4.3, 4.3, 45, 0.13],
+    ["circle", 55, 108, 3.7, 3.7, 0, 0.15],
   ];
 
+  // The quote sits across the middle of the face — y 77.5 to 95.4 in these
+  // units, and lower still once "mehr" expands. Only the box the lines
+  // actually occupy is kept clear, so shapes still run down both margins.
+  // Dropped rather than veiled: a veil over them left a visible edge.
+  const QH_CLEAR = { x0: 12, x1: 88, y0: 58, y1: 118 };
+
+  function qhOutsideText([, x, y, w, h]) {
+    const r = Math.hypot(w / 2, h / 2); // circumscribed, so rotation is covered
+    return (
+      y - r >= QH_CLEAR.y1 ||
+      y + r <= QH_CLEAR.y0 ||
+      x - r >= QH_CLEAR.x1 ||
+      x + r <= QH_CLEAR.x0
+    );
+  }
+
   function qhShape([type, x, y, w, h, rot, a]) {
-    const fill = `rgba(214, 74, 74, ${a})`;
+    const fill = `rgba(176, 16, 28, ${a})`;
     const turn = rot ? ` transform="rotate(${rot} ${x} ${y})"` : "";
     const hw = w / 2;
     const hh = h / 2;
@@ -340,7 +356,7 @@
     return (
       `<svg class="quote-card__pattern" viewBox="0 0 100 161"` +
       ` preserveAspectRatio="none" aria-hidden="true" focusable="false">` +
-      `${QH_SHAPES.map(qhShape).join("")}</svg>`
+      `${QH_SHAPES.filter(qhOutsideText).map(qhShape).join("")}</svg>`
     );
   }
 

@@ -1094,33 +1094,27 @@
 /* 3 · Herz-Dame — Beige mit rotem Muster */
 
 .quote-card--qh {
-  /* Blood red, lightening gently towards the middle. The lift lives in this
-     gradient rather than in a separate veil — a veil over the top gave a pale
-     blob with an edge to it. All the type is light, so nothing depends on
-     landing inside the lighter area. */
+  /* White, shading a touch towards the edges so the card is not a flat sheet.
+     The type is dark, so it reads anywhere on the face. */
   --f-bg: radial-gradient(
     ellipse 80% 64% at 50% 46%,
-    #a3111e 0%,
-    #911019 26%,
-    #7c0a14 50%,
-    #64070f 72%,
-    #4a040b 88%,
-    #3a030a 100%
+    #ffffff 0%,
+    #fcfcfc 50%,
+    #f4f4f5 78%,
+    #ececed 100%
   );
-  --f-ink: #ffeae6;
-  --f-accent: #ffd2c9;
-  --f-frame: rgba(255, 205, 195, 0.3);
-  --f-muted: rgba(255, 222, 216, 0.7);
+  --f-ink: #17151a;
+  --f-accent: #b0101c;
+  --f-frame: rgba(23, 21, 26, 0.22);
+  --f-muted: rgba(23, 21, 26, 0.55);
 }
 
 /* "mehr" cannot inherit --f-accent here: it has to stand out from the quote,
    not match the label above it. */
 
 .quote-card--qh .quote-card__more {
-  color: #ffffff;
-  font-weight: 800;
-  text-decoration-color: rgba(255, 255, 255, 0.85);
-  text-decoration-thickness: 2px;
+  color: #0f0f0f;
+  text-decoration-color: rgba(15, 15, 15, 0.85);
 }
 
 
@@ -1134,19 +1128,6 @@
   height: 100%;
 }
 
-
-/* Beige veil over the middle keeps the quote clear; the pattern stays visible
-   at the edges. */
-
-
-
-/* Light type on a dark ground: a soft shadow keeps the edges from picking up
-   the red beneath them. */
-
-.quote-card--qh .quote-card__text {
-  font-weight: 600;
-  text-shadow: 0 1px 3px rgba(30, 2, 6, 0.55);
-}
 
 /* 4 · Pik-Bube — Perfektion */
 

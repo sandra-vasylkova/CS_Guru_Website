@@ -667,6 +667,137 @@ body:has(.play-page) {
   box-shadow: 0 0 8px rgba(139, 195, 74, 0.7);
 }
 
+/* Password-gated subtopics: one unlock field per topic, guarding a subset
+   of its lessons until the matching password is entered. */
+.topic__lock {
+  padding: 0 28px 20px;
+}
+
+.topic--closed .topic__lock {
+  display: none;
+}
+
+.topic__lock-form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 480px;
+  padding: 4px 6px 4px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  background: rgba(2, 10, 12, 0.6);
+  transition: border-color 0.15s ease;
+}
+
+.topic__lock-form:focus-within {
+  border-color: var(--topic-color);
+}
+
+.topic__lock-form.topic__lock-form--error {
+  border-color: var(--red);
+  animation: topic-lock-shake 0.3s ease;
+}
+
+@keyframes topic-lock-shake {
+  25% {
+    transform: translateX(-4px);
+  }
+  75% {
+    transform: translateX(4px);
+  }
+}
+
+.topic__lock-input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  color: var(--white);
+  font-family: var(--font);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.topic__lock-input::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.topic__lock-input:focus {
+  outline: none;
+}
+
+.topic__lock-submit {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border: none;
+  border-radius: 50%;
+  background: var(--topic-color);
+  color: var(--black);
+  cursor: pointer;
+}
+
+.topic__lock-submit svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* .subtopic__content wraps the card's original children with display:contents
+   so it stays invisible to the .subtopic grid layout, giving the blur filter
+   a target without touching the existing icon/text/arrow columns. */
+.subtopic__content {
+  display: contents;
+}
+
+.subtopic--locked .subtopic__content {
+  filter: blur(5px);
+  user-select: none;
+}
+
+.subtopic__lock-overlay {
+  display: none;
+}
+
+.subtopic--locked .subtopic__lock-overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: rgba(2, 6, 8, 0.35);
+}
+
+.subtopic--locked {
+  cursor: not-allowed;
+}
+
+.subtopic__lock-icon {
+  width: 58px;
+  height: 58px;
+  fill: none;
+  stroke: #767676;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.subtopic__lock-icon-body {
+  fill: #767676;
+  stroke: none;
+}
+
+.subtopic__lock-icon-hole {
+  fill: #111111;
+  stroke: none;
+}
+
 .learn-page .nav__link--active,
 .learn-page .nav__link:hover {
   color: var(--turquoise);

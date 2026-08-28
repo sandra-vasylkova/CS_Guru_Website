@@ -159,6 +159,29 @@
               <span class="topic__arrow">›</span>
             </button>
 
+            <div class="topic__lock">
+              <form class="topic__lock-form" data-lock-form>
+                <input
+                  type="password"
+                  class="topic__lock-input"
+                  placeholder="Gib ein Passwort ein, um die entsprechenden Themen freizuschalten"
+                  autocomplete="off"
+                  autocapitalize="off"
+                  autocorrect="off"
+                  spellcheck="false"
+                />
+                <button
+                  type="submit"
+                  class="topic__lock-submit"
+                  aria-label="Freischalten"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M4 12h16M13.5 5.5 20 12l-6.5 6.5" />
+                  </svg>
+                </button>
+              </form>
+            </div>
+
             <div class="subtopics">
               <a
                 href="/pages/explainations/learning_themes/python%20basis/level_test.html"
@@ -178,85 +201,316 @@
               <a
                 href="/pages/explainations/learning_themes/python%20basis/variables.html"
                 class="subtopic"
+                data-lock-index="1"
               >
-                <div class="subtopic__icon">x</div>
-                <div>
-                  <h3>1. Variablen</h3>
-                  <p>Werte speichern und verändern</p>
+                <div class="subtopic__content">
+                  <div class="subtopic__icon">x</div>
+                  <div>
+                    <h3>1. Variablen</h3>
+                    <p>Werte speichern und verändern</p>
+                  </div>
+                  <span>›</span>
                 </div>
-                <span>›</span>
+                <div class="subtopic__lock-overlay" aria-hidden="true">
+                  <svg
+                    class="subtopic__lock-icon"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <rect
+                      class="subtopic__lock-icon-body"
+                      x="5"
+                      y="11"
+                      width="14"
+                      height="9"
+                      rx="1.5"
+                    />
+                    <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+                    <circle
+                      class="subtopic__lock-icon-hole"
+                      cx="12"
+                      cy="14.6"
+                      r="1.3"
+                    />
+                    <rect
+                      class="subtopic__lock-icon-hole"
+                      x="11.2"
+                      y="14.6"
+                      width="1.6"
+                      height="3.2"
+                    />
+                  </svg>
+                </div>
               </a>
 
               <a
                 href="/pages/explainations/learning_themes/python%20basis/data_types.html"
                 class="subtopic"
+                data-lock-index="2"
               >
-                <div class="subtopic__icon">T</div>
-                <div>
-                  <h3>2. Datentypen</h3>
-                  <p>Zahlen, Texte und Wahrheitswerte</p>
+                <div class="subtopic__content">
+                  <div class="subtopic__icon">T</div>
+                  <div>
+                    <h3>2. Datentypen</h3>
+                    <p>Zahlen, Texte und Wahrheitswerte</p>
+                  </div>
+                  <span>›</span>
                 </div>
-                <span>›</span>
+                <div class="subtopic__lock-overlay" aria-hidden="true">
+                  <svg
+                    class="subtopic__lock-icon"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <rect
+                      class="subtopic__lock-icon-body"
+                      x="5"
+                      y="11"
+                      width="14"
+                      height="9"
+                      rx="1.5"
+                    />
+                    <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+                    <circle
+                      class="subtopic__lock-icon-hole"
+                      cx="12"
+                      cy="14.6"
+                      r="1.3"
+                    />
+                    <rect
+                      class="subtopic__lock-icon-hole"
+                      x="11.2"
+                      y="14.6"
+                      width="1.6"
+                      height="3.2"
+                    />
+                  </svg>
+                </div>
               </a>
 
               <a
                 href="/pages/explainations/learning_themes/python%20basis/print_input.html"
                 class="subtopic"
+                data-lock-index="3"
               >
-                <div class="subtopic__icon">&gt;_</div>
-                <div>
-                  <h3>3. Print &amp; Input</h3>
-                  <p>Ausgaben anzeigen und Eingaben verarbeiten</p>
+                <div class="subtopic__content">
+                  <div class="subtopic__icon">&gt;_</div>
+                  <div>
+                    <h3>3. Print &amp; Input</h3>
+                    <p>Ausgaben anzeigen und Eingaben verarbeiten</p>
+                  </div>
+                  <span>›</span>
                 </div>
-                <span>›</span>
+                <div class="subtopic__lock-overlay" aria-hidden="true">
+                  <svg
+                    class="subtopic__lock-icon"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <rect
+                      class="subtopic__lock-icon-body"
+                      x="5"
+                      y="11"
+                      width="14"
+                      height="9"
+                      rx="1.5"
+                    />
+                    <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+                    <circle
+                      class="subtopic__lock-icon-hole"
+                      cx="12"
+                      cy="14.6"
+                      r="1.3"
+                    />
+                    <rect
+                      class="subtopic__lock-icon-hole"
+                      x="11.2"
+                      y="14.6"
+                      width="1.6"
+                      height="3.2"
+                    />
+                  </svg>
+                </div>
               </a>
 
               <a
                 href="/pages/explainations/learning_themes/python%20basis/conditions.html"
                 class="subtopic"
+                data-lock-index="4"
               >
-                <div class="subtopic__icon">?</div>
-                <div>
-                  <h3>4. Bedingungen</h3>
-                  <p>Entscheidungen mit if, elif und else</p>
+                <div class="subtopic__content">
+                  <div class="subtopic__icon">?</div>
+                  <div>
+                    <h3>4. Bedingungen</h3>
+                    <p>Entscheidungen mit if, elif und else</p>
+                  </div>
+                  <span>›</span>
                 </div>
-                <span>›</span>
+                <div class="subtopic__lock-overlay" aria-hidden="true">
+                  <svg
+                    class="subtopic__lock-icon"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <rect
+                      class="subtopic__lock-icon-body"
+                      x="5"
+                      y="11"
+                      width="14"
+                      height="9"
+                      rx="1.5"
+                    />
+                    <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+                    <circle
+                      class="subtopic__lock-icon-hole"
+                      cx="12"
+                      cy="14.6"
+                      r="1.3"
+                    />
+                    <rect
+                      class="subtopic__lock-icon-hole"
+                      x="11.2"
+                      y="14.6"
+                      width="1.6"
+                      height="3.2"
+                    />
+                  </svg>
+                </div>
               </a>
 
               <a
                 href="/pages/explainations/learning_themes/python%20basis/data_structures.html"
                 class="subtopic"
+                data-lock-index="5"
               >
-                <div class="subtopic__icon">[...}</div>
-                <div>
-                  <h3>5. Datenstrukturen</h3>
-                  <p>Strings, Lists, Dictionaries, Tuples</p>
+                <div class="subtopic__content">
+                  <div class="subtopic__icon">[...}</div>
+                  <div>
+                    <h3>5. Datenstrukturen</h3>
+                    <p>Strings, Lists, Dictionaries, Tuples</p>
+                  </div>
+                  <span>›</span>
                 </div>
-                <span>›</span>
+                <div class="subtopic__lock-overlay" aria-hidden="true">
+                  <svg
+                    class="subtopic__lock-icon"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <rect
+                      class="subtopic__lock-icon-body"
+                      x="5"
+                      y="11"
+                      width="14"
+                      height="9"
+                      rx="1.5"
+                    />
+                    <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+                    <circle
+                      class="subtopic__lock-icon-hole"
+                      cx="12"
+                      cy="14.6"
+                      r="1.3"
+                    />
+                    <rect
+                      class="subtopic__lock-icon-hole"
+                      x="11.2"
+                      y="14.6"
+                      width="1.6"
+                      height="3.2"
+                    />
+                  </svg>
+                </div>
               </a>
 
               <a
                 href="/pages/explainations/learning_themes/python%20basis/loops.html"
                 class="subtopic"
+                data-lock-index="6"
               >
-                <div class="subtopic__icon">↻</div>
-                <div>
-                  <h3>6. Schleifen</h3>
-                  <p>Wiederholungen mit for und while</p>
+                <div class="subtopic__content">
+                  <div class="subtopic__icon">↻</div>
+                  <div>
+                    <h3>6. Schleifen</h3>
+                    <p>Wiederholungen mit for und while</p>
+                  </div>
+                  <span>›</span>
                 </div>
-                <span>›</span>
+                <div class="subtopic__lock-overlay" aria-hidden="true">
+                  <svg
+                    class="subtopic__lock-icon"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <rect
+                      class="subtopic__lock-icon-body"
+                      x="5"
+                      y="11"
+                      width="14"
+                      height="9"
+                      rx="1.5"
+                    />
+                    <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+                    <circle
+                      class="subtopic__lock-icon-hole"
+                      cx="12"
+                      cy="14.6"
+                      r="1.3"
+                    />
+                    <rect
+                      class="subtopic__lock-icon-hole"
+                      x="11.2"
+                      y="14.6"
+                      width="1.6"
+                      height="3.2"
+                    />
+                  </svg>
+                </div>
               </a>
 
               <a
                 href="/pages/explainations/learning_themes/python%20basis/functions.html"
                 class="subtopic"
+                data-lock-index="7"
               >
-                <div class="subtopic__icon">ƒ</div>
-                <div>
-                  <h3>7. Funktionen</h3>
-                  <p>Wiederverwendbarer Code</p>
+                <div class="subtopic__content">
+                  <div class="subtopic__icon">ƒ</div>
+                  <div>
+                    <h3>7. Funktionen</h3>
+                    <p>Wiederverwendbarer Code</p>
+                  </div>
+                  <span>›</span>
                 </div>
-                <span>›</span>
+                <div class="subtopic__lock-overlay" aria-hidden="true">
+                  <svg
+                    class="subtopic__lock-icon"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <rect
+                      class="subtopic__lock-icon-body"
+                      x="5"
+                      y="11"
+                      width="14"
+                      height="9"
+                      rx="1.5"
+                    />
+                    <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+                    <circle
+                      class="subtopic__lock-icon-hole"
+                      cx="12"
+                      cy="14.6"
+                      r="1.3"
+                    />
+                    <rect
+                      class="subtopic__lock-icon-hole"
+                      x="11.2"
+                      y="14.6"
+                      width="1.6"
+                      height="3.2"
+                    />
+                  </svg>
+                </div>
               </a>
             </div>
           </div>
@@ -270,77 +524,298 @@
               <span class="topic__arrow">›</span>
             </button>
 
+            <div class="topic__lock">
+              <form class="topic__lock-form" data-lock-form>
+                <input
+                  type="password"
+                  class="topic__lock-input"
+                  placeholder="Gib ein Passwort ein, um die entsprechenden Themen freizuschalten"
+                  autocomplete="off"
+                  autocapitalize="off"
+                  autocorrect="off"
+                  spellcheck="false"
+                />
+                <button
+                  type="submit"
+                  class="topic__lock-submit"
+                  aria-label="Freischalten"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M4 12h16M13.5 5.5 20 12l-6.5 6.5" />
+                  </svg>
+                </button>
+              </form>
+            </div>
+
             <div class="subtopics">
               <a
                 href="/pages/explainations/learning_themes/Number Systems/bits_bytes.html"
                 class="subtopic"
+                data-lock-index="1"
               >
-                <div class="subtopic__icon">8b</div>
-                <div>
-                  <h3>1. Bits, Bytes und Stellenwerte</h3>
-                  <p>Grundlagen, Potenzen und Bedeutung einzelner Stellen</p>
+                <div class="subtopic__content">
+                  <div class="subtopic__icon">8b</div>
+                  <div>
+                    <h3>1. Bits, Bytes und Stellenwerte</h3>
+                    <p>Grundlagen, Potenzen und Bedeutung einzelner Stellen</p>
+                  </div>
+                  <span>›</span>
                 </div>
-                <span>›</span>
+                <div class="subtopic__lock-overlay" aria-hidden="true">
+                  <svg
+                    class="subtopic__lock-icon"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <rect
+                      class="subtopic__lock-icon-body"
+                      x="5"
+                      y="11"
+                      width="14"
+                      height="9"
+                      rx="1.5"
+                    />
+                    <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+                    <circle
+                      class="subtopic__lock-icon-hole"
+                      cx="12"
+                      cy="14.6"
+                      r="1.3"
+                    />
+                    <rect
+                      class="subtopic__lock-icon-hole"
+                      x="11.2"
+                      y="14.6"
+                      width="1.6"
+                      height="3.2"
+                    />
+                  </svg>
+                </div>
               </a>
 
               <a
                 href="/pages/explainations/learning_themes/Number Systems/number_systems.html"
                 class="subtopic"
+                data-lock-index="2"
               >
-                <div class="subtopic__icon">Σ</div>
-                <div>
-                  <h3>2. Zahlensysteme im Überblick</h3>
-                  <p>Binär-, Oktal-, Dezimal- und Hexadezimalsystem</p>
+                <div class="subtopic__content">
+                  <div class="subtopic__icon">Σ</div>
+                  <div>
+                    <h3>2. Zahlensysteme im Überblick</h3>
+                    <p>Binär-, Oktal-, Dezimal- und Hexadezimalsystem</p>
+                  </div>
+                  <span>›</span>
                 </div>
-                <span>›</span>
+                <div class="subtopic__lock-overlay" aria-hidden="true">
+                  <svg
+                    class="subtopic__lock-icon"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <rect
+                      class="subtopic__lock-icon-body"
+                      x="5"
+                      y="11"
+                      width="14"
+                      height="9"
+                      rx="1.5"
+                    />
+                    <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+                    <circle
+                      class="subtopic__lock-icon-hole"
+                      cx="12"
+                      cy="14.6"
+                      r="1.3"
+                    />
+                    <rect
+                      class="subtopic__lock-icon-hole"
+                      x="11.2"
+                      y="14.6"
+                      width="1.6"
+                      height="3.2"
+                    />
+                  </svg>
+                </div>
               </a>
 
               <a
                 href="/pages/explainations/learning_themes/Number Systems/conversions.html"
                 class="subtopic"
+                data-lock-index="3"
               >
-                <div class="subtopic__icon">→<br />←</div>
-                <div>
-                  <h3>3. Umwandlungen</h3>
-                  <p>Zwischen Zahlensystemen umwandeln</p>
+                <div class="subtopic__content">
+                  <div class="subtopic__icon">→<br />←</div>
+                  <div>
+                    <h3>3. Umwandlungen</h3>
+                    <p>Zwischen Zahlensystemen umwandeln</p>
+                  </div>
+                  <span>›</span>
                 </div>
-                <span>›</span>
+                <div class="subtopic__lock-overlay" aria-hidden="true">
+                  <svg
+                    class="subtopic__lock-icon"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <rect
+                      class="subtopic__lock-icon-body"
+                      x="5"
+                      y="11"
+                      width="14"
+                      height="9"
+                      rx="1.5"
+                    />
+                    <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+                    <circle
+                      class="subtopic__lock-icon-hole"
+                      cx="12"
+                      cy="14.6"
+                      r="1.3"
+                    />
+                    <rect
+                      class="subtopic__lock-icon-hole"
+                      x="11.2"
+                      y="14.6"
+                      width="1.6"
+                      height="3.2"
+                    />
+                  </svg>
+                </div>
               </a>
 
               <a
                 href="/pages/explainations/learning_themes/Number Systems/fast_method.html"
                 class="subtopic"
+                data-lock-index="4"
               >
-                <div class="subtopic__icon">→<br />←</div>
-                <div>
-                  <h3>4. Schnellmethode</h3>
-                  <p>Lerne, Zahlen blitzschnell umzuwandeln</p>
+                <div class="subtopic__content">
+                  <div class="subtopic__icon">→<br />←</div>
+                  <div>
+                    <h3>4. Schnellmethode</h3>
+                    <p>Lerne, Zahlen blitzschnell umzuwandeln</p>
+                  </div>
+                  <span>›</span>
                 </div>
-                <span>›</span>
+                <div class="subtopic__lock-overlay" aria-hidden="true">
+                  <svg
+                    class="subtopic__lock-icon"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <rect
+                      class="subtopic__lock-icon-body"
+                      x="5"
+                      y="11"
+                      width="14"
+                      height="9"
+                      rx="1.5"
+                    />
+                    <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+                    <circle
+                      class="subtopic__lock-icon-hole"
+                      cx="12"
+                      cy="14.6"
+                      r="1.3"
+                    />
+                    <rect
+                      class="subtopic__lock-icon-hole"
+                      x="11.2"
+                      y="14.6"
+                      width="1.6"
+                      height="3.2"
+                    />
+                  </svg>
+                </div>
               </a>
 
               <a
                 href="/pages/explainations/learning_themes/Number Systems/binary_arithmetic.html"
                 class="subtopic"
+                data-lock-index="5"
               >
-                <div class="subtopic__icon">+</div>
-                <div>
-                  <h3>5. Binärarithmetik</h3>
-                  <p>Addition, Subtraktion und Überlauf</p>
+                <div class="subtopic__content">
+                  <div class="subtopic__icon">+</div>
+                  <div>
+                    <h3>5. Binärarithmetik</h3>
+                    <p>Addition, Subtraktion und Überlauf</p>
+                  </div>
+                  <span>›</span>
                 </div>
-                <span>›</span>
+                <div class="subtopic__lock-overlay" aria-hidden="true">
+                  <svg
+                    class="subtopic__lock-icon"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <rect
+                      class="subtopic__lock-icon-body"
+                      x="5"
+                      y="11"
+                      width="14"
+                      height="9"
+                      rx="1.5"
+                    />
+                    <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+                    <circle
+                      class="subtopic__lock-icon-hole"
+                      cx="12"
+                      cy="14.6"
+                      r="1.3"
+                    />
+                    <rect
+                      class="subtopic__lock-icon-hole"
+                      x="11.2"
+                      y="14.6"
+                      width="1.6"
+                      height="3.2"
+                    />
+                  </svg>
+                </div>
               </a>
 
               <a
                 href="/pages/explainations/learning_themes/Number Systems/HA_VA.html"
                 class="subtopic"
+                data-lock-index="6"
               >
-                <div class="subtopic__icon">+</div>
-                <div>
-                  <h3>6. Halb- und Volladdierer</h3>
-                  <p>Addition im Prozessor</p>
+                <div class="subtopic__content">
+                  <div class="subtopic__icon">+</div>
+                  <div>
+                    <h3>6. Halb- und Volladdierer</h3>
+                    <p>Addition im Prozessor</p>
+                  </div>
+                  <span>›</span>
                 </div>
-                <span>›</span>
+                <div class="subtopic__lock-overlay" aria-hidden="true">
+                  <svg
+                    class="subtopic__lock-icon"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <rect
+                      class="subtopic__lock-icon-body"
+                      x="5"
+                      y="11"
+                      width="14"
+                      height="9"
+                      rx="1.5"
+                    />
+                    <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+                    <circle
+                      class="subtopic__lock-icon-hole"
+                      cx="12"
+                      cy="14.6"
+                      r="1.3"
+                    />
+                    <rect
+                      class="subtopic__lock-icon-hole"
+                      x="11.2"
+                      y="14.6"
+                      width="1.6"
+                      height="3.2"
+                    />
+                  </svg>
+                </div>
               </a>
 
               <a
@@ -379,77 +854,298 @@
               <span class="topic__arrow">›</span>
             </button>
 
+            <div class="topic__lock">
+              <form class="topic__lock-form" data-lock-form>
+                <input
+                  type="password"
+                  class="topic__lock-input"
+                  placeholder="Gib ein Passwort ein, um die entsprechenden Themen freizuschalten"
+                  autocomplete="off"
+                  autocapitalize="off"
+                  autocorrect="off"
+                  spellcheck="false"
+                />
+                <button
+                  type="submit"
+                  class="topic__lock-submit"
+                  aria-label="Freischalten"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M4 12h16M13.5 5.5 20 12l-6.5 6.5" />
+                  </svg>
+                </button>
+              </form>
+            </div>
+
             <div class="subtopics">
               <a
                 href="/pages/explainations/learning_themes/switch%20algebra/logical_expressions.html"
                 class="subtopic"
+                data-lock-index="1"
               >
-                <div class="subtopic__icon">⊤⊥</div>
-                <div>
-                  <h3>1. Aussagen und Wahrheitswerte</h3>
-                  <p>Logische Aussagen und Grundoperatoren</p>
+                <div class="subtopic__content">
+                  <div class="subtopic__icon">⊤⊥</div>
+                  <div>
+                    <h3>1. Aussagen und Wahrheitswerte</h3>
+                    <p>Logische Aussagen und Grundoperatoren</p>
+                  </div>
+                  <span>›</span>
                 </div>
-                <span>›</span>
+                <div class="subtopic__lock-overlay" aria-hidden="true">
+                  <svg
+                    class="subtopic__lock-icon"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <rect
+                      class="subtopic__lock-icon-body"
+                      x="5"
+                      y="11"
+                      width="14"
+                      height="9"
+                      rx="1.5"
+                    />
+                    <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+                    <circle
+                      class="subtopic__lock-icon-hole"
+                      cx="12"
+                      cy="14.6"
+                      r="1.3"
+                    />
+                    <rect
+                      class="subtopic__lock-icon-hole"
+                      x="11.2"
+                      y="14.6"
+                      width="1.6"
+                      height="3.2"
+                    />
+                  </svg>
+                </div>
               </a>
 
               <a
                 href="/pages/explainations/learning_themes/switch%20algebra/advanced_operators.html"
                 class="subtopic"
+                data-lock-index="2"
               >
-                <div class="subtopic__icon">⊕</div>
-                <div>
-                  <h3>2. Erweiterte Operatoren</h3>
-                  <p>Equivalenz, Antivalenz, Implikation</p>
+                <div class="subtopic__content">
+                  <div class="subtopic__icon">⊕</div>
+                  <div>
+                    <h3>2. Erweiterte Operatoren</h3>
+                    <p>Equivalenz, Antivalenz, Implikation</p>
+                  </div>
+                  <span>›</span>
                 </div>
-                <span>›</span>
+                <div class="subtopic__lock-overlay" aria-hidden="true">
+                  <svg
+                    class="subtopic__lock-icon"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <rect
+                      class="subtopic__lock-icon-body"
+                      x="5"
+                      y="11"
+                      width="14"
+                      height="9"
+                      rx="1.5"
+                    />
+                    <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+                    <circle
+                      class="subtopic__lock-icon-hole"
+                      cx="12"
+                      cy="14.6"
+                      r="1.3"
+                    />
+                    <rect
+                      class="subtopic__lock-icon-hole"
+                      x="11.2"
+                      y="14.6"
+                      width="1.6"
+                      height="3.2"
+                    />
+                  </svg>
+                </div>
               </a>
 
               <a
                 href="/pages/explainations/learning_themes/switch%20algebra/truth_tables.html"
                 class="subtopic"
+                data-lock-index="3"
               >
-                <div class="subtopic__icon">▦</div>
-                <div>
-                  <h3>3. Wahrheitstabellen</h3>
-                  <p>Systematische Auswertung von Ausdrücken</p>
+                <div class="subtopic__content">
+                  <div class="subtopic__icon">▦</div>
+                  <div>
+                    <h3>3. Wahrheitstabellen</h3>
+                    <p>Systematische Auswertung von Ausdrücken</p>
+                  </div>
+                  <span>›</span>
                 </div>
-                <span>›</span>
+                <div class="subtopic__lock-overlay" aria-hidden="true">
+                  <svg
+                    class="subtopic__lock-icon"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <rect
+                      class="subtopic__lock-icon-body"
+                      x="5"
+                      y="11"
+                      width="14"
+                      height="9"
+                      rx="1.5"
+                    />
+                    <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+                    <circle
+                      class="subtopic__lock-icon-hole"
+                      cx="12"
+                      cy="14.6"
+                      r="1.3"
+                    />
+                    <rect
+                      class="subtopic__lock-icon-hole"
+                      x="11.2"
+                      y="14.6"
+                      width="1.6"
+                      height="3.2"
+                    />
+                  </svg>
+                </div>
               </a>
 
               <a
                 href="/pages/explainations/learning_themes/switch%20algebra/boolean_laws.html"
                 class="subtopic"
+                data-lock-index="4"
               >
-                <div class="subtopic__icon">≡</div>
-                <div>
-                  <h3>4. Boolesche Gesetze</h3>
-                  <p>Erkennung und Umformung der Ausdrücke</p>
+                <div class="subtopic__content">
+                  <div class="subtopic__icon">≡</div>
+                  <div>
+                    <h3>4. Boolesche Gesetze</h3>
+                    <p>Erkennung und Umformung der Ausdrücke</p>
+                  </div>
+                  <span>›</span>
                 </div>
-                <span>›</span>
+                <div class="subtopic__lock-overlay" aria-hidden="true">
+                  <svg
+                    class="subtopic__lock-icon"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <rect
+                      class="subtopic__lock-icon-body"
+                      x="5"
+                      y="11"
+                      width="14"
+                      height="9"
+                      rx="1.5"
+                    />
+                    <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+                    <circle
+                      class="subtopic__lock-icon-hole"
+                      cx="12"
+                      cy="14.6"
+                      r="1.3"
+                    />
+                    <rect
+                      class="subtopic__lock-icon-hole"
+                      x="11.2"
+                      y="14.6"
+                      width="1.6"
+                      height="3.2"
+                    />
+                  </svg>
+                </div>
               </a>
 
               <a
                 href="/pages/explainations/learning_themes/switch%20algebra/simplification.html"
                 class="subtopic"
+                data-lock-index="5"
               >
-                <div class="subtopic__icon">↓</div>
-                <div>
-                  <h3>5. Vereinfachung</h3>
-                  <p>Anwendung der Gesetze + DNF und KNF</p>
+                <div class="subtopic__content">
+                  <div class="subtopic__icon">↓</div>
+                  <div>
+                    <h3>5. Vereinfachung</h3>
+                    <p>Anwendung der Gesetze + DNF und KNF</p>
+                  </div>
+                  <span>›</span>
                 </div>
-                <span>›</span>
+                <div class="subtopic__lock-overlay" aria-hidden="true">
+                  <svg
+                    class="subtopic__lock-icon"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <rect
+                      class="subtopic__lock-icon-body"
+                      x="5"
+                      y="11"
+                      width="14"
+                      height="9"
+                      rx="1.5"
+                    />
+                    <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+                    <circle
+                      class="subtopic__lock-icon-hole"
+                      cx="12"
+                      cy="14.6"
+                      r="1.3"
+                    />
+                    <rect
+                      class="subtopic__lock-icon-hole"
+                      x="11.2"
+                      y="14.6"
+                      width="1.6"
+                      height="3.2"
+                    />
+                  </svg>
+                </div>
               </a>
 
               <a
                 href="/pages/explainations/learning_themes/switch%20algebra/logic_gate.html"
                 class="subtopic"
+                data-lock-index="6"
               >
-                <div class="subtopic__icon">⟐</div>
-                <div>
-                  <h3>6. Logikgatter</h3>
-                  <p>Ausdrücke als Schaltungen</p>
+                <div class="subtopic__content">
+                  <div class="subtopic__icon">⟐</div>
+                  <div>
+                    <h3>6. Logikgatter</h3>
+                    <p>Ausdrücke als Schaltungen</p>
+                  </div>
+                  <span>›</span>
                 </div>
-                <span>›</span>
+                <div class="subtopic__lock-overlay" aria-hidden="true">
+                  <svg
+                    class="subtopic__lock-icon"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <rect
+                      class="subtopic__lock-icon-body"
+                      x="5"
+                      y="11"
+                      width="14"
+                      height="9"
+                      rx="1.5"
+                    />
+                    <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+                    <circle
+                      class="subtopic__lock-icon-hole"
+                      cx="12"
+                      cy="14.6"
+                      r="1.3"
+                    />
+                    <rect
+                      class="subtopic__lock-icon-hole"
+                      x="11.2"
+                      y="14.6"
+                      width="1.6"
+                      height="3.2"
+                    />
+                  </svg>
+                </div>
               </a>
             </div>
           </div>

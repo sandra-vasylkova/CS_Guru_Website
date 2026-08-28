@@ -28,6 +28,107 @@ document.querySelectorAll(".topic__head").forEach((head) => {
   }
 })();
 
+// Password-gated subtopics: each topic has its own unlock field, and each
+// password reveals a specific subset of its lessons (see data-lock-index on
+// the .subtopic links in learn.html). Unlocks accumulate and persist in
+// localStorage - once a lesson is unlocked it stays unlocked, no matter how
+// many more passwords get entered afterwards.
+(() => {
+  const STORAGE_KEY = "csguru:unlocked-lessons";
+
+  const LOCK_CONFIG = {
+    "topic-python": {
+      111: [1, 2],
+      222: [3, 4],
+      333: [5, 6],
+      444: [7],
+    },
+    "topic-numbers": {
+      aaa: [1, 2],
+      bbb: [3],
+      ccc: [4],
+      ddd: [5, 6],
+    },
+    "topic-logic": {
+      314: [1],
+      1592: [2],
+      6535: [3],
+      8979: [4, 5],
+      3238: [6],
+    },
+  };
+
+  const topics = [...document.querySelectorAll(".topic[id]")].filter(
+    (topic) => LOCK_CONFIG[topic.id],
+  );
+  if (!topics.length) return;
+
+  function readUnlocked() {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+    } catch {
+      return {};
+    }
+  }
+
+  function saveUnlocked(unlocked) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(unlocked));
+    } catch {
+      // Private browsing / quota exceeded - unlocks just won't persist.
+    }
+  }
+
+  const unlocked = readUnlocked();
+
+  function applyLockState(topic) {
+    const unlockedIndices = new Set(unlocked[topic.id] || []);
+
+    topic.querySelectorAll("[data-lock-index]").forEach((link) => {
+      const isLocked = !unlockedIndices.has(Number(link.dataset.lockIndex));
+      link.classList.toggle("subtopic--locked", isLocked);
+      link.setAttribute("aria-disabled", String(isLocked));
+      link.tabIndex = isLocked ? -1 : 0;
+    });
+  }
+
+  topics.forEach((topic) => {
+    applyLockState(topic);
+
+    // Locked cards keep their real href (no-JS fallback / SEO), so clicks
+    // need to be intercepted explicitly instead of relying on pointer-events.
+    topic.addEventListener("click", (event) => {
+      if (event.target.closest(".subtopic--locked")) event.preventDefault();
+    });
+
+    const form = topic.querySelector("[data-lock-form]");
+    const input = form?.querySelector(".topic__lock-input");
+    if (!form || !input) return;
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const password = input.value.trim();
+      const indices = LOCK_CONFIG[topic.id][password];
+
+      if (!password || !indices) {
+        form.classList.remove("topic__lock-form--error");
+        void form.offsetWidth; // restart the shake animation on repeat misses
+        form.classList.add("topic__lock-form--error");
+        return;
+      }
+
+      const current = new Set(unlocked[topic.id] || []);
+      indices.forEach((index) => current.add(index));
+      unlocked[topic.id] = [...current];
+      saveUnlocked(unlocked);
+
+      input.value = "";
+      form.classList.remove("topic__lock-form--error");
+      applyLockState(topic);
+    });
+  });
+})();
+
 // Nav hover dropdowns: hovering "Lernen", "Spielen", or "Werkzeuge" lists
 // every major topic/game/tool so a click jumps straight to it. Injected
 // here (rather than duplicated in every page's nav markup) since app.js is

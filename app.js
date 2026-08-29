@@ -42,12 +42,14 @@ document.querySelectorAll(".topic__head").forEach((head) => {
       222: [3, 4],
       333: [5, 6],
       444: [7],
+      1415926535: [1, 2, 3, 4, 5, 6, 7],
     },
     "topic-numbers": {
       aaa: [1, 2],
       bbb: [3],
       ccc: [4],
       ddd: [5, 6],
+      8979323846: [1, 2, 3, 4, 5, 6],
     },
     "topic-logic": {
       314: [1],
@@ -55,6 +57,7 @@ document.querySelectorAll(".topic__head").forEach((head) => {
       6535: [3],
       8979: [4, 5],
       3238: [6],
+      2643383279: [1, 2, 3, 4, 5, 6],
     },
   };
 

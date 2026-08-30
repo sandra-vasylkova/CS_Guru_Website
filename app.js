@@ -132,6 +132,32 @@ document.querySelectorAll(".topic__head").forEach((head) => {
   });
 })();
 
+// The unlock placeholder text is too long to fit inline on phone screens, so
+// swap in a shorter version below the same breakpoint the lesson sidebar
+// disappears at, and restore the full text above it.
+(() => {
+  const inputs = document.querySelectorAll(".topic__lock-input");
+  if (!inputs.length) return;
+
+  const mobilePlaceholder = "Passwort eingeben";
+  const query = window.matchMedia("(max-width: 700px)");
+
+  inputs.forEach((input) => {
+    input.dataset.placeholderFull = input.placeholder;
+  });
+
+  function applyPlaceholder() {
+    inputs.forEach((input) => {
+      input.placeholder = query.matches
+        ? mobilePlaceholder
+        : input.dataset.placeholderFull;
+    });
+  }
+
+  applyPlaceholder();
+  query.addEventListener("change", applyPlaceholder);
+})();
+
 // Nav hover dropdowns: hovering "Lernen", "Spielen", or "Werkzeuge" lists
 // every major topic/game/tool so a click jumps straight to it. Injected
 // here (rather than duplicated in every page's nav markup) since app.js is

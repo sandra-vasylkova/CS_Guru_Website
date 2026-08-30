@@ -9573,7 +9573,7 @@ body:has(.lesson-page--logic) {
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 700px) {
   .lesson-sidebar {
     display: none;
   }

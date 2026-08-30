@@ -146,9 +146,46 @@
             Wähle ein Thema aus und erhalte alles Wissenswerte dazu (und noch
             ein bisschen mehr).
           </p>
+
+          <div class="topics__search">
+            <svg
+              class="topics__search-icon"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <circle cx="11" cy="11" r="7" />
+              <path d="m20 20-3.5-3.5" />
+            </svg>
+            <input
+              type="search"
+              id="topics-search"
+              class="topics__search-input"
+              placeholder="Themen durchsuchen…"
+              autocomplete="off"
+              autocapitalize="off"
+              autocorrect="off"
+              spellcheck="false"
+            />
+            <button
+              type="button"
+              class="topics__search-clear"
+              id="topics-search-clear"
+              aria-label="Suche löschen"
+              hidden
+            >
+              ×
+            </button>
+
+            <div
+              class="topics__search-results"
+              id="topics-search-results"
+              hidden
+            ></div>
+          </div>
         </section>
 
         <section class="topics__list">
+
           <!-- Python -->
           <div class="topic topic--closed topic--python" id="topic-python">
             <button class="topic__head" type="button">
@@ -180,6 +217,19 @@
                   </svg>
                 </button>
               </form>
+
+              <button
+                type="button"
+                class="topic__lock-relock"
+                data-relock-button
+                hidden
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="5" y="11" width="14" height="9" rx="2" />
+                  <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+                </svg>
+                Alle wieder sperren
+              </button>
             </div>
 
             <div class="subtopics">
@@ -545,6 +595,19 @@
                   </svg>
                 </button>
               </form>
+
+              <button
+                type="button"
+                class="topic__lock-relock"
+                data-relock-button
+                hidden
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="5" y="11" width="14" height="9" rx="2" />
+                  <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+                </svg>
+                Alle wieder sperren
+              </button>
             </div>
 
             <div class="subtopics">
@@ -875,6 +938,19 @@
                   </svg>
                 </button>
               </form>
+
+              <button
+                type="button"
+                class="topic__lock-relock"
+                data-relock-button
+                hidden
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="5" y="11" width="14" height="9" rx="2" />
+                  <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+                </svg>
+                Alle wieder sperren
+              </button>
             </div>
 
             <div class="subtopics">

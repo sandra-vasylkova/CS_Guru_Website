@@ -454,13 +454,18 @@ body:has(.play-page) {
   pointer-events: none;
 }
 
-.topics__intro,
 .topics__list {
   position: relative;
   z-index: 2;
 }
 
+/* Higher than .topics__list so the search-results dropdown (a descendant)
+   paints above the topic cards below it instead of being covered by them -
+   both sections share a stacking context otherwise, and DOM order alone
+   would put .topics__list on top. */
 .topics__intro {
+  position: relative;
+  z-index: 3;
   margin-bottom: 34px;
 }
 
@@ -490,6 +495,152 @@ body:has(.play-page) {
   font-size: 1.15rem;
   font-weight: 500;
   line-height: 1.45;
+}
+
+/* Live full-text search bar, above the topic accordion. */
+.topics__search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 420px;
+  margin-top: 24px;
+  padding: 4px 16px 4px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  background: rgba(2, 10, 12, 0.6);
+  transition: border-color 0.15s ease;
+}
+
+.topics__search:focus-within {
+  border-color: var(--turquoise);
+}
+
+.topics__search-icon {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.55);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.topics__search-input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  color: var(--white);
+  font-family: var(--font);
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 10px 0;
+}
+
+.topics__search-input::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.topics__search-input:focus {
+  outline: none;
+}
+
+/* Chrome/Safari add a default magnifier + clear button for type="search";
+   hide them since the pill already supplies its own icon. */
+.topics__search-input::-webkit-search-decoration,
+.topics__search-input::-webkit-search-cancel-button,
+.topics__search-input::-webkit-search-results-button,
+.topics__search-input::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+}
+
+.topics__search-clear {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.topics__search-clear:hover {
+  background: rgba(255, 255, 255, 0.22);
+  color: var(--white);
+}
+
+.topics__search-clear[hidden] {
+  display: none;
+}
+
+.search-highlight {
+  background: var(--turquoise);
+  color: var(--black);
+  border-radius: 3px;
+  padding: 0 2px;
+}
+
+/* Search-suggestions dropdown: floats below the search pill and lists
+   matching phrases pulled from the full lesson text, each labeled with the
+   topic/subtopic it came from. */
+.topics__search-results {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  right: 0;
+  max-height: 60vh;
+  overflow-y: auto;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 16px;
+  background: rgba(4, 12, 14, 0.97);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 22px 55px rgba(0, 0, 0, 0.45);
+  padding: 8px;
+}
+
+.topics__search-result {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.15s ease;
+}
+
+.topics__search-result:hover,
+.topics__search-result:focus-visible {
+  background: rgba(34, 214, 205, 0.12);
+  outline: none;
+}
+
+.topics__search-result-meta {
+  color: var(--turquoise);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.topics__search-result-phrase {
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.topics__search-empty {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+  padding: 16px 14px;
+  text-align: center;
 }
 
 .topics__list {
@@ -670,6 +821,10 @@ body:has(.play-page) {
 /* Password-gated subtopics: one unlock field per topic, guarding a subset
    of its lessons until the matching password is entered. */
 .topic__lock {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
   padding: 0 28px 20px;
 }
 
@@ -681,6 +836,8 @@ body:has(.play-page) {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex: 1 1 auto;
+  min-width: 220px;
   max-width: 620px;
   padding: 4px 6px 4px 16px;
   border: 1px solid rgba(255, 255, 255, 0.22);
@@ -747,6 +904,47 @@ body:has(.play-page) {
   stroke-width: 2.4;
   stroke-linecap: round;
   stroke-linejoin: round;
+}
+
+/* Re-lock button: only shown once a topic has at least one unlocked lesson,
+   lets the visitor blur everything again without reloading the page. */
+.topic__lock-relock {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 6px;
+  padding: 9px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.55);
+  font-family: var(--font);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.topic__lock-relock:hover {
+  border-color: var(--red);
+  color: var(--red);
+}
+
+.topic__lock-relock svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.topic__lock-relock[hidden] {
+  display: none;
 }
 
 /* .subtopic__content wraps the card's original children with display:contents

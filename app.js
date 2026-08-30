@@ -93,6 +93,47 @@ document.querySelectorAll(".topic__head").forEach((head) => {
       link.setAttribute("aria-disabled", String(isLocked));
       link.tabIndex = isLocked ? -1 : 0;
     });
+
+    const relockButton = topic.querySelector("[data-relock-button]");
+    if (relockButton) relockButton.hidden = unlockedIndices.size === 0;
+  }
+
+  // Locking a lesson again also resets its completion progress - a lesson
+  // can't stay "finished" once it's no longer reachable, so the "done"
+  // badge and stored progress get cleared along with the unlock. With no
+  // `indices` given, every lesson in the topic is reset; otherwise only the
+  // given lock indices are.
+  function resetProgress(topic, indices) {
+    const PROGRESS_KEY = "csguru:lesson-progress";
+    let progress;
+    try {
+      progress = JSON.parse(localStorage.getItem(PROGRESS_KEY)) || {};
+    } catch {
+      progress = {};
+    }
+
+    const indexSet = indices ? new Set(indices) : null;
+
+    topic.querySelectorAll("[data-lock-index]").forEach((link) => {
+      if (indexSet && !indexSet.has(Number(link.dataset.lockIndex))) return;
+
+      const path = new URL(link.getAttribute("href"), location.origin).pathname;
+      let normalizedPath;
+      try {
+        normalizedPath = decodeURIComponent(path);
+      } catch {
+        normalizedPath = path;
+      }
+      delete progress[normalizedPath];
+      link.classList.remove("subtopic--done");
+      link.querySelector(".subtopic__done-badge")?.remove();
+    });
+
+    try {
+      localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
+    } catch {
+      // Private browsing / quota exceeded.
+    }
   }
 
   topics.forEach((topic) => {
@@ -104,16 +145,29 @@ document.querySelectorAll(".topic__head").forEach((head) => {
       if (event.target.closest(".subtopic--locked")) event.preventDefault();
     });
 
+    topic
+      .querySelector("[data-relock-button]")
+      ?.addEventListener("click", () => {
+        delete unlocked[topic.id];
+        saveUnlocked(unlocked);
+        resetProgress(topic);
+        applyLockState(topic);
+      });
+
     const form = topic.querySelector("[data-lock-form]");
     const input = form?.querySelector(".topic__lock-input");
     if (!form || !input) return;
 
     form.addEventListener("submit", (event) => {
       event.preventDefault();
-      const password = input.value.trim();
+      const value = input.value.trim();
+
+      // "lock<code>" re-locks exactly the lessons that <code> would unlock
+      const lockMatch = /^lock(.+)$/i.exec(value);
+      const password = lockMatch ? lockMatch[1] : value;
       const indices = LOCK_CONFIG[topic.id][password];
 
-      if (!password || !indices) {
+      if (!value || !indices) {
         form.classList.remove("topic__lock-form--error");
         void form.offsetWidth; // restart the shake animation on repeat misses
         form.classList.add("topic__lock-form--error");
@@ -121,9 +175,16 @@ document.querySelectorAll(".topic__head").forEach((head) => {
       }
 
       const current = new Set(unlocked[topic.id] || []);
-      indices.forEach((index) => current.add(index));
-      unlocked[topic.id] = [...current];
-      saveUnlocked(unlocked);
+      if (lockMatch) {
+        indices.forEach((index) => current.delete(index));
+        unlocked[topic.id] = [...current];
+        saveUnlocked(unlocked);
+        resetProgress(topic, indices);
+      } else {
+        indices.forEach((index) => current.add(index));
+        unlocked[topic.id] = [...current];
+        saveUnlocked(unlocked);
+      }
 
       input.value = "";
       form.classList.remove("topic__lock-form--error");
@@ -132,9 +193,6 @@ document.querySelectorAll(".topic__head").forEach((head) => {
   });
 })();
 
-// The unlock placeholder text is too long to fit inline on phone screens, so
-// swap in a shorter version below the same breakpoint the lesson sidebar
-// disappears at, and restore the full text above it.
 (() => {
   const inputs = document.querySelectorAll(".topic__lock-input");
   if (!inputs.length) return;
@@ -156,6 +214,171 @@ document.querySelectorAll(".topic__head").forEach((head) => {
 
   applyPlaceholder();
   query.addEventListener("change", applyPlaceholder);
+})();
+
+// Full-text lesson search
+(() => {
+  const input = document.querySelector("#topics-search");
+  const resultsPanel = document.querySelector("#topics-search-results");
+  const clearButton = document.querySelector("#topics-search-clear");
+  if (!input || !resultsPanel) return;
+
+  const MIN_QUERY_LENGTH = 2;
+  const MAX_RESULTS = 8;
+  const MIN_PHRASE_LENGTH = 12;
+  const SNIPPET_RADIUS = 60;
+
+  const entries = [...document.querySelectorAll(".topics__list .subtopic")]
+    .filter((subtopicEl) => subtopicEl.getAttribute("href"))
+    .map((subtopicEl) => {
+      const topicEl = subtopicEl.closest(".topic");
+      const topicName = topicEl?.querySelector("h2")?.textContent.trim() ?? "";
+      // Each topic sets its own --topic-color
+      const topicColor = topicEl
+        ? getComputedStyle(topicEl).getPropertyValue("--topic-color").trim()
+        : "";
+      const title = (subtopicEl.querySelector("h3")?.textContent ?? "")
+        .replace(/\s+/g, " ")
+        .trim();
+
+      return {
+        subtopicEl,
+        url: subtopicEl.getAttribute("href"),
+        topicName,
+        topicColor,
+        title,
+        phrases: [title],
+        loaded: false,
+      };
+    });
+
+  async function loadPhrases(entry) {
+    if (entry.loaded) return;
+    entry.loaded = true; // set eagerly so a second call can't refetch
+
+    try {
+      const res = await fetch(entry.url);
+      const html = await res.text();
+      const doc = new DOMParser().parseFromString(html, "text/html");
+      const content = doc.querySelector(".lesson-content");
+      if (!content) return;
+
+      // Multi-line code samples aren't "phrases" a learner would search for
+      content.querySelectorAll("pre").forEach((el) => el.remove());
+
+      content.querySelectorAll("p, li").forEach((node) => {
+        const text = node.textContent.replace(/\s+/g, " ").trim();
+        if (text.length >= MIN_PHRASE_LENGTH) entry.phrases.push(text);
+      });
+    } catch {
+      // Offline / fetch failure - that lesson just won't be searchable yet.
+    }
+  }
+
+  const prefetchAll = () => entries.forEach(loadPhrases);
+  if ("requestIdleCallback" in window) {
+    requestIdleCallback(prefetchAll, { timeout: 4000 });
+  } else {
+    setTimeout(prefetchAll, 1000);
+  }
+
+  const escapeHtml = (str) =>
+    str.replace(
+      /[&<>"']/g,
+      (c) =>
+        ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;",
+        })[c],
+    );
+
+  function renderPhrase(text, query) {
+    const index = text.toLowerCase().indexOf(query.toLowerCase());
+    if (index === -1) return escapeHtml(text);
+
+    const start = Math.max(0, index - SNIPPET_RADIUS);
+    const end = Math.min(text.length, index + query.length + SNIPPET_RADIUS);
+
+    const before = escapeHtml(text.slice(start, index));
+    const match = escapeHtml(text.slice(index, index + query.length));
+    const after = escapeHtml(text.slice(index + query.length, end));
+
+    return `${start > 0 ? "…" : ""}${before}<mark class="search-highlight">${match}</mark>${after}${end < text.length ? "…" : ""}`;
+  }
+
+  function closeResults() {
+    resultsPanel.hidden = true;
+    resultsPanel.innerHTML = "";
+  }
+
+  function renderResults(query) {
+    const lowerQuery = query.toLowerCase();
+    const matches = [];
+
+    for (const entry of entries) {
+      if (entry.subtopicEl.classList.contains("subtopic--locked")) continue;
+
+      const phrase = entry.phrases.find((p) =>
+        p.toLowerCase().includes(lowerQuery),
+      );
+      if (phrase) matches.push({ entry, phrase });
+
+      if (matches.length >= MAX_RESULTS) break;
+    }
+
+    resultsPanel.hidden = false;
+
+    if (!matches.length) {
+      resultsPanel.innerHTML =
+        '<p class="topics__search-empty">Keine Treffer gefunden.</p>';
+      return;
+    }
+
+    resultsPanel.innerHTML = matches
+      .map(({ entry, phrase }) => {
+        const href = `${entry.url}#:~:text=${encodeURIComponent(phrase)}`;
+        const colorStyle = entry.topicColor
+          ? ` style="color: ${escapeHtml(entry.topicColor)}"`
+          : "";
+        return `<a class="topics__search-result" href="${href}">
+          <span class="topics__search-result-meta"${colorStyle}>${escapeHtml(entry.topicName)} &rsaquo; ${escapeHtml(entry.title)}</span>
+          <span class="topics__search-result-phrase">${renderPhrase(phrase, query)}</span>
+        </a>`;
+      })
+      .join("");
+  }
+
+  input.addEventListener("input", () => {
+    const query = input.value.trim();
+    if (clearButton) clearButton.hidden = query === "";
+
+    if (query.length < MIN_QUERY_LENGTH) {
+      closeResults();
+      return;
+    }
+    renderResults(query);
+  });
+
+  input.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      input.blur();
+      closeResults();
+    }
+  });
+
+  clearButton?.addEventListener("click", () => {
+    input.value = "";
+    clearButton.hidden = true;
+    closeResults();
+    input.focus();
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!event.target.closest(".topics__search")) closeResults();
+  });
 })();
 
 // Nav hover dropdowns: hovering "Lernen", "Spielen", or "Werkzeuge" lists
